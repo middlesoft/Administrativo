@@ -5,11 +5,15 @@
  */
 package view;
 
+import view.inventario.fr_colores;
+import view.inventario.fr_productos;
+import view.inventario.fr_categoria;
+import view.inventario.fr_unidades;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.JOptionPane;
-import static view.fr_productos.activo;
+import static view.inventario.fr_productos.activo;
 
 /**
  *
@@ -260,12 +264,27 @@ public class fr_ppal extends javax.swing.JFrame {
         Tabla_Inv.add(Articulo);
 
         Colores.setText("Colores");
+        Colores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ColoresActionPerformed(evt);
+            }
+        });
         Tabla_Inv.add(Colores);
 
         Unidades.setText("Unidades");
+        Unidades.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UnidadesActionPerformed(evt);
+            }
+        });
         Tabla_Inv.add(Unidades);
 
         Categoria.setText("Categoria o Linea");
+        Categoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CategoriaActionPerformed(evt);
+            }
+        });
         Tabla_Inv.add(Categoria);
 
         SubCategoria.setText("SubCategoria o Sublinea");
@@ -372,6 +391,27 @@ public class fr_ppal extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_bt_salirActionPerformed
+
+    private void UnidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UnidadesActionPerformed
+        // TODO add your handling code here:
+        fr_unidades und = new fr_unidades();
+        escritorio.add(und);
+        und.show();
+    }//GEN-LAST:event_UnidadesActionPerformed
+
+    private void ColoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ColoresActionPerformed
+        // TODO add your handling code here:
+        fr_colores col = new fr_colores();
+        escritorio.add(col);
+        col.show();
+    }//GEN-LAST:event_ColoresActionPerformed
+
+    private void CategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CategoriaActionPerformed
+        // TODO add your handling code here:
+        fr_categoria cat = new fr_categoria();
+        escritorio.add(cat);
+        cat.show();
+    }//GEN-LAST:event_CategoriaActionPerformed
 
     /**
      * @param args the command line arguments
