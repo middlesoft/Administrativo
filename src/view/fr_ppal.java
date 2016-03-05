@@ -6,7 +6,10 @@
 package view;
 
 import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.Toolkit;
 import javax.swing.JOptionPane;
+import static view.fr_productos.activo;
 
 /**
  *
@@ -23,6 +26,10 @@ public class fr_ppal extends javax.swing.JFrame {
         super.setExtendedState(MAXIMIZED_BOTH);
         super.setVisible(true);
         jToolBar1.setVisible(false);
+        
+        Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/middlesoftlogo.png"));
+        setIconImage(icon);
+        setVisible(true);
     }
 
     /**
@@ -35,18 +42,23 @@ public class fr_ppal extends javax.swing.JFrame {
     private void initComponents() {
 
         jToolBar1 = new javax.swing.JToolBar();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
+        bt_buscar = new javax.swing.JButton();
+        bt_agregar = new javax.swing.JButton();
+        bt_modificar = new javax.swing.JButton();
+        bt_guardar = new javax.swing.JButton();
+        bt_cancelar = new javax.swing.JButton();
+        bt_eliminar = new javax.swing.JButton();
+        bt_inicio = new javax.swing.JButton();
+        bt_atras = new javax.swing.JButton();
+        bt_adelante = new javax.swing.JButton();
+        bt_fin = new javax.swing.JButton();
+        bt_salir = new javax.swing.JButton();
         escritorio = new javax.swing.JDesktopPane();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         MenuPrincipal = new javax.swing.JMenuBar();
         Archivo = new javax.swing.JMenu();
         Salir = new javax.swing.JMenuItem();
@@ -78,99 +90,131 @@ public class fr_ppal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
+        jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Search44.png"))); // NOI18N
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton1);
+        bt_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Search44.png"))); // NOI18N
+        bt_buscar.setFocusable(false);
+        bt_buscar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_buscar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(bt_buscar);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit_add.png"))); // NOI18N
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton2);
+        bt_agregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit_add.png"))); // NOI18N
+        bt_agregar.setFocusable(false);
+        bt_agregar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_agregar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(bt_agregar);
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit.png"))); // NOI18N
-        jButton3.setFocusable(false);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton3);
+        bt_modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit.png"))); // NOI18N
+        bt_modificar.setFocusable(false);
+        bt_modificar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_modificar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(bt_modificar);
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/3floppy_unmount.png"))); // NOI18N
-        jButton4.setFocusable(false);
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton4);
+        bt_guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/3floppy_unmount.png"))); // NOI18N
+        bt_guardar.setFocusable(false);
+        bt_guardar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_guardar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(bt_guardar);
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/button_cancel.png"))); // NOI18N
-        jButton5.setFocusable(false);
-        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton5);
+        bt_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/button_cancel.png"))); // NOI18N
+        bt_cancelar.setFocusable(false);
+        bt_cancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_cancelar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(bt_cancelar);
 
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit_remove.png"))); // NOI18N
-        jButton6.setFocusable(false);
-        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton6);
+        bt_eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit_remove.png"))); // NOI18N
+        bt_eliminar.setFocusable(false);
+        bt_eliminar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_eliminar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(bt_eliminar);
 
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/2leftarrow.png"))); // NOI18N
-        jButton7.setFocusable(false);
-        jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton7);
+        bt_inicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/2leftarrow.png"))); // NOI18N
+        bt_inicio.setFocusable(false);
+        bt_inicio.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_inicio.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(bt_inicio);
 
-        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/1leftarrow.png"))); // NOI18N
-        jButton8.setFocusable(false);
-        jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton8.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton8);
+        bt_atras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/1leftarrow.png"))); // NOI18N
+        bt_atras.setFocusable(false);
+        bt_atras.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_atras.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(bt_atras);
 
-        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/1rightarrow.png"))); // NOI18N
-        jButton9.setFocusable(false);
-        jButton9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton9.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton9);
+        bt_adelante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/1rightarrow.png"))); // NOI18N
+        bt_adelante.setFocusable(false);
+        bt_adelante.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_adelante.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(bt_adelante);
 
-        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/2rightarrow.png"))); // NOI18N
-        jButton10.setFocusable(false);
-        jButton10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton10.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton10);
+        bt_fin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/2rightarrow.png"))); // NOI18N
+        bt_fin.setFocusable(false);
+        bt_fin.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_fin.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(bt_fin);
 
-        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/kfm_home.png"))); // NOI18N
-        jButton11.setFocusable(false);
-        jButton11.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton11.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton11.addActionListener(new java.awt.event.ActionListener() {
+        bt_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/kfm_home.png"))); // NOI18N
+        bt_salir.setFocusable(false);
+        bt_salir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_salir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
+                bt_salirActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton11);
+        jToolBar1.add(bt_salir);
 
         escritorio.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/middlesoft.png"))); // NOI18N
+
+        jPanel1.setOpaque(false);
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/MySQL2.png"))); // NOI18N
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(354, 0, 173, 110));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/JAVA2.png"))); // NOI18N
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, -1, 89));
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/netbeans2.png"))); // NOI18N
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 172, 110));
+
+        escritorio.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        escritorio.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(escritorioLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 753, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 276, Short.MAX_VALUE)
+            .addGroup(escritorioLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(53, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, escritorioLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         Archivo.setText("Archivo");
+        Archivo.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         Archivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ArchivoActionPerformed(evt);
             }
         });
 
+        Salir.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         Salir.setText("Salir");
         Salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -182,9 +226,11 @@ public class fr_ppal extends javax.swing.JFrame {
         MenuPrincipal.add(Archivo);
 
         Edicion.setText("Edicion");
+        Edicion.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         MenuPrincipal.add(Edicion);
 
         Modulos.setText("Modulos");
+        Modulos.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         Modulos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 ModulosMouseClicked(evt);
@@ -192,8 +238,10 @@ public class fr_ppal extends javax.swing.JFrame {
         });
 
         Inventario.setText("Inventario");
+        Inventario.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         Procesos_Inv.setText("Procesos");
+        Procesos_Inv.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         Entrada_Salida.setText("Entrada y Salida");
         Procesos_Inv.add(Entrada_Salida);
@@ -201,6 +249,7 @@ public class fr_ppal extends javax.swing.JFrame {
         Inventario.add(Procesos_Inv);
 
         Tabla_Inv.setText("Tablas");
+        Tabla_Inv.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         Articulo.setText("Articulos o Productos");
         Articulo.addActionListener(new java.awt.event.ActionListener() {
@@ -228,6 +277,7 @@ public class fr_ppal extends javax.swing.JFrame {
         Inventario.add(Tabla_Inv);
 
         Reporte_Inv.setText("Reportes");
+        Reporte_Inv.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         Inventario.add(Reporte_Inv);
 
         Modulos.add(Inventario);
@@ -264,9 +314,11 @@ public class fr_ppal extends javax.swing.JFrame {
         MenuPrincipal.add(Modulos);
 
         Soporte.setText("Soporte");
+        Soporte.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         MenuPrincipal.add(Soporte);
 
         Ayuda.setText("Ayuda");
+        Ayuda.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         MenuPrincipal.add(Ayuda);
 
         setJMenuBar(MenuPrincipal);
@@ -314,10 +366,12 @@ public class fr_ppal extends javax.swing.JFrame {
         prod.show();
     }//GEN-LAST:event_ArticuloActionPerformed
 
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+    private void bt_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_salirActionPerformed
         // TODO add your handling code here:
+       
         
-    }//GEN-LAST:event_jButton11ActionPerformed
+        
+    }//GEN-LAST:event_bt_salirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -355,45 +409,50 @@ public class fr_ppal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem Almacenes;
-    private javax.swing.JMenu Archivo;
-    private javax.swing.JMenuItem Articulo;
-    private javax.swing.JMenu Ayuda;
-    private javax.swing.JMenuItem Categoria;
-    private javax.swing.JMenuItem Colores;
-    private javax.swing.JMenu Compras;
-    private javax.swing.JMenu Contabilidad;
-    private javax.swing.JMenu Edicion;
-    private javax.swing.JMenuItem Entrada_Salida;
-    private javax.swing.JMenu Inventario;
-    private javax.swing.JMenuBar MenuPrincipal;
-    private javax.swing.JMenu Modulos;
-    private javax.swing.JMenu Procesos_CxC;
-    private javax.swing.JMenu Procesos_CxP;
-    private javax.swing.JMenu Procesos_Inv;
-    private javax.swing.JMenu Reporte_CxC;
-    private javax.swing.JMenu Reporte_CxP;
-    private javax.swing.JMenu Reporte_Inv;
-    private javax.swing.JMenuItem Salir;
-    private javax.swing.JMenu Soporte;
-    private javax.swing.JMenuItem SubCategoria;
-    private javax.swing.JMenu Tabla_CxC;
-    private javax.swing.JMenu Tabla_CxP;
-    private javax.swing.JMenu Tabla_Inv;
-    private javax.swing.JMenuItem Unidades;
-    private javax.swing.JMenu Ventas;
-    private javax.swing.JDesktopPane escritorio;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
+    public static javax.swing.JMenuItem Almacenes;
+    public static javax.swing.JMenu Archivo;
+    public static javax.swing.JMenuItem Articulo;
+    public static javax.swing.JMenu Ayuda;
+    public static javax.swing.JMenuItem Categoria;
+    public static javax.swing.JMenuItem Colores;
+    public static javax.swing.JMenu Compras;
+    public static javax.swing.JMenu Contabilidad;
+    public static javax.swing.JMenu Edicion;
+    public static javax.swing.JMenuItem Entrada_Salida;
+    public static javax.swing.JMenu Inventario;
+    public static javax.swing.JMenuBar MenuPrincipal;
+    public static javax.swing.JMenu Modulos;
+    public static javax.swing.JMenu Procesos_CxC;
+    public static javax.swing.JMenu Procesos_CxP;
+    public static javax.swing.JMenu Procesos_Inv;
+    public static javax.swing.JMenu Reporte_CxC;
+    public static javax.swing.JMenu Reporte_CxP;
+    public static javax.swing.JMenu Reporte_Inv;
+    public static javax.swing.JMenuItem Salir;
+    public static javax.swing.JMenu Soporte;
+    public static javax.swing.JMenuItem SubCategoria;
+    public static javax.swing.JMenu Tabla_CxC;
+    public static javax.swing.JMenu Tabla_CxP;
+    public static javax.swing.JMenu Tabla_Inv;
+    public static javax.swing.JMenuItem Unidades;
+    public static javax.swing.JMenu Ventas;
+    public static javax.swing.JButton bt_adelante;
+    public static javax.swing.JButton bt_agregar;
+    public static javax.swing.JButton bt_atras;
+    public static javax.swing.JButton bt_buscar;
+    public static javax.swing.JButton bt_cancelar;
+    public static javax.swing.JButton bt_eliminar;
+    public static javax.swing.JButton bt_fin;
+    public static javax.swing.JButton bt_guardar;
+    public static javax.swing.JButton bt_inicio;
+    public static javax.swing.JButton bt_modificar;
+    public static javax.swing.JButton bt_salir;
+    public static javax.swing.JDesktopPane escritorio;
+    public static javax.swing.JLabel jLabel1;
+    public static javax.swing.JLabel jLabel2;
+    public static javax.swing.JLabel jLabel3;
+    public static javax.swing.JLabel jLabel4;
+    public static javax.swing.JPanel jPanel1;
     public static javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
 }
