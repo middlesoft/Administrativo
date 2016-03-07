@@ -104,11 +104,11 @@ public class fr_categoria extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(11, 11, 11)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -196,6 +196,11 @@ public class fr_categoria extends javax.swing.JInternalFrame {
         bt_salir.setFocusable(false);
         bt_salir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_salir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_salirActionPerformed(evt);
+            }
+        });
         jToolBar1.add(bt_salir);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -246,6 +251,11 @@ public class fr_categoria extends javax.swing.JInternalFrame {
     private void bt_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_eliminarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_bt_eliminarActionPerformed
+
+    private void bt_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_salirActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_bt_salirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

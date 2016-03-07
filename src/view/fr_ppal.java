@@ -12,6 +12,9 @@ import view.inventario.fr_unidades;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 import static view.inventario.fr_productos.activo;
 
@@ -19,8 +22,11 @@ import static view.inventario.fr_productos.activo;
  *
  * @author Kel
  */
-public class fr_ppal extends javax.swing.JFrame {
+public class fr_ppal extends javax.swing.JFrame implements Runnable {
     private Dimension dim;
+    String hora, minutos, segundos, ampm;
+     Calendar calendario;
+      Thread h1;
     /**
      * Creates new form fr_ppal
      */
@@ -30,10 +36,46 @@ public class fr_ppal extends javax.swing.JFrame {
         super.setExtendedState(MAXIMIZED_BOTH);
         super.setVisible(true);
         jToolBar1.setVisible(false);
+        iniciarreloj();
         
         Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/middlesoftlogo.png"));
         setIconImage(icon);
         setVisible(true);
+    }
+    
+    public void iniciarreloj(){
+        h1 = new Thread(this);
+        h1.start();
+    }
+        
+    public void run() {
+        Thread ct = Thread.currentThread();
+        while (ct == h1) {
+            calcula();
+            lbHora.setText(hora + ":" + minutos + ":" + segundos + " " + ampm);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+            }
+        }
+    }
+
+    public void calcula() {
+        Calendar calendario = new GregorianCalendar();
+        Date fechaHoraActual = new Date();
+
+        calendario.setTime(fechaHoraActual);
+        ampm = calendario.get(Calendar.AM_PM) == Calendar.AM ? "AM" : "PM";
+
+        if (ampm.equals("PM")) {
+            int h = calendario.get(Calendar.HOUR_OF_DAY) - 12;
+            hora = h > 9 ? "" + h : "0" + h;
+        } else {
+            hora = calendario.get(Calendar.HOUR_OF_DAY) > 9 ? "" + calendario.get(Calendar.HOUR_OF_DAY) : "0" + calendario.get(Calendar.HOUR_OF_DAY);
+        }
+        
+        minutos = calendario.get(Calendar.MINUTE) > 9 ? "" + calendario.get(Calendar.MINUTE) : "0" + calendario.get(Calendar.MINUTE);
+        segundos = calendario.get(Calendar.SECOND) > 9 ? "" + calendario.get(Calendar.SECOND) : "0" + calendario.get(Calendar.SECOND);
     }
 
     /**
@@ -63,6 +105,7 @@ public class fr_ppal extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        lbHora = new javax.swing.JLabel();
         MenuPrincipal = new javax.swing.JMenuBar();
         Archivo = new javax.swing.JMenu();
         Salir = new javax.swing.JMenuItem();
@@ -168,8 +211,6 @@ public class fr_ppal extends javax.swing.JFrame {
         });
         jToolBar1.add(bt_salir);
 
-        escritorio.setBackground(new java.awt.Color(255, 255, 255));
-
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/middlesoft.png"))); // NOI18N
 
         jPanel1.setOpaque(false);
@@ -184,8 +225,13 @@ public class fr_ppal extends javax.swing.JFrame {
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/netbeans2.png"))); // NOI18N
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 172, 110));
 
+        lbHora.setFont(new java.awt.Font("Arial", 1, 48)); // NOI18N
+        lbHora.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbHora.setText("jLabel1");
+
         escritorio.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        escritorio.setLayer(lbHora, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
         escritorio.setLayout(escritorioLayout);
@@ -195,7 +241,9 @@ public class fr_ppal extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 753, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbHora, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         escritorioLayout.setVerticalGroup(
@@ -206,6 +254,8 @@ public class fr_ppal extends javax.swing.JFrame {
                 .addContainerGap(53, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, escritorioLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbHora, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -494,5 +544,6 @@ public class fr_ppal extends javax.swing.JFrame {
     public static javax.swing.JLabel jLabel4;
     public static javax.swing.JPanel jPanel1;
     public static javax.swing.JToolBar jToolBar1;
+    public static javax.swing.JLabel lbHora;
     // End of variables declaration//GEN-END:variables
 }

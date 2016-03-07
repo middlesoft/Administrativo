@@ -206,7 +206,7 @@ public class fr_inicio extends javax.swing.JFrame {
             public void run() {
                 fr_inicio.setDefaultLookAndFeelDecorated(true);
                 new fr_inicio().setVisible(true);
-                 SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.RavenSkin");  
+                 SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.MistSilverSkin");  
                 
             }
         });

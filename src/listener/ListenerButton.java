@@ -14,7 +14,7 @@ import view.inventario.fr_productos;
  * @author Kel
  */
 public class ListenerButton implements java.awt.event.ActionListener {
-    private static boolean Bandera = false, lAgregar=true, lbuscar=true, lsalir=true;
+    private static boolean lAgregar=true, lbuscar=true, lsalir=true;
     
     //View
     private fr_ppal p = null;
