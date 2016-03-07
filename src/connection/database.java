@@ -30,7 +30,7 @@ public class database {
             Class.forName("com.mysql.jdbc.Driver");
         }catch (ClassNotFoundException e){
             System.err.println("Error al registrar el Driver");
-            System.exit(0);//
+            System.exit(0);
         }
         
         //Establece conexion con el servidor
@@ -38,7 +38,7 @@ public class database {
             conexion = (Connection) DriverManager.getConnection(this.host, this.user, this.pass);
         }catch (SQLException e){
            System.err.println("Error al registrar el Driver");
-           System.exit(0);//  
+           System.exit(0);
         }
     }
     
