@@ -5,7 +5,7 @@
  */
 package view.inventario;
 
-import static view.fr_ppal.MenuPrincipal;
+import static view.main.fr_ppal.MenuPrincipal;
 
 /**
  *

@@ -6,7 +6,7 @@
 package listener;
 
 import java.awt.event.ActionEvent;
-import view.fr_ppal;
+import view.main.fr_ppal;
 import view.inventario.fr_productos;
 
 /**
