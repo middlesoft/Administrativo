@@ -32,6 +32,5 @@ public class ListenerButton implements java.awt.event.ActionListener {
       
             break;
         }
-    }
-    
+    }  
 }
