@@ -16,7 +16,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
-import static view.inventario.fr_productos.activo;
+import view.inventario.fr_almacenes;
 
 /**
  *
@@ -341,6 +341,11 @@ public class fr_ppal extends javax.swing.JFrame implements Runnable {
         Tabla_Inv.add(SubCategoria);
 
         Almacenes.setText("Almacenes");
+        Almacenes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AlmacenesActionPerformed(evt);
+            }
+        });
         Tabla_Inv.add(Almacenes);
 
         Inventario.add(Tabla_Inv);
@@ -462,6 +467,13 @@ public class fr_ppal extends javax.swing.JFrame implements Runnable {
         escritorio.add(cat);
         cat.show();
     }//GEN-LAST:event_CategoriaActionPerformed
+
+    private void AlmacenesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlmacenesActionPerformed
+        // TODO add your handling code here:
+        fr_almacenes alm = new fr_almacenes();
+        escritorio.add(alm);
+        alm.show();
+    }//GEN-LAST:event_AlmacenesActionPerformed
 
     /**
      * @param args the command line arguments
