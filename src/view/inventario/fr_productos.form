@@ -145,19 +145,24 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace min="-2" pref="229" max="-2" attributes="0"/>
+              <Component id="jToolBar1" min="-2" pref="471" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jTabbedPane1" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jTabbedPane1" min="-2" pref="1002" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="12" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="jTabbedPane1" min="-2" pref="428" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jTabbedPane1" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jToolBar1" min="-2" pref="48" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -176,61 +181,8 @@
             </Constraint>
           </Constraints>
 
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jPanel7" pref="477" max="32767" attributes="0"/>
-                          </Group>
-                          <Component id="jPanel5" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jPanel3" alignment="0" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                              <Component id="jToolBar1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jScrollPane1" pref="475" max="32767" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jPanel6" max="32767" attributes="0"/>
-                                  <Component id="jPanel7" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="jScrollPane1" min="-2" pref="343" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jToolBar1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                  </Group>
-              </Group>
-            </DimensionLayout>
+          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+            <Property name="useNullLayout" type="boolean" value="false"/>
           </Layout>
           <SubComponents>
             <Container class="javax.swing.JPanel" name="jPanel3">
@@ -243,6 +195,11 @@
                   </Border>
                 </Property>
               </Properties>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                  <AbsoluteConstraints x="6" y="6" width="-1" height="-1"/>
+                </Constraint>
+              </Constraints>
 
               <Layout>
                 <DimensionLayout dim="0">
@@ -325,7 +282,7 @@
                                   </Group>
                               </Group>
                           </Group>
-                          <EmptySpace pref="33" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -627,6 +584,11 @@
                   </Border>
                 </Property>
               </Properties>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                  <AbsoluteConstraints x="10" y="250" width="719" height="-1"/>
+                </Constraint>
+              </Constraints>
 
               <Layout>
                 <DimensionLayout dim="0">
@@ -753,91 +715,6 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="jPanel6">
-              <Properties>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                    <TitledBorder title="Informaci&#xf3;n Stock">
-                      <Font PropertyName="font" name="Tahoma" size="11" style="1"/>
-                    </TitledBorder>
-                  </Border>
-                </Property>
-              </Properties>
-
-              <Layout>
-                <DimensionLayout dim="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel24" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel20" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel23" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="jTextField8" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jTextField9" alignment="0" min="-2" pref="80" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                                  <Component id="jTextField10" min="-2" pref="80" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <EmptySpace pref="27" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
-                </DimensionLayout>
-                <DimensionLayout dim="1">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel20" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextField8" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jTextField9" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel23" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jTextField10" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel24" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace pref="28" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
-                </DimensionLayout>
-              </Layout>
-              <SubComponents>
-                <Component class="javax.swing.JLabel" name="jLabel20">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Existencia Minima"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="jLabel23">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Existencia Maxima"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="jLabel24">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Existencia Actual"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JTextField" name="jTextField8">
-                </Component>
-                <Component class="javax.swing.JTextField" name="jTextField9">
-                </Component>
-                <Component class="javax.swing.JTextField" name="jTextField10">
-                </Component>
-              </SubComponents>
-            </Container>
             <Container class="javax.swing.JPanel" name="jPanel7">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -848,33 +725,48 @@
                   </Border>
                 </Property>
               </Properties>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                  <AbsoluteConstraints x="731" y="6" width="260" height="370"/>
+                </Constraint>
+              </Constraints>
 
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jPanel8" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jPanel9" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="jPanel10" max="32767" attributes="0"/>
+                              <Component id="jPanel8" max="32767" attributes="0"/>
+                              <Component id="jPanel9" max="32767" attributes="0"/>
+                          </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jPanel10" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jPanel11" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jPanel11" min="-2" max="-2" attributes="0"/>
+                              <Component id="jPanel16" min="-2" max="-2" attributes="0"/>
+                              <Component id="jPanel17" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="12" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="jPanel11" max="32767" attributes="0"/>
+                              <Component id="jPanel8" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="jPanel8" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jPanel9" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jPanel10" alignment="0" max="32767" attributes="0"/>
-                              </Group>
-                              <Component id="jPanel11" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jPanel9" min="-2" max="-2" attributes="0"/>
+                              <Component id="jPanel16" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="jPanel10" min="-2" max="-2" attributes="0"/>
+                              <Component id="jPanel17" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
@@ -894,12 +786,12 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="100" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="100" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -916,12 +808,12 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="100" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="100" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -943,7 +835,7 @@
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="103" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -970,174 +862,92 @@
                     </DimensionLayout>
                   </Layout>
                 </Container>
-              </SubComponents>
-            </Container>
-            <Container class="javax.swing.JToolBar" name="jToolBar1">
-              <Properties>
-                <Property name="rollover" type="boolean" value="true"/>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
-              </AuxValues>
+                <Container class="javax.swing.JPanel" name="jPanel16">
+                  <Properties>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+                        <EtchetBorder/>
+                      </Border>
+                    </Property>
+                  </Properties>
 
-              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
-              <SubComponents>
-                <Component class="javax.swing.JButton" name="bt_buscar">
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <EmptySpace min="0" pref="100" max="32767" attributes="0"/>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <EmptySpace min="0" pref="100" max="32767" attributes="0"/>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                </Container>
+                <Container class="javax.swing.JPanel" name="jPanel17">
                   <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/images/Search32.png"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+                        <EtchetBorder/>
+                      </Border>
                     </Property>
-                    <Property name="focusable" type="boolean" value="false"/>
-                    <Property name="horizontalTextPosition" type="int" value="0"/>
-                    <Property name="verticalTextPosition" type="int" value="3"/>
                   </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
-                  </AuxValues>
-                </Component>
-                <Component class="javax.swing.JButton" name="bt_agregar">
-                  <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/images/edit_add32.png"/>
-                    </Property>
-                    <Property name="focusable" type="boolean" value="false"/>
-                    <Property name="horizontalTextPosition" type="int" value="0"/>
-                    <Property name="verticalTextPosition" type="int" value="3"/>
-                  </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
-                  </AuxValues>
-                </Component>
-                <Component class="javax.swing.JButton" name="bt_modificar">
-                  <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/images/edit32.png"/>
-                    </Property>
-                    <Property name="focusable" type="boolean" value="false"/>
-                    <Property name="horizontalTextPosition" type="int" value="0"/>
-                    <Property name="verticalTextPosition" type="int" value="3"/>
-                  </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
-                  </AuxValues>
-                </Component>
-                <Component class="javax.swing.JButton" name="bt_guardar">
-                  <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/images/3floppy_unmount32.png"/>
-                    </Property>
-                    <Property name="focusable" type="boolean" value="false"/>
-                    <Property name="horizontalTextPosition" type="int" value="0"/>
-                    <Property name="verticalTextPosition" type="int" value="3"/>
-                  </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
-                  </AuxValues>
-                </Component>
-                <Component class="javax.swing.JButton" name="bt_cancelar">
-                  <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/images/button_cancel32.png"/>
-                    </Property>
-                    <Property name="focusable" type="boolean" value="false"/>
-                    <Property name="horizontalTextPosition" type="int" value="0"/>
-                    <Property name="verticalTextPosition" type="int" value="3"/>
-                  </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
-                  </AuxValues>
-                </Component>
-                <Component class="javax.swing.JButton" name="bt_eliminar">
-                  <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/images/edit_remove32.png"/>
-                    </Property>
-                    <Property name="focusable" type="boolean" value="false"/>
-                    <Property name="horizontalTextPosition" type="int" value="0"/>
-                    <Property name="verticalTextPosition" type="int" value="3"/>
-                  </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
-                  </AuxValues>
-                </Component>
-                <Component class="javax.swing.JButton" name="bt_inicio">
-                  <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/images/2leftarrow32.png"/>
-                    </Property>
-                    <Property name="focusable" type="boolean" value="false"/>
-                    <Property name="horizontalTextPosition" type="int" value="0"/>
-                    <Property name="verticalTextPosition" type="int" value="3"/>
-                  </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
-                  </AuxValues>
-                </Component>
-                <Component class="javax.swing.JButton" name="bt_atras">
-                  <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/images/1leftarrow32.png"/>
-                    </Property>
-                    <Property name="focusable" type="boolean" value="false"/>
-                    <Property name="horizontalTextPosition" type="int" value="0"/>
-                    <Property name="verticalTextPosition" type="int" value="3"/>
-                  </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
-                  </AuxValues>
-                </Component>
-                <Component class="javax.swing.JButton" name="bt_adelante">
-                  <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/images/1rightarrow32.png"/>
-                    </Property>
-                    <Property name="focusable" type="boolean" value="false"/>
-                    <Property name="horizontalTextPosition" type="int" value="0"/>
-                    <Property name="verticalTextPosition" type="int" value="3"/>
-                  </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
-                  </AuxValues>
-                </Component>
-                <Component class="javax.swing.JButton" name="bt_fin">
-                  <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/images/2rightarrow32.png"/>
-                    </Property>
-                    <Property name="focusable" type="boolean" value="false"/>
-                    <Property name="horizontalTextPosition" type="int" value="0"/>
-                    <Property name="verticalTextPosition" type="int" value="3"/>
-                  </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
-                  </AuxValues>
-                </Component>
-                <Component class="javax.swing.JButton" name="bt_salir">
-                  <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/images/kfm_home32.png"/>
-                    </Property>
-                    <Property name="focusable" type="boolean" value="false"/>
-                    <Property name="horizontalTextPosition" type="int" value="0"/>
-                    <Property name="verticalTextPosition" type="int" value="3"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_salirActionPerformed"/>
-                  </Events>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
-                  </AuxValues>
-                </Component>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <EmptySpace min="0" pref="100" max="32767" attributes="0"/>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <EmptySpace min="0" pref="100" max="32767" attributes="0"/>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                </Container>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jPanel13">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Listado de Productos">
+                <Property name="tabTitle" type="java.lang.String" value="Listado de Productos"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                      <Component id="jScrollPane2" min="-2" pref="886" max="-2" attributes="0"/>
+                      <EmptySpace pref="68" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                      <Component id="jScrollPane2" min="-2" pref="343" max="-2" attributes="0"/>
+                      <EmptySpace pref="36" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Container class="javax.swing.JScrollPane" name="jScrollPane2">
               <AuxValues>
                 <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
               </AuxValues>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="jTable1">
+                <Component class="javax.swing.JTable" name="jTable2">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="4" rowCount="4">
@@ -1159,8 +969,8 @@
         <Container class="javax.swing.JPanel" name="jPanel2">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Precios y Costos">
-                <Property name="tabTitle" type="java.lang.String" value="Precios y Costos"/>
+              <JTabbedPaneConstraints tabName="Precios,Costos y Stock">
+                <Property name="tabTitle" type="java.lang.String" value="Precios,Costos y Stock"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -1168,19 +978,23 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                       <Component id="jPanel12" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="853" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                      <Component id="jPanel15" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                      <Component id="jPanel12" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="431" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jPanel15" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="jPanel12" alignment="1" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1323,8 +1137,250 @@
                 </Component>
               </SubComponents>
             </Container>
+            <Container class="javax.swing.JPanel" name="jPanel15">
+              <Properties>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                    <TitledBorder title="Informaci&#xf3;n Stock">
+                      <Font PropertyName="font" name="Tahoma" size="11" style="1"/>
+                    </TitledBorder>
+                  </Border>
+                </Property>
+              </Properties>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel27" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel25" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel26" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="jTextField11" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jTextField12" alignment="0" min="-2" pref="80" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                                  <Component id="jTextField13" min="-2" pref="80" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace pref="237" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel25" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jTextField11" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jTextField12" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel26" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jTextField13" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel27" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="jLabel25">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Existencia Minima"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel26">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Existencia Maxima"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel27">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Existencia Actual"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="jTextField11">
+                </Component>
+                <Component class="javax.swing.JTextField" name="jTextField12">
+                </Component>
+                <Component class="javax.swing.JTextField" name="jTextField13">
+                </Component>
+              </SubComponents>
+            </Container>
           </SubComponents>
         </Container>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JToolBar" name="jToolBar1">
+      <Properties>
+        <Property name="rollover" type="boolean" value="true"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JButton" name="bt_buscar">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/images/Search32.png"/>
+            </Property>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="bt_agregar">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/images/edit_add32.png"/>
+            </Property>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="bt_modificar">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/images/edit32.png"/>
+            </Property>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="bt_guardar">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/images/3floppy_unmount32.png"/>
+            </Property>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="bt_cancelar">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/images/button_cancel32.png"/>
+            </Property>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="bt_eliminar">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/images/edit_remove32.png"/>
+            </Property>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="bt_inicio">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/images/2leftarrow32.png"/>
+            </Property>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="bt_atras">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/images/1leftarrow32.png"/>
+            </Property>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="bt_adelante">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/images/1rightarrow32.png"/>
+            </Property>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="bt_fin">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/images/2rightarrow32.png"/>
+            </Property>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="bt_salir">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/images/kfm_home32.png"/>
+            </Property>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_salirActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>
