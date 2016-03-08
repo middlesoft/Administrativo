@@ -16,6 +16,7 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
      */
     public fr_almacenes() {
         initComponents();
+        this.setTitle("Sucursales");
     }
 
     /**

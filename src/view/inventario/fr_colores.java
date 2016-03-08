@@ -18,6 +18,7 @@ public class fr_colores extends javax.swing.JInternalFrame {
      */
     public fr_colores() {
         initComponents();
+        this.setTitle("Colores");
     }
 
     /**

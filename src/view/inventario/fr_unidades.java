@@ -18,6 +18,7 @@ public class fr_unidades extends javax.swing.JInternalFrame {
      */
     public fr_unidades() {
         initComponents();
+        this.setTitle("Unidades");
     }
 
     /**
