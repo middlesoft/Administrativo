@@ -16,6 +16,7 @@ public class fr_subgrupos extends javax.swing.JInternalFrame {
      */
     public fr_subgrupos() {
         initComponents();
+        this.setTitle("SubGrupos");
     }
 
     /**
@@ -27,17 +28,278 @@ public class fr_subgrupos extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jToolBar2 = new javax.swing.JToolBar();
+        bt_buscar1 = new javax.swing.JButton();
+        bt_agregar1 = new javax.swing.JButton();
+        bt_modificar1 = new javax.swing.JButton();
+        bt_guardar1 = new javax.swing.JButton();
+        bt_cancelar1 = new javax.swing.JButton();
+        bt_eliminar1 = new javax.swing.JButton();
+        bt_inicio1 = new javax.swing.JButton();
+        bt_atras1 = new javax.swing.JButton();
+        bt_adelante1 = new javax.swing.JButton();
+        bt_fin1 = new javax.swing.JButton();
+        bt_salir1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        lbl_grupo = new javax.swing.JLabel();
+        lbl_codigo = new javax.swing.JLabel();
+        lbl_descripcion = new javax.swing.JLabel();
+        cbo_grupo = new javax.swing.JComboBox<>();
+        txt_codigo = new javax.swing.JTextField();
+        txt_descripcion = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        Tabla = new javax.swing.JTable();
+        jToolBar3 = new javax.swing.JToolBar();
+        bt_buscar2 = new javax.swing.JButton();
+        bt_agregar2 = new javax.swing.JButton();
+        bt_modificar2 = new javax.swing.JButton();
+        bt_guardar2 = new javax.swing.JButton();
+        bt_cancelar2 = new javax.swing.JButton();
+        bt_eliminar2 = new javax.swing.JButton();
+        bt_inicio2 = new javax.swing.JButton();
+        bt_atras2 = new javax.swing.JButton();
+        bt_adelante2 = new javax.swing.JButton();
+        bt_fin2 = new javax.swing.JButton();
+        bt_salir2 = new javax.swing.JButton();
+
+        jToolBar2.setFloatable(false);
+        jToolBar2.setRollover(true);
+        jToolBar2.setOpaque(false);
+
+        bt_buscar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Search32.png"))); // NOI18N
+        bt_buscar1.setFocusable(false);
+        bt_buscar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_buscar1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar2.add(bt_buscar1);
+
+        bt_agregar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit_add32.png"))); // NOI18N
+        bt_agregar1.setFocusable(false);
+        bt_agregar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_agregar1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar2.add(bt_agregar1);
+
+        bt_modificar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit32.png"))); // NOI18N
+        bt_modificar1.setFocusable(false);
+        bt_modificar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_modificar1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar2.add(bt_modificar1);
+
+        bt_guardar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/3floppy_unmount32.png"))); // NOI18N
+        bt_guardar1.setFocusable(false);
+        bt_guardar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_guardar1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar2.add(bt_guardar1);
+
+        bt_cancelar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/button_cancel32.png"))); // NOI18N
+        bt_cancelar1.setFocusable(false);
+        bt_cancelar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_cancelar1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar2.add(bt_cancelar1);
+
+        bt_eliminar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit_remove32.png"))); // NOI18N
+        bt_eliminar1.setFocusable(false);
+        bt_eliminar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_eliminar1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar2.add(bt_eliminar1);
+
+        bt_inicio1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/2leftarrow32.png"))); // NOI18N
+        bt_inicio1.setFocusable(false);
+        bt_inicio1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_inicio1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar2.add(bt_inicio1);
+
+        bt_atras1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/1leftarrow32.png"))); // NOI18N
+        bt_atras1.setFocusable(false);
+        bt_atras1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_atras1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar2.add(bt_atras1);
+
+        bt_adelante1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/1rightarrow32.png"))); // NOI18N
+        bt_adelante1.setFocusable(false);
+        bt_adelante1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_adelante1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar2.add(bt_adelante1);
+
+        bt_fin1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/2rightarrow32.png"))); // NOI18N
+        bt_fin1.setFocusable(false);
+        bt_fin1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_fin1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar2.add(bt_fin1);
+
+        bt_salir1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/kfm_home32.png"))); // NOI18N
+        bt_salir1.setFocusable(false);
+        bt_salir1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_salir1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_salir1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_salir1ActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(bt_salir1);
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Informacion SubGrupos"));
+
+        lbl_grupo.setText("Grupo");
+
+        lbl_codigo.setText("Codigo");
+
+        lbl_descripcion.setText("Descripcion");
+
+        cbo_grupo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lbl_descripcion)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbl_codigo)
+                            .addComponent(lbl_grupo))
+                        .addGap(38, 38, 38)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbo_grupo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(154, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_grupo)
+                    .addComponent(cbo_grupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_codigo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_descripcion)
+                    .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(27, Short.MAX_VALUE))
+        );
+
+        Tabla.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(Tabla);
+
+        jToolBar3.setFloatable(false);
+        jToolBar3.setRollover(true);
+        jToolBar3.setOpaque(false);
+
+        bt_buscar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Search32.png"))); // NOI18N
+        bt_buscar2.setFocusable(false);
+        bt_buscar2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_buscar2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar3.add(bt_buscar2);
+
+        bt_agregar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit_add32.png"))); // NOI18N
+        bt_agregar2.setFocusable(false);
+        bt_agregar2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_agregar2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar3.add(bt_agregar2);
+
+        bt_modificar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit32.png"))); // NOI18N
+        bt_modificar2.setFocusable(false);
+        bt_modificar2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_modificar2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar3.add(bt_modificar2);
+
+        bt_guardar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/3floppy_unmount32.png"))); // NOI18N
+        bt_guardar2.setFocusable(false);
+        bt_guardar2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_guardar2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar3.add(bt_guardar2);
+
+        bt_cancelar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/button_cancel32.png"))); // NOI18N
+        bt_cancelar2.setFocusable(false);
+        bt_cancelar2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_cancelar2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar3.add(bt_cancelar2);
+
+        bt_eliminar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit_remove32.png"))); // NOI18N
+        bt_eliminar2.setFocusable(false);
+        bt_eliminar2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_eliminar2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar3.add(bt_eliminar2);
+
+        bt_inicio2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/2leftarrow32.png"))); // NOI18N
+        bt_inicio2.setFocusable(false);
+        bt_inicio2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_inicio2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar3.add(bt_inicio2);
+
+        bt_atras2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/1leftarrow32.png"))); // NOI18N
+        bt_atras2.setFocusable(false);
+        bt_atras2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_atras2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar3.add(bt_atras2);
+
+        bt_adelante2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/1rightarrow32.png"))); // NOI18N
+        bt_adelante2.setFocusable(false);
+        bt_adelante2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_adelante2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar3.add(bt_adelante2);
+
+        bt_fin2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/2rightarrow32.png"))); // NOI18N
+        bt_fin2.setFocusable(false);
+        bt_fin2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_fin2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar3.add(bt_fin2);
+
+        bt_salir2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/kfm_home32.png"))); // NOI18N
+        bt_salir2.setFocusable(false);
+        bt_salir2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_salir2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_salir2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_salir2ActionPerformed(evt);
+            }
+        });
+        jToolBar3.add(bt_salir2);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 644, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 415, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -54,8 +316,51 @@ public class fr_subgrupos extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void bt_salir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_salir1ActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_bt_salir1ActionPerformed
+
+    private void bt_salir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_salir2ActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_bt_salir2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable Tabla;
+    public static javax.swing.JButton bt_adelante1;
+    public static javax.swing.JButton bt_adelante2;
+    public static javax.swing.JButton bt_agregar1;
+    public static javax.swing.JButton bt_agregar2;
+    public static javax.swing.JButton bt_atras1;
+    public static javax.swing.JButton bt_atras2;
+    public static javax.swing.JButton bt_buscar1;
+    public static javax.swing.JButton bt_buscar2;
+    public static javax.swing.JButton bt_cancelar1;
+    public static javax.swing.JButton bt_cancelar2;
+    public static javax.swing.JButton bt_eliminar1;
+    public static javax.swing.JButton bt_eliminar2;
+    public static javax.swing.JButton bt_fin1;
+    public static javax.swing.JButton bt_fin2;
+    public static javax.swing.JButton bt_guardar1;
+    public static javax.swing.JButton bt_guardar2;
+    public static javax.swing.JButton bt_inicio1;
+    public static javax.swing.JButton bt_inicio2;
+    public static javax.swing.JButton bt_modificar1;
+    public static javax.swing.JButton bt_modificar2;
+    public static javax.swing.JButton bt_salir1;
+    public static javax.swing.JButton bt_salir2;
+    private javax.swing.JComboBox<String> cbo_grupo;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    public static javax.swing.JToolBar jToolBar2;
+    public static javax.swing.JToolBar jToolBar3;
+    private javax.swing.JLabel lbl_codigo;
+    private javax.swing.JLabel lbl_descripcion;
+    private javax.swing.JLabel lbl_grupo;
+    private javax.swing.JTextField txt_codigo;
+    private javax.swing.JTextField txt_descripcion;
     // End of variables declaration//GEN-END:variables
 }

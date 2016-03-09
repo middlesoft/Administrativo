@@ -17,6 +17,11 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 import view.inventario.fr_almacenes;
+import view.inventario.fr_departamento;
+import view.inventario.fr_grupos;
+import view.inventario.fr_sucursal;
+import view.inventario.fr_tallas;
+import view.inventario.fr_ubicacion;
 
 /**
  *
@@ -121,6 +126,12 @@ public class fr_ppal extends javax.swing.JFrame implements Runnable {
         Categoria = new javax.swing.JMenuItem();
         SubCategoria = new javax.swing.JMenuItem();
         Almacenes = new javax.swing.JMenuItem();
+        Ubicacion = new javax.swing.JMenuItem();
+        Departamento = new javax.swing.JMenuItem();
+        SubGrupos = new javax.swing.JMenuItem();
+        Sucursal = new javax.swing.JMenuItem();
+        Tallas = new javax.swing.JMenuItem();
+        Grupos = new javax.swing.JMenuItem();
         Reporte_Inv = new javax.swing.JMenu();
         Compras = new javax.swing.JMenu();
         Procesos_CxC = new javax.swing.JMenu();
@@ -210,6 +221,8 @@ public class fr_ppal extends javax.swing.JFrame implements Runnable {
             }
         });
         jToolBar1.add(bt_salir);
+
+        escritorio.setOpaque(false);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/middlesoft.png"))); // NOI18N
 
@@ -348,6 +361,49 @@ public class fr_ppal extends javax.swing.JFrame implements Runnable {
         });
         Tabla_Inv.add(Almacenes);
 
+        Ubicacion.setText("Ubicación");
+        Ubicacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UbicacionActionPerformed(evt);
+            }
+        });
+        Tabla_Inv.add(Ubicacion);
+
+        Departamento.setText("Departamento");
+        Departamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DepartamentoActionPerformed(evt);
+            }
+        });
+        Tabla_Inv.add(Departamento);
+
+        SubGrupos.setText("SubGrupos");
+        Tabla_Inv.add(SubGrupos);
+
+        Sucursal.setText("Sucursal");
+        Sucursal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SucursalActionPerformed(evt);
+            }
+        });
+        Tabla_Inv.add(Sucursal);
+
+        Tallas.setText("Tallas");
+        Tallas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TallasActionPerformed(evt);
+            }
+        });
+        Tabla_Inv.add(Tallas);
+
+        Grupos.setText("Grupos");
+        Grupos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GruposActionPerformed(evt);
+            }
+        });
+        Tabla_Inv.add(Grupos);
+
         Inventario.add(Tabla_Inv);
 
         Reporte_Inv.setText("Reportes");
@@ -475,6 +531,41 @@ public class fr_ppal extends javax.swing.JFrame implements Runnable {
         alm.show();
     }//GEN-LAST:event_AlmacenesActionPerformed
 
+    private void UbicacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UbicacionActionPerformed
+        // TODO add your handling code here:
+        fr_ubicacion ub = new fr_ubicacion();
+        escritorio.add(ub);
+        ub.show();
+    }//GEN-LAST:event_UbicacionActionPerformed
+
+    private void DepartamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DepartamentoActionPerformed
+        // TODO add your handling code here:
+        fr_departamento dp = new fr_departamento();
+        escritorio.add(dp);
+        dp.show();
+    }//GEN-LAST:event_DepartamentoActionPerformed
+
+    private void GruposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GruposActionPerformed
+        // TODO add your handling code here:
+        fr_grupos gp = new fr_grupos();
+        escritorio.add(gp);
+        gp.show();
+    }//GEN-LAST:event_GruposActionPerformed
+
+    private void TallasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TallasActionPerformed
+        // TODO add your handling code here:
+        fr_tallas talla = new fr_tallas();
+        escritorio.add(talla);
+        talla.show();
+    }//GEN-LAST:event_TallasActionPerformed
+
+    private void SucursalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SucursalActionPerformed
+        // TODO add your handling code here:
+        fr_sucursal suc = new fr_sucursal();
+        escritorio.add(suc);
+        suc.show();
+    }//GEN-LAST:event_SucursalActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -519,8 +610,10 @@ public class fr_ppal extends javax.swing.JFrame implements Runnable {
     public static javax.swing.JMenuItem Colores;
     public static javax.swing.JMenu Compras;
     public static javax.swing.JMenu Contabilidad;
+    public static javax.swing.JMenuItem Departamento;
     public static javax.swing.JMenu Edicion;
     public static javax.swing.JMenuItem Entrada_Salida;
+    public static javax.swing.JMenuItem Grupos;
     public static javax.swing.JMenu Inventario;
     public static javax.swing.JMenuBar MenuPrincipal;
     public static javax.swing.JMenu Modulos;
@@ -533,9 +626,13 @@ public class fr_ppal extends javax.swing.JFrame implements Runnable {
     public static javax.swing.JMenuItem Salir;
     public static javax.swing.JMenu Soporte;
     public static javax.swing.JMenuItem SubCategoria;
+    public static javax.swing.JMenuItem SubGrupos;
+    public static javax.swing.JMenuItem Sucursal;
     public static javax.swing.JMenu Tabla_CxC;
     public static javax.swing.JMenu Tabla_CxP;
     public static javax.swing.JMenu Tabla_Inv;
+    public static javax.swing.JMenuItem Tallas;
+    public static javax.swing.JMenuItem Ubicacion;
     public static javax.swing.JMenuItem Unidades;
     public static javax.swing.JMenu Ventas;
     public static javax.swing.JButton bt_adelante;

@@ -229,7 +229,9 @@ public class fr_ubicacion extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(Tabla);
 
+        jToolBar2.setFloatable(false);
         jToolBar2.setRollover(true);
+        jToolBar2.setOpaque(false);
 
         bt_buscar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Search32.png"))); // NOI18N
         bt_buscar1.setFocusable(false);
