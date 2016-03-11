@@ -48,7 +48,7 @@ public class fr_inicio extends javax.swing.JFrame {
         lbl_pass = new javax.swing.JLabel();
         txt_user = new javax.swing.JTextField();
         txt_pass = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        img_logo = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         bt_aceptar = new javax.swing.JButton();
         bt_salir = new javax.swing.JButton();
@@ -63,7 +63,7 @@ public class fr_inicio extends javax.swing.JFrame {
         lbl_pass.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         lbl_pass.setText("Contraseña");
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/middlesoft2.png"))); // NOI18N
+        img_logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/middlesoft2.png"))); // NOI18N
 
         bt_aceptar.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         bt_aceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/apply32.png"))); // NOI18N
@@ -107,7 +107,7 @@ public class fr_inicio extends javax.swing.JFrame {
                 .addGroup(fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(fondoLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(img_logo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(fondoLayout.createSequentialGroup()
                         .addGap(36, 36, 36)
                         .addGroup(fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -127,7 +127,7 @@ public class fr_inicio extends javax.swing.JFrame {
             fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(fondoLayout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(img_logo, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lbl_user)
@@ -217,7 +217,7 @@ public class fr_inicio extends javax.swing.JFrame {
     private javax.swing.JButton bt_aceptar;
     private javax.swing.JButton bt_salir;
     private javax.swing.JPanel fondo;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel img_logo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbl_pass;
     private javax.swing.JLabel lbl_user;

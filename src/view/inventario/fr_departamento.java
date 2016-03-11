@@ -38,8 +38,8 @@ public class fr_departamento extends javax.swing.JInternalFrame {
         txt_codigo = new javax.swing.JTextField();
         txt_descripcion = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        lblcomision_venta = new javax.swing.JLabel();
+        lblcomision_cobro = new javax.swing.JLabel();
         txt_comiven = new javax.swing.JTextField();
         txt_comicob = new javax.swing.JTextField();
         chk_activo = new javax.swing.JCheckBox();
@@ -68,9 +68,9 @@ public class fr_departamento extends javax.swing.JInternalFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Comisión"));
 
-        jLabel6.setText("Venta");
+        lblcomision_venta.setText("Venta");
 
-        jLabel7.setText("Cobro");
+        lblcomision_cobro.setText("Cobro");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -79,8 +79,8 @@ public class fr_departamento extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7)
+                    .addComponent(lblcomision_venta)
+                    .addComponent(lblcomision_cobro)
                     .addComponent(txt_comiven)
                     .addComponent(txt_comicob, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(31, Short.MAX_VALUE))
@@ -89,11 +89,11 @@ public class fr_departamento extends javax.swing.JInternalFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel6)
+                .addComponent(lblcomision_venta)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txt_comiven, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel7)
+                .addComponent(lblcomision_cobro)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txt_comicob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -291,8 +291,6 @@ public class fr_departamento extends javax.swing.JInternalFrame {
     public static javax.swing.JButton bt_salir;
     private javax.swing.JCheckBox chk_activo;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -300,6 +298,8 @@ public class fr_departamento extends javax.swing.JInternalFrame {
     public static javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel lbl_codigo;
     private javax.swing.JLabel lbl_descripcion;
+    private javax.swing.JLabel lblcomision_cobro;
+    private javax.swing.JLabel lblcomision_venta;
     private javax.swing.JTextField txt_codigo;
     private javax.swing.JTextField txt_comicob;
     private javax.swing.JTextField txt_comiven;
