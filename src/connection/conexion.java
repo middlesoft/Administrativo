@@ -5,11 +5,12 @@
  */
 package connection;
 
+
+
+import com.mysql.jdbc.CallableStatement;
 import com.mysql.jdbc.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.CallableStatement;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,6 +29,12 @@ public class conexion {
     protected PreparedStatement consulta;
     protected ResultSet resultado;
     protected int registros;
+    private String  maquina     = "localhost";
+    private String  usuario     = "root";
+    private String  clave       = "";
+    private int puerto          = 3306;
+    private String  servidor    = "";
+    private static Connection conexion  = null;
     
     public void conectar(String sql) {
          Connection conn = null;
@@ -92,7 +99,7 @@ public class conexion {
        String resultado=null;
        try {            
             // se crea instancia a procedimiento, los parametros de entrada y salida se simbolizan con el signo ?
-            CallableStatement proc = conn.prepareCall(" CALL usuario(?,?) ");
+            CallableStatement proc = (CallableStatement) conn.prepareCall(" CALL usuario(?,?) ");
             //se cargan los parametros de entrada
             proc.setString("usuario", usuario);//Tipo String
             proc.setInt("password", password);//Tipo entero
@@ -148,49 +155,5 @@ public class conexion {
         }catch (ClassNotFoundException |SQLException e) {
             JOptionPane.showMessageDialog(null, "No hay Conexion con el Servidor de Base de datos");
             }
-        } 
-   
-   public void acceso_procedure(String txt_user,String txt_pass) throws SQLException{
-        //Connection connMY = null;
-        ResultSet rs = null;
-        try{
-            
-             conexion conn = new conexion();
-             conn.conectar(null);
-             conn.conn.setAutoCommit(false);
-             CallableStatement prcProcedimientoAlmacenado = conn.conn.prepareCall("{call getUsuarios(?,?)}"); 
-             prcProcedimientoAlmacenado.setString("p_usuario", txt_user);
-	     prcProcedimientoAlmacenado.setString("p_passwd", txt_pass);
-
-             rs =  prcProcedimientoAlmacenado.executeQuery();
-     
-            if(rs.next()){      
-                
-                 JOptionPane.showMessageDialog(null, "Usted ha iniciado sesión");
-                 fr_ppal principal = new fr_ppal();
-                 principal.setExtendedState(fr_ppal.MAXIMIZED_BOTH);
-                 principal.show(); 
-                conn.conn.commit();
-                          
-             }
-            
-            else { 
-                
-                 JOptionPane.showMessageDialog(null, "Ingrese su nombre de usuario y contraseña");
-                 
-             }
-                          
-            while(rs.next()) { 
-                System.out.println(rs.getString(1));
-            }          
-        }
-        catch (SQLException e) {
-            
-            
-        } 
-        finally {
-            
-        }
-    }    
-   
+        }   
 }

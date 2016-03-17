@@ -5,6 +5,17 @@
  */
 package view.inventario;
 
+import static view.inventario.fr_colores.bt_adelante;
+import static view.inventario.fr_colores.bt_agregar;
+import static view.inventario.fr_colores.bt_atras;
+import static view.inventario.fr_colores.bt_buscar;
+import static view.inventario.fr_colores.bt_cancelar;
+import static view.inventario.fr_colores.bt_eliminar;
+import static view.inventario.fr_colores.bt_fin;
+import static view.inventario.fr_colores.bt_guardar;
+import static view.inventario.fr_colores.bt_inicio;
+import static view.inventario.fr_colores.bt_modificar;
+
 /**
  *
  * @author Kel
@@ -16,7 +27,41 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
      */
     public fr_almacenes() {
         initComponents();
-        this.setTitle("Sucursales");
+        deshabilitar();
+        this.setTitle("Almacenes");
+    }
+    
+    public void deshabilitar(){
+        txt_codigo.setEnabled(false);
+        txt_descripcion.setEnabled(false);
+        cbo_sucursal.setEnabled(false);
+        bt_buscar.setEnabled(true);
+        bt_eliminar.setEnabled(true);
+        bt_guardar.setEnabled(false);
+        bt_modificar.setEnabled(true);
+        bt_adelante.setEnabled(true);
+        bt_atras.setEnabled(true);
+        bt_fin.setEnabled(true);
+        bt_inicio.setEnabled(true);
+        bt_cancelar.setEnabled(false);
+        bt_agregar.setEnabled(true);
+                
+    }
+    
+    public void habilitar(){
+        txt_codigo.setEnabled(true);
+        txt_descripcion.setEnabled(true);
+        cbo_sucursal.setEnabled(true);
+        bt_buscar.setEnabled(false);
+        bt_eliminar.setEnabled(false);
+        bt_guardar.setEnabled(true);
+        bt_modificar.setEnabled(false);
+        bt_adelante.setEnabled(false);
+        bt_atras.setEnabled(false);
+        bt_fin.setEnabled(false);
+        bt_inicio.setEnabled(false);
+        bt_cancelar.setEnabled(true);
+        bt_agregar.setEnabled(false);
     }
 
     /**
@@ -33,9 +78,9 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        txt_codigo = new javax.swing.JTextField();
+        txt_descripcion = new javax.swing.JTextField();
+        cbo_sucursal = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jToolBar1 = new javax.swing.JToolBar();
@@ -59,7 +104,7 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Sucursal");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbo_sucursal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -73,9 +118,9 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbo_sucursal, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(230, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -84,15 +129,15 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbo_sucursal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
@@ -123,6 +168,11 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
         bt_agregar.setFocusable(false);
         bt_agregar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_agregar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_agregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_agregarActionPerformed(evt);
+            }
+        });
         jToolBar1.add(bt_agregar);
 
         bt_modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit32.png"))); // NOI18N
@@ -141,6 +191,11 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
         bt_cancelar.setFocusable(false);
         bt_cancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_cancelar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_cancelarActionPerformed(evt);
+            }
+        });
         jToolBar1.add(bt_cancelar);
 
         bt_eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit_remove32.png"))); // NOI18N
@@ -182,6 +237,11 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
         bt_salir.setFocusable(false);
         bt_salir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_salir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_salirActionPerformed(evt);
+            }
+        });
         jToolBar1.add(bt_salir);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -231,6 +291,21 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_bt_eliminarActionPerformed
 
+    private void bt_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_agregarActionPerformed
+        // TODO add your handling code here:
+        habilitar();
+    }//GEN-LAST:event_bt_agregarActionPerformed
+
+    private void bt_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelarActionPerformed
+        // TODO add your handling code here:
+        deshabilitar();
+    }//GEN-LAST:event_bt_cancelarActionPerformed
+
+    private void bt_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_salirActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_bt_salirActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JButton bt_adelante;
@@ -244,7 +319,7 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
     public static javax.swing.JButton bt_inicio;
     public static javax.swing.JButton bt_modificar;
     public static javax.swing.JButton bt_salir;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> cbo_sucursal;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -252,8 +327,8 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     public static javax.swing.JToolBar jToolBar1;
+    private javax.swing.JTextField txt_codigo;
+    private javax.swing.JTextField txt_descripcion;
     // End of variables declaration//GEN-END:variables
 }

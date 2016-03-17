@@ -5,6 +5,17 @@
  */
 package view.inventario;
 
+import static view.inventario.fr_colores.bt_adelante;
+import static view.inventario.fr_colores.bt_agregar;
+import static view.inventario.fr_colores.bt_atras;
+import static view.inventario.fr_colores.bt_buscar;
+import static view.inventario.fr_colores.bt_cancelar;
+import static view.inventario.fr_colores.bt_eliminar;
+import static view.inventario.fr_colores.bt_fin;
+import static view.inventario.fr_colores.bt_guardar;
+import static view.inventario.fr_colores.bt_inicio;
+import static view.inventario.fr_colores.bt_modificar;
+
 /**
  *
  * @author Kelvin
@@ -17,6 +28,39 @@ public class fr_subgrupos extends javax.swing.JInternalFrame {
     public fr_subgrupos() {
         initComponents();
         this.setTitle("SubGrupos");
+    }
+    
+     public void deshabilitar(){
+        txt_codigo.setEnabled(false);
+        txt_descripcion.setEnabled(false);
+        cbo_grupo.setEnabled(false);
+        bt_buscar.setEnabled(true);
+        bt_eliminar.setEnabled(true);
+        bt_guardar.setEnabled(false);
+        bt_modificar.setEnabled(true);
+        bt_adelante.setEnabled(true);
+        bt_atras.setEnabled(true);
+        bt_fin.setEnabled(true);
+        bt_inicio.setEnabled(true);
+        bt_cancelar.setEnabled(false);
+        bt_agregar.setEnabled(true);
+                
+    }
+    
+    public void habilitar(){
+        txt_codigo.setEnabled(true);
+        txt_descripcion.setEnabled(true);
+        cbo_grupo.setEnabled(true);
+        bt_buscar.setEnabled(false);
+        bt_eliminar.setEnabled(false);
+        bt_guardar.setEnabled(true);
+        bt_modificar.setEnabled(false);
+        bt_adelante.setEnabled(false);
+        bt_atras.setEnabled(false);
+        bt_fin.setEnabled(false);
+        bt_inicio.setEnabled(false);
+        bt_cancelar.setEnabled(true);
+        bt_agregar.setEnabled(false);
     }
 
     /**
@@ -154,10 +198,10 @@ public class fr_subgrupos extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(lbl_descripcion)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,8 +210,8 @@ public class fr_subgrupos extends javax.swing.JInternalFrame {
                         .addGap(38, 38, 38)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbo_grupo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(154, Short.MAX_VALUE))
+                            .addComponent(cbo_grupo, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -283,12 +327,14 @@ public class fr_subgrupos extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(12, 12, 12)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1))))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
