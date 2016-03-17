@@ -5,8 +5,12 @@
  */
 package view.main;
 
+import connection.conexion;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.jvnet.substance.*;
 /**
@@ -47,11 +51,11 @@ public class fr_inicio extends javax.swing.JFrame {
         lbl_user = new javax.swing.JLabel();
         lbl_pass = new javax.swing.JLabel();
         txt_user = new javax.swing.JTextField();
-        txt_pass = new javax.swing.JTextField();
         img_logo = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         bt_aceptar = new javax.swing.JButton();
         bt_salir = new javax.swing.JButton();
+        txt_pass = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -118,8 +122,8 @@ public class fr_inicio extends javax.swing.JFrame {
                                     .addComponent(lbl_user))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txt_pass)
-                                    .addComponent(txt_user, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(txt_user, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                                    .addComponent(txt_pass))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -132,10 +136,10 @@ public class fr_inicio extends javax.swing.JFrame {
                 .addGroup(fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lbl_user)
                     .addComponent(txt_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(12, 12, 12)
                 .addGroup(fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txt_pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_pass))
+                    .addComponent(lbl_pass)
+                    .addComponent(txt_pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -157,12 +161,8 @@ public class fr_inicio extends javax.swing.JFrame {
 
     private void bt_aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_aceptarActionPerformed
         // TODO add your handling code here:
-        
-            fr_ppal prin = new fr_ppal();
-            prin.show();
-            prin.setExtendedState(fr_ppal.MAXIMIZED_BOTH); // Para mostrer el Formulario Maximizado
-            prin.setVisible(true);
-            dispose();
+        conexion acceso = new conexion();
+        acceso.access(txt_user.getText(),txt_pass.getText());
     }//GEN-LAST:event_bt_aceptarActionPerformed
 
     private void bt_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_salirActionPerformed
@@ -221,7 +221,7 @@ public class fr_inicio extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbl_pass;
     private javax.swing.JLabel lbl_user;
-    private javax.swing.JTextField txt_pass;
+    private javax.swing.JPasswordField txt_pass;
     private javax.swing.JTextField txt_user;
     // End of variables declaration//GEN-END:variables
 }

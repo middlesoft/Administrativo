@@ -5,20 +5,36 @@
  */
 package view.inventario;
 
+ 
+import connection.conexion;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static view.main.fr_ppal.MenuPrincipal;
-
+   
 /**
  *
  * @author Kel
  */
-public class fr_colores extends javax.swing.JInternalFrame {
-
+public class fr_colores extends javax.swing.JInternalFrame {      
+    
+        
     /**
      * Creates new form fr_colores
      */
     public fr_colores() {
         initComponents();
         this.setTitle("Colores");
+        
+    }
+    
+    public static void insertarColores(){
+        
     }
 
     /**
@@ -70,7 +86,7 @@ public class fr_colores extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(163, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -100,6 +116,11 @@ public class fr_colores extends javax.swing.JInternalFrame {
         bt_agregar.setFocusable(false);
         bt_agregar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_agregar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_agregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_agregarActionPerformed(evt);
+            }
+        });
         jToolBar1.add(bt_agregar);
 
         bt_modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit32.png"))); // NOI18N
@@ -112,6 +133,11 @@ public class fr_colores extends javax.swing.JInternalFrame {
         bt_guardar.setFocusable(false);
         bt_guardar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_guardar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_guardarActionPerformed(evt);
+            }
+        });
         jToolBar1.add(bt_guardar);
 
         bt_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/button_cancel32.png"))); // NOI18N
@@ -183,7 +209,7 @@ public class fr_colores extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -206,7 +232,7 @@ public class fr_colores extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 376, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -219,7 +245,19 @@ public class fr_colores extends javax.swing.JInternalFrame {
         MenuPrincipal.setVisible(true);
     }//GEN-LAST:event_bt_salirActionPerformed
 
+    private void bt_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_agregarActionPerformed
+        // TODO add your handling code here:
+        
+        
+        
+    }//GEN-LAST:event_bt_agregarActionPerformed
 
+    private void bt_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_guardarActionPerformed
+        // TODO add your handling code here:
+        insertarColores();
+    }//GEN-LAST:event_bt_guardarActionPerformed
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Tabla;
     public static javax.swing.JButton bt_adelante;

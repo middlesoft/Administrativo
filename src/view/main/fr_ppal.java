@@ -43,6 +43,7 @@ public class fr_ppal extends javax.swing.JFrame implements Runnable {
         jToolBar1.setVisible(false);
         iniciarreloj();
         
+              
         Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/middlesoftlogo.png"));
         setIconImage(icon);
         setVisible(true);

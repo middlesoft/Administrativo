@@ -60,8 +60,8 @@
                                   </Group>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="txt_user" pref="140" max="32767" attributes="0"/>
                                       <Component id="txt_pass" max="32767" attributes="0"/>
-                                      <Component id="txt_user" min="-2" pref="140" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -82,10 +82,10 @@
                       <Component id="lbl_user" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Component id="txt_user" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="txt_pass" min="-2" max="-2" attributes="0"/>
                       <Component id="lbl_pass" min="-2" max="-2" attributes="0"/>
+                      <Component id="txt_pass" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
@@ -112,8 +112,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_user">
-        </Component>
-        <Component class="javax.swing.JTextField" name="txt_pass">
         </Component>
         <Component class="javax.swing.JLabel" name="img_logo">
           <Properties>
@@ -175,6 +173,8 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JPasswordField" name="txt_pass">
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>
