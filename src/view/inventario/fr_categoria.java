@@ -5,6 +5,15 @@
  */
 package view.inventario;
 
+import connection.cargaCombo;
+import connection.correlativo;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.DefaultComboBoxModel;
 import static view.inventario.fr_almacenes.bt_adelante;
 import static view.inventario.fr_almacenes.bt_agregar;
 import static view.inventario.fr_almacenes.bt_atras;
@@ -25,10 +34,101 @@ public class fr_categoria extends javax.swing.JInternalFrame {
     /**
      * Creates new form fr_categoria
      */
-    public fr_categoria() {
+    public fr_categoria() throws SQLException {
         initComponents();
         deshabilitar();
         this.setTitle("Categoria");
+        //correlativo();
+        comboImpuesto();
+        comboConcepto();
+        
+        
+    }
+    
+        public void insertar() throws SQLException{
+        CallableStatement cs = null;
+        Connection conn =  null;
+        ResultSet rs = null;
+        
+        try{
+            
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            //String sql = "INSERT INTO COLORES(codigo, descripcion)VALUES("+txt_codigo+","+txt_descripcion+")"; 
+            String codigo = txt_codigo.getText();
+            String descri = txt_descripcion.getText();
+            String impu = (String) cbo_impuesto.getSelectedItem();
+            String concep = (String) cbo_concepto.getSelectedItem();
+            
+            cs = conn.prepareCall("{call insertSubcategoria(?,?,?,?)}");
+
+            cs.setString(1, codigo);
+            cs.setString(2, descri);
+            cs.setString(3, impu);
+            cs.setString(3, concep);
+            
+            System.out.println("Capturamos la insercion del registro 1: "+codigo);
+            System.out.println("Capturamos la insercion del registro 2: "+descri);
+            System.out.println("Capturamos la insercion del registro 2: "+impu);
+            System.out.println("Capturamos la insercion del registro 2: "+concep);
+            cs.execute();
+            System.out.println("Finaliza el store procedure");
+
+                       
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            close(conn, cs);
+        }
+        
+    }
+    
+    private static void close(Connection conn, Statement cs) throws SQLException {
+		
+		if (cs != null) {
+			cs.close();
+		}
+
+		if (conn != null) {
+			conn.close();
+		}
+	}
+    
+    public void comboImpuesto() throws SQLException {
+        
+        int contar = (int) cbo_impuesto.countComponents();
+
+        String sql = "SELECT CODIGO AS DATO1 FROM IMPUESTO";
+        DefaultComboBoxModel mdl = new DefaultComboBoxModel(cargaCombo.Elementos(sql));
+        this.cbo_impuesto.setModel(mdl);
+        this.cbo_impuesto.addItem("Seleccione...");
+        //System.out.println(mdl);
+        this.cbo_impuesto.setSelectedIndex(1);
+        
+    }
+    
+    public void comboConcepto() throws SQLException {
+        
+        int contar = (int) cbo_concepto.countComponents();
+
+        String sql = "SELECT CODIGO AS DATO1 FROM CONCEPTO";
+        DefaultComboBoxModel mdl = new DefaultComboBoxModel(cargaCombo.Elementos(sql));
+        this.cbo_concepto.setModel(mdl);
+        this.cbo_concepto.addItem("Seleccione...");
+        //System.out.println(mdl);
+        this.cbo_concepto.setSelectedIndex(1);
+        
+    }
+    
+    public void correlativo(){
+        String Consecutivo = null;
+        
+        correlativo codigo = new correlativo();
+        Consecutivo = codigo.numconsecutivo("SELECT CONCAT(REPEAT('0',6-LENGTH(CONVERT(MAX(CODIGO)+1,CHAR(6)))),CONVERT(MAX(CODIGO)+1,CHAR(6))) AS CODIGO FROM CATEGORIA");
+        if (Consecutivo==null) {
+            Consecutivo="000001";
+        }
+              
+        this.txt_codigo.setText(Consecutivo);
     }
     
     public void deshabilitar(){
@@ -86,7 +186,7 @@ public class fr_categoria extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         cbo_concepto = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        Tabla = new javax.swing.JTable();
         jToolBar1 = new javax.swing.JToolBar();
         bt_buscar = new javax.swing.JButton();
         bt_agregar = new javax.swing.JButton();
@@ -159,7 +259,7 @@ public class fr_categoria extends javax.swing.JInternalFrame {
                 .addContainerGap(39, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        Tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -170,7 +270,7 @@ public class fr_categoria extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(Tabla);
 
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
@@ -328,6 +428,7 @@ public class fr_categoria extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable Tabla;
     public static javax.swing.JButton bt_adelante;
     public static javax.swing.JButton bt_agregar;
     public static javax.swing.JButton bt_atras;
@@ -348,7 +449,6 @@ public class fr_categoria extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     public static javax.swing.JToolBar jToolBar1;
     private javax.swing.JTextField txt_codigo;
     private javax.swing.JTextField txt_descripcion;

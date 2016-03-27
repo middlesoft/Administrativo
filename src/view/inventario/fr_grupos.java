@@ -5,6 +5,17 @@
  */
 package view.inventario;
 
+import connection.cargaCombo;
+import connection.correlativo;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import static view.inventario.fr_colores.bt_adelante;
 import static view.inventario.fr_colores.bt_agregar;
 import static view.inventario.fr_colores.bt_atras;
@@ -25,10 +36,82 @@ public class fr_grupos extends javax.swing.JInternalFrame {
     /**
      * Creates new form fr_grupos
      */
-    public fr_grupos() {
+    public fr_grupos() throws SQLException {
         initComponents();
         deshabilitar();
         this.setTitle("Grupos");
+        combo();
+        //correlativo();
+    }
+    
+    public void insertar() throws SQLException{
+        CallableStatement cs = null;
+        Connection conn =  null;
+        ResultSet rs = null;
+        
+        try{
+            
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            //String sql = "INSERT INTO COLORES(codigo, descripcion)VALUES("+txt_codigo+","+txt_descripcion+")"; 
+            String codigo = txt_codigo.getText();
+            String descri = txt_descripcion.getText();
+            String depart = (String) cbo_departament.getSelectedItem();
+            
+            cs = conn.prepareCall("{call insertGrupo(?,?,?)}");
+
+            cs.setString(1, codigo);
+            cs.setString(2, descri);
+            cs.setString(3, depart);
+            
+            System.out.println("Capturamos la insercion del registro 1: "+codigo);
+            System.out.println("Capturamos la insercion del registro 2: "+descri);
+            System.out.println("Capturamos la insercion del registro 2: "+depart);
+            cs.execute();
+            System.out.println("Finaliza el store procedure");
+
+                       
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            close(conn, cs);
+        }
+        
+    }
+    
+    private static void close(Connection conn, Statement cs) throws SQLException {
+		
+		if (cs != null) {
+			cs.close();
+		}
+
+		if (conn != null) {
+			conn.close();
+		}
+	}
+    
+    public void combo() throws SQLException {
+        
+        int contar = (int) cbo_departament.countComponents();
+
+        String sql = "SELECT CODIGO AS DATO1 FROM DEPARTAMENTO";
+        DefaultComboBoxModel mdl = new DefaultComboBoxModel(cargaCombo.Elementos(sql));
+        this.cbo_departament.setModel(mdl);
+        this.cbo_departament.addItem("Seleccione...");
+        //System.out.println(mdl);
+        this.cbo_departament.setSelectedIndex(1);
+        
+    }
+    
+    public void correlativo(){
+        String Consecutivo = null;
+        
+        correlativo codigo = new correlativo();
+        Consecutivo = codigo.numconsecutivo("SELECT CONCAT(REPEAT('0',6-LENGTH(CONVERT(MAX(CODIGO)+1,CHAR(6)))),CONVERT(MAX(CODIGO)+1,CHAR(6))) AS CODIGO FROM GRUPO");
+        if (Consecutivo==null) {
+            Consecutivo="000001";
+        }
+              
+        this.txt_codigo.setText(Consecutivo);
     }
     
     public void deshabilitar(){
@@ -84,17 +167,17 @@ public class fr_grupos extends javax.swing.JInternalFrame {
         txt_descripcion = new javax.swing.JTextField();
         cbo_departament = new javax.swing.JComboBox<>();
         jToolBar2 = new javax.swing.JToolBar();
-        bt_buscar1 = new javax.swing.JButton();
-        bt_agregar1 = new javax.swing.JButton();
-        bt_modificar1 = new javax.swing.JButton();
-        bt_guardar1 = new javax.swing.JButton();
-        bt_cancelar1 = new javax.swing.JButton();
-        bt_eliminar1 = new javax.swing.JButton();
-        bt_inicio1 = new javax.swing.JButton();
-        bt_atras1 = new javax.swing.JButton();
-        bt_adelante1 = new javax.swing.JButton();
-        bt_fin1 = new javax.swing.JButton();
-        bt_salir1 = new javax.swing.JButton();
+        bt_buscar = new javax.swing.JButton();
+        bt_agregar = new javax.swing.JButton();
+        bt_modificar = new javax.swing.JButton();
+        bt_guardar = new javax.swing.JButton();
+        bt_cancelar = new javax.swing.JButton();
+        bt_eliminar = new javax.swing.JButton();
+        bt_inicio = new javax.swing.JButton();
+        bt_atras = new javax.swing.JButton();
+        bt_adelante = new javax.swing.JButton();
+        bt_fin = new javax.swing.JButton();
+        bt_salir = new javax.swing.JButton();
 
         Tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -162,86 +245,91 @@ public class fr_grupos extends javax.swing.JInternalFrame {
         jToolBar2.setRollover(true);
         jToolBar2.setOpaque(false);
 
-        bt_buscar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Search32.png"))); // NOI18N
-        bt_buscar1.setFocusable(false);
-        bt_buscar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        bt_buscar1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar2.add(bt_buscar1);
+        bt_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Search32.png"))); // NOI18N
+        bt_buscar.setFocusable(false);
+        bt_buscar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_buscar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar2.add(bt_buscar);
 
-        bt_agregar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit_add32.png"))); // NOI18N
-        bt_agregar1.setFocusable(false);
-        bt_agregar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        bt_agregar1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        bt_agregar1.addActionListener(new java.awt.event.ActionListener() {
+        bt_agregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit_add32.png"))); // NOI18N
+        bt_agregar.setFocusable(false);
+        bt_agregar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_agregar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_agregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bt_agregar1ActionPerformed(evt);
+                bt_agregarActionPerformed(evt);
             }
         });
-        jToolBar2.add(bt_agregar1);
+        jToolBar2.add(bt_agregar);
 
-        bt_modificar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit32.png"))); // NOI18N
-        bt_modificar1.setFocusable(false);
-        bt_modificar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        bt_modificar1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar2.add(bt_modificar1);
+        bt_modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit32.png"))); // NOI18N
+        bt_modificar.setFocusable(false);
+        bt_modificar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_modificar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar2.add(bt_modificar);
 
-        bt_guardar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/3floppy_unmount32.png"))); // NOI18N
-        bt_guardar1.setFocusable(false);
-        bt_guardar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        bt_guardar1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar2.add(bt_guardar1);
-
-        bt_cancelar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/button_cancel32.png"))); // NOI18N
-        bt_cancelar1.setFocusable(false);
-        bt_cancelar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        bt_cancelar1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        bt_cancelar1.addActionListener(new java.awt.event.ActionListener() {
+        bt_guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/3floppy_unmount32.png"))); // NOI18N
+        bt_guardar.setFocusable(false);
+        bt_guardar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_guardar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_guardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bt_cancelar1ActionPerformed(evt);
+                bt_guardarActionPerformed(evt);
             }
         });
-        jToolBar2.add(bt_cancelar1);
+        jToolBar2.add(bt_guardar);
 
-        bt_eliminar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit_remove32.png"))); // NOI18N
-        bt_eliminar1.setFocusable(false);
-        bt_eliminar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        bt_eliminar1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar2.add(bt_eliminar1);
-
-        bt_inicio1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/2leftarrow32.png"))); // NOI18N
-        bt_inicio1.setFocusable(false);
-        bt_inicio1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        bt_inicio1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar2.add(bt_inicio1);
-
-        bt_atras1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/1leftarrow32.png"))); // NOI18N
-        bt_atras1.setFocusable(false);
-        bt_atras1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        bt_atras1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar2.add(bt_atras1);
-
-        bt_adelante1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/1rightarrow32.png"))); // NOI18N
-        bt_adelante1.setFocusable(false);
-        bt_adelante1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        bt_adelante1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar2.add(bt_adelante1);
-
-        bt_fin1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/2rightarrow32.png"))); // NOI18N
-        bt_fin1.setFocusable(false);
-        bt_fin1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        bt_fin1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar2.add(bt_fin1);
-
-        bt_salir1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/kfm_home32.png"))); // NOI18N
-        bt_salir1.setFocusable(false);
-        bt_salir1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        bt_salir1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        bt_salir1.addActionListener(new java.awt.event.ActionListener() {
+        bt_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/button_cancel32.png"))); // NOI18N
+        bt_cancelar.setFocusable(false);
+        bt_cancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_cancelar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bt_salir1ActionPerformed(evt);
+                bt_cancelarActionPerformed(evt);
             }
         });
-        jToolBar2.add(bt_salir1);
+        jToolBar2.add(bt_cancelar);
+
+        bt_eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit_remove32.png"))); // NOI18N
+        bt_eliminar.setFocusable(false);
+        bt_eliminar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_eliminar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar2.add(bt_eliminar);
+
+        bt_inicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/2leftarrow32.png"))); // NOI18N
+        bt_inicio.setFocusable(false);
+        bt_inicio.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_inicio.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar2.add(bt_inicio);
+
+        bt_atras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/1leftarrow32.png"))); // NOI18N
+        bt_atras.setFocusable(false);
+        bt_atras.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_atras.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar2.add(bt_atras);
+
+        bt_adelante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/1rightarrow32.png"))); // NOI18N
+        bt_adelante.setFocusable(false);
+        bt_adelante.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_adelante.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar2.add(bt_adelante);
+
+        bt_fin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/2rightarrow32.png"))); // NOI18N
+        bt_fin.setFocusable(false);
+        bt_fin.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_fin.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar2.add(bt_fin);
+
+        bt_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/kfm_home32.png"))); // NOI18N
+        bt_salir.setFocusable(false);
+        bt_salir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_salir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_salirActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(bt_salir);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -281,35 +369,45 @@ public class fr_grupos extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bt_salir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_salir1ActionPerformed
+    private void bt_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_salirActionPerformed
         // TODO add your handling code here:
         dispose();
-    }//GEN-LAST:event_bt_salir1ActionPerformed
+    }//GEN-LAST:event_bt_salirActionPerformed
 
-    private void bt_agregar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_agregar1ActionPerformed
+    private void bt_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_agregarActionPerformed
         // TODO add your handling code here:
         habilitar();
-    }//GEN-LAST:event_bt_agregar1ActionPerformed
+    }//GEN-LAST:event_bt_agregarActionPerformed
 
-    private void bt_cancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelar1ActionPerformed
+    private void bt_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelar1ActionPerformed
         // TODO add your handling code here:
         deshabilitar();
     }//GEN-LAST:event_bt_cancelar1ActionPerformed
 
+    private void bt_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_guardarActionPerformed
+        try {
+            // TODO add your handling code here:
+            insertar();
+        } catch (SQLException ex) {
+            Logger.getLogger(fr_grupos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_bt_guardarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Tabla;
-    public static javax.swing.JButton bt_adelante1;
-    public static javax.swing.JButton bt_agregar1;
-    public static javax.swing.JButton bt_atras1;
-    public static javax.swing.JButton bt_buscar1;
-    public static javax.swing.JButton bt_cancelar1;
-    public static javax.swing.JButton bt_eliminar1;
-    public static javax.swing.JButton bt_fin1;
-    public static javax.swing.JButton bt_guardar1;
-    public static javax.swing.JButton bt_inicio1;
-    public static javax.swing.JButton bt_modificar1;
-    public static javax.swing.JButton bt_salir1;
+    public static javax.swing.JButton bt_adelante;
+    public static javax.swing.JButton bt_agregar;
+    public static javax.swing.JButton bt_atras;
+    public static javax.swing.JButton bt_buscar;
+    public static javax.swing.JButton bt_cancelar;
+    public static javax.swing.JButton bt_eliminar;
+    public static javax.swing.JButton bt_fin;
+    public static javax.swing.JButton bt_guardar;
+    public static javax.swing.JButton bt_inicio;
+    public static javax.swing.JButton bt_modificar;
+    public static javax.swing.JButton bt_salir;
     private javax.swing.JComboBox<String> cbo_departament;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

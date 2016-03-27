@@ -5,6 +5,17 @@
  */
 package view.inventario;
 
+import connection.cargaCombo;
+import connection.correlativo;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import static view.inventario.fr_colores.bt_adelante;
 import static view.inventario.fr_colores.bt_agregar;
 import static view.inventario.fr_colores.bt_atras;
@@ -25,10 +36,83 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
     /**
      * Creates new form fr_almacenes
      */
-    public fr_almacenes() {
+    public fr_almacenes() throws SQLException {
         initComponents();
         deshabilitar();
         this.setTitle("Almacenes");
+        //correlativo();
+        combo();
+    }
+    
+    
+    public void insertar() throws SQLException{
+        CallableStatement cs = null;
+        Connection conn =  null;
+        ResultSet rs = null;
+        
+        try{
+            
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            //String sql = "INSERT INTO COLORES(codigo, descripcion)VALUES("+txt_codigo+","+txt_descripcion+")"; 
+            String codigo = txt_codigo.getText();
+            String descri = txt_descripcion.getText();
+            String sucur = (String) cbo_sucursal.getSelectedItem();
+            
+            cs = conn.prepareCall("{call insertSucursal(?,?,?)}");
+
+            cs.setString(1, codigo);
+            cs.setString(2, descri);
+            cs.setString(3, sucur);
+            
+            System.out.println("Capturamos la insercion del registro 1: "+codigo);
+            System.out.println("Capturamos la insercion del registro 2: "+descri);
+            System.out.println("Capturamos la insercion del registro 2: "+sucur);
+            cs.execute();
+            System.out.println("Finaliza el store procedure");
+
+                       
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            close(conn, cs);
+        }
+        
+    }
+    
+    private static void close(Connection conn, Statement cs) throws SQLException {
+		
+		if (cs != null) {
+			cs.close();
+		}
+
+		if (conn != null) {
+			conn.close();
+		}
+	}
+    
+    public void combo() throws SQLException {
+        
+        int contar = (int) cbo_sucursal.countComponents();
+
+        String sql = "SELECT CODIGO AS DATO1 FROM DEPARTAMENTO";
+        DefaultComboBoxModel mdl = new DefaultComboBoxModel(cargaCombo.Elementos(sql));
+        this.cbo_sucursal.setModel(mdl);
+        this.cbo_sucursal.addItem("Seleccione...");
+        //System.out.println(mdl);
+        this.cbo_sucursal.setSelectedIndex(1);
+        
+    }
+    
+    public void correlativo(){
+        String Consecutivo = null;
+        
+        correlativo codigo = new correlativo();
+        Consecutivo = codigo.numconsecutivo("SELECT CONCAT(REPEAT('0',6-LENGTH(CONVERT(MAX(CODIGO)+1,CHAR(6)))),CONVERT(MAX(CODIGO)+1,CHAR(6))) AS CODIGO FROM ALMACEN");
+        if (Consecutivo==null) {
+            Consecutivo="000001";
+        }
+              
+        this.txt_codigo.setText(Consecutivo);
     }
     
     public void deshabilitar(){
@@ -185,6 +269,11 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
         bt_guardar.setFocusable(false);
         bt_guardar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_guardar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_guardarActionPerformed(evt);
+            }
+        });
         jToolBar1.add(bt_guardar);
 
         bt_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/button_cancel32.png"))); // NOI18N
@@ -305,6 +394,15 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_bt_salirActionPerformed
+
+    private void bt_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_guardarActionPerformed
+        try {
+            // TODO add your handling code here:
+            insertar();
+        } catch (SQLException ex) {
+            Logger.getLogger(fr_almacenes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_bt_guardarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

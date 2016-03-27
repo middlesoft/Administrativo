@@ -7,32 +7,102 @@ package view.inventario;
 
  
 import connection.conexion;
+import connection.correlativo;
+import controller.ControlColores;
+import java.awt.event.MouseListener;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Types;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
 import static view.main.fr_ppal.MenuPrincipal;
    
 /**
  *
  * @author Kel
  */
-public class fr_colores extends javax.swing.JInternalFrame {      
-    
+public class fr_colores extends javax.swing.JInternalFrame {
+    public static DefaultTableModel dtm;
+       
         
     /**
      * Creates new form fr_colores
      */
     public fr_colores() {
         initComponents();
-        this.setTitle("Colores");
-        deshabilitar();
+        iniciar();
+    }
+    
+    public void iniciar(){
+         this.setTitle("Colores");
+         deshabilitar();
+         //correlativo();
+    }
+    
+    public void insertar() throws SQLException{
+        CallableStatement cs = null;
+        Connection conn =  null;
+        ResultSet rs = null;
+        
+        try{
+            
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            //String sql = "INSERT INTO COLORES(codigo, descripcion)VALUES("+txt_codigo+","+txt_descripcion+")"; 
+            String codigo = txt_codigo.getText();
+            String descri = txt_descripcion.getText();
+            
+            cs = conn.prepareCall("{call insertColores(?,?)}");
+
+            cs.setString(1, codigo);
+            cs.setString(2, descri);
+            
+            System.out.println("Capturamos la insercion del registro 1: "+codigo);
+            System.out.println("Capturamos la insercion del registro 2: "+descri);
+            cs.execute();
+            System.out.println("Finaliza el store procedure");
+
+                       
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            close(conn, cs);
+        }
         
     }
+    
+        
+    private static void close(Connection conn, Statement cs) throws SQLException {
+		
+		if (cs != null) {
+			cs.close();
+		}
+
+		if (conn != null) {
+			conn.close();
+		}
+	}
+    
+    public void correlativo(){
+        String Consecutivo = null;
+        
+        correlativo codigo = new correlativo();
+        Consecutivo = codigo.numconsecutivo("SELECT CONCAT(REPEAT('0',6-LENGTH(CONVERT(MAX(CODIGO)+1,CHAR(6)))),CONVERT(MAX(CODIGO)+1,CHAR(6))) AS CODIGO FROM COLORES");
+        if (Consecutivo==null) {
+            Consecutivo="000001";
+        }
+              
+        this.txt_codigo.setText(Consecutivo);
+    }
+    
     
     public void deshabilitar(){
         txt_codigo.setEnabled(false);
@@ -160,6 +230,7 @@ public class fr_colores extends javax.swing.JInternalFrame {
         jToolBar1.add(bt_modificar);
 
         bt_guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/3floppy_unmount32.png"))); // NOI18N
+        bt_guardar.setActionCommand("guardar");
         bt_guardar.setFocusable(false);
         bt_guardar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_guardar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -286,7 +357,12 @@ public class fr_colores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_bt_agregarActionPerformed
 
     private void bt_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_guardarActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            insertar();
+        } catch (SQLException ex) {
+            Logger.getLogger(fr_colores.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_bt_guardarActionPerformed
 
     private void bt_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelarActionPerformed
@@ -294,9 +370,31 @@ public class fr_colores extends javax.swing.JInternalFrame {
         deshabilitar();
     }//GEN-LAST:event_bt_cancelarActionPerformed
     
+    public void conectaControlador(  ControlColores c  ){
+ 
+        /*
+        bt_agregar.addActionListener(c);
+        bt_agregar.setActionCommand("agregar");
+        */
+        bt_modificar.addActionListener(c);
+        bt_modificar.setActionCommand("modificar");
+ 
+        bt_guardar.addActionListener(c);
+        bt_guardar.setActionCommand("guardar");
+        
+        bt_eliminar.addActionListener(c);
+        bt_eliminar.setActionCommand("eliminar");
+        
+        bt_cancelar.addActionListener(c);
+        bt_cancelar.setActionCommand("cancelar");
+ 
+        Tabla.addMouseListener((MouseListener) c);
+        //sólo se permite pulsar una fila a la vez.
+        Tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable Tabla;
+    public static javax.swing.JTable Tabla;
     public static javax.swing.JButton bt_adelante;
     public static javax.swing.JButton bt_agregar;
     public static javax.swing.JButton bt_atras;
@@ -314,7 +412,7 @@ public class fr_colores extends javax.swing.JInternalFrame {
     public static javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel lbl_codigo;
     private javax.swing.JLabel lbl_descripcion;
-    private javax.swing.JTextField txt_codigo;
-    private javax.swing.JTextField txt_descripcion;
+    public static javax.swing.JTextField txt_codigo;
+    public static javax.swing.JTextField txt_descripcion;
     // End of variables declaration//GEN-END:variables
 }

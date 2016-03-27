@@ -5,6 +5,25 @@
  */
 package view.inventario;
 
+import connection.correlativo;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import static view.inventario.fr_colores.bt_cancelar;
+import static view.inventario.fr_colores.bt_fin;
+import static view.inventario.fr_grupos.bt_adelante;
+import static view.inventario.fr_grupos.bt_agregar;
+import static view.inventario.fr_grupos.bt_atras;
+import static view.inventario.fr_grupos.bt_buscar;
+import static view.inventario.fr_grupos.bt_eliminar;
+import static view.inventario.fr_grupos.bt_guardar;
+import static view.inventario.fr_grupos.bt_inicio;
+import static view.inventario.fr_grupos.bt_modificar;
 import static view.main.fr_ppal.MenuPrincipal;
 
 /**
@@ -18,7 +37,105 @@ public class fr_departamento extends javax.swing.JInternalFrame {
      */
     public fr_departamento() {
         initComponents();
+        deshabilitar();
+        //correlativo();
         this.setTitle("Departamento");
+    }
+    
+    public void insertar() throws SQLException{
+        CallableStatement cs = null;
+        Connection conn =  null;
+        ResultSet rs = null;
+               
+        try{
+            
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            //String sql = "INSERT INTO COLORES(codigo, descripcion)VALUES("+txt_codigo+","+txt_descripcion+")"; 
+            String codigo = txt_codigo.getText();
+            String descri = txt_descripcion.getText();
+            String comiven = txt_comiven.getText();
+            String comicob = txt_comicob.getText();
+           
+            
+            cs = conn.prepareCall("{call insertDepartament(?,?,?,?)}");
+
+            cs.setString(1, codigo);
+            cs.setString(2, descri);
+            cs.setString(3, comiven);
+            cs.setString(4, comicob);
+            
+            System.out.println("Capturamos la insercion del registro 1: "+codigo);
+            System.out.println("Capturamos la insercion del registro 2: "+descri);
+            System.out.println("Capturamos la insercion del registro 3: "+comiven);
+            System.out.println("Capturamos la insercion del registro 4: "+comicob);
+            cs.execute();
+            System.out.println("Finaliza el store procedure");
+
+                       
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            close(conn, cs);
+        }
+        
+    }
+    
+    private static void close(Connection conn, Statement cs) throws SQLException {
+		
+		if (cs != null) {
+			cs.close();
+		}
+
+		if (conn != null) {
+			conn.close();
+		}
+	}
+    
+    public void correlativo(){
+        String Consecutivo = null;
+        
+        correlativo codigo = new correlativo();
+        Consecutivo = codigo.numconsecutivo("SELECT CONCAT(REPEAT('0',6-LENGTH(CONVERT(MAX(CODIGO)+1,CHAR(6)))),CONVERT(MAX(CODIGO)+1,CHAR(6))) AS CODIGO FROM DEPARTAMENTO");
+        if (Consecutivo==null) {
+            Consecutivo="000001";
+        }
+              
+        this.txt_codigo.setText(Consecutivo);
+    }
+    
+    public void deshabilitar(){
+        txt_codigo.setEnabled(false);
+        txt_descripcion.setEnabled(false);
+        txt_comiven.setEnabled(false);
+        txt_comiven.setEnabled(false);
+        bt_buscar.setEnabled(true);
+        bt_eliminar.setEnabled(true);
+        bt_guardar.setEnabled(false);
+        bt_modificar.setEnabled(true);
+        bt_adelante.setEnabled(true);
+        bt_atras.setEnabled(true);
+        bt_fin.setEnabled(true);
+        bt_inicio.setEnabled(true);
+        bt_cancelar.setEnabled(false);
+        bt_agregar.setEnabled(true);
+                
+    }
+    
+    public void habilitar(){
+        txt_codigo.setEnabled(true);
+        txt_descripcion.setEnabled(true);
+        txt_comiven.setEnabled(true);
+        txt_comiven.setEnabled(true);
+        bt_buscar.setEnabled(false);
+        bt_eliminar.setEnabled(false);
+        bt_guardar.setEnabled(true);
+        bt_modificar.setEnabled(false);
+        bt_adelante.setEnabled(false);
+        bt_atras.setEnabled(false);
+        bt_fin.setEnabled(false);
+        bt_inicio.setEnabled(false);
+        bt_cancelar.setEnabled(true);
+        bt_agregar.setEnabled(false);
     }
 
     /**
@@ -168,6 +285,11 @@ public class fr_departamento extends javax.swing.JInternalFrame {
         bt_agregar.setFocusable(false);
         bt_agregar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_agregar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_agregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_agregarActionPerformed(evt);
+            }
+        });
         jToolBar1.add(bt_agregar);
 
         bt_modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit32.png"))); // NOI18N
@@ -180,12 +302,22 @@ public class fr_departamento extends javax.swing.JInternalFrame {
         bt_guardar.setFocusable(false);
         bt_guardar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_guardar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_guardarActionPerformed(evt);
+            }
+        });
         jToolBar1.add(bt_guardar);
 
         bt_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/button_cancel32.png"))); // NOI18N
         bt_cancelar.setFocusable(false);
         bt_cancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_cancelar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_cancelarActionPerformed(evt);
+            }
+        });
         jToolBar1.add(bt_cancelar);
 
         bt_eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit_remove32.png"))); // NOI18N
@@ -274,6 +406,25 @@ public class fr_departamento extends javax.swing.JInternalFrame {
         MenuPrincipal.setEnabled(true);
         MenuPrincipal.setVisible(true);
     }//GEN-LAST:event_bt_salirActionPerformed
+
+    private void bt_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_guardarActionPerformed
+        try {
+            // TODO add your handling code here:
+            insertar();
+        } catch (SQLException ex) {
+            Logger.getLogger(fr_departamento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_bt_guardarActionPerformed
+
+    private void bt_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_agregarActionPerformed
+        // TODO add your handling code here:
+        habilitar();
+    }//GEN-LAST:event_bt_agregarActionPerformed
+
+    private void bt_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelarActionPerformed
+        // TODO add your handling code here:
+        deshabilitar();
+    }//GEN-LAST:event_bt_cancelarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

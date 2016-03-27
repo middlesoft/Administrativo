@@ -186,7 +186,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                                  <Component id="jPanel19" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jPanel19" min="-2" pref="689" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
@@ -236,8 +236,8 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="lbl_subcategoria" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lbl_categoria" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="lbl_color" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lbl_categoria" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
@@ -260,58 +260,61 @@
                                                   <Component id="cbo_subcategoria" alignment="0" pref="180" max="32767" attributes="0"/>
                                                   <Component id="cbo_categoria" alignment="0" max="32767" attributes="0"/>
                                               </Group>
+                                              <EmptySpace max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Group type="102" attributes="0">
-                                                      <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
-                                                      <Component id="txt_garantia" min="-2" pref="80" max="-2" attributes="0"/>
-                                                      <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
-                                                      <Component id="lbl_unidad" min="-2" max="-2" attributes="0"/>
+                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Component id="lbl_garantia" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                          <Component id="lbl_peso" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      </Group>
+                                                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Group type="102" attributes="0">
+                                                              <Component id="txt_garantia" min="-2" pref="80" max="-2" attributes="0"/>
+                                                              <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
+                                                              <Component id="lbl_unidad" min="-2" max="-2" attributes="0"/>
+                                                          </Group>
+                                                          <Component id="txt_peso" min="-2" pref="80" max="-2" attributes="0"/>
+                                                      </Group>
                                                   </Group>
-                                                  <Group type="102" alignment="0" attributes="0">
+                                                  <Group type="102" attributes="0">
+                                                      <Component id="lbl_refencia" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
-                                                      <Component id="lbl_peso" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="txt_referencia" min="-2" pref="181" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
                                           </Group>
                                       </Group>
                                   </Group>
-                                  <Group type="102" alignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="lbl_descripcion" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="lbl_codigo" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lbl_modelo" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <Component id="txt_codigo" min="-2" pref="80" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
-                                              <Component id="lbl_tipo" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="4" pref="4" max="-2" attributes="0"/>
-                                              <Component id="cbo_tipo" min="-2" pref="130" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                                              <Component id="lbl_fecha" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="cfecha" min="-2" pref="155" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Component id="txt_descripcion" min="-2" pref="570" max="-2" attributes="0"/>
-                                          <Component id="txt_modelo" alignment="0" min="-2" pref="174" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="lbl_modelo" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="230" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="lbl_garantia" min="-2" max="-2" attributes="0"/>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="lbl_refencia" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="txt_peso" min="-2" pref="80" max="-2" attributes="0"/>
-                                                  <Component id="txt_referencia" min="-2" pref="181" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace pref="85" max="32767" attributes="0"/>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <EmptySpace pref="571" max="32767" attributes="0"/>
                                               <Component id="jCheckBox2" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Group type="102" attributes="0">
+                                                      <Component id="txt_codigo" min="-2" pref="80" max="-2" attributes="0"/>
+                                                      <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
+                                                      <Component id="lbl_tipo" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace min="4" pref="4" max="-2" attributes="0"/>
+                                                      <Component id="cbo_tipo" min="-2" pref="130" max="-2" attributes="0"/>
+                                                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                                                      <Component id="lbl_fecha" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                                      <Component id="cfecha" min="-2" pref="155" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <Component id="txt_descripcion" min="-2" pref="570" max="-2" attributes="0"/>
+                                                  <Component id="txt_modelo" alignment="0" min="-2" pref="174" max="-2" attributes="0"/>
+                                              </Group>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -350,15 +353,13 @@
                                       <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" attributes="0">
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="lbl_modelo" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                                      <Component id="txt_referencia" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="lbl_refencia" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="txt_modelo" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
+                                              <Group type="103" groupAlignment="3" attributes="0">
+                                                  <Component id="txt_referencia" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="lbl_refencia" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="txt_modelo" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="lbl_modelo" alignment="3" min="-2" max="-2" attributes="0"/>
                                               </Group>
-                                              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
                                               <Component id="lbl_categoria" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" attributes="0">

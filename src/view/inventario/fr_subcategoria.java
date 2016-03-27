@@ -5,6 +5,7 @@
  */
 package view.inventario;
 
+import connection.cargaCombo;
 import connection.correlativo;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -14,34 +15,32 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static view.inventario.fr_colores.bt_adelante;
-import static view.inventario.fr_colores.bt_agregar;
-import static view.inventario.fr_colores.bt_atras;
-import static view.inventario.fr_colores.bt_buscar;
-import static view.inventario.fr_colores.bt_cancelar;
-import static view.inventario.fr_colores.bt_eliminar;
-import static view.inventario.fr_colores.bt_fin;
-import static view.inventario.fr_colores.bt_guardar;
-import static view.inventario.fr_colores.bt_inicio;
-import static view.inventario.fr_colores.bt_modificar;
-import static view.inventario.fr_colores.txt_codigo;
-import static view.inventario.fr_colores.txt_descripcion;
-import static view.main.fr_ppal.MenuPrincipal;
+import javax.swing.DefaultComboBoxModel;
+import static view.inventario.fr_categoria.bt_adelante;
+import static view.inventario.fr_categoria.bt_agregar;
+import static view.inventario.fr_categoria.bt_atras;
+import static view.inventario.fr_categoria.bt_buscar;
+import static view.inventario.fr_categoria.bt_cancelar;
+import static view.inventario.fr_categoria.bt_eliminar;
+import static view.inventario.fr_categoria.bt_fin;
+import static view.inventario.fr_categoria.bt_guardar;
+import static view.inventario.fr_categoria.bt_inicio;
+import static view.inventario.fr_categoria.bt_modificar;
 
 /**
  *
- * @author Kelvin
+ * @author Kel
  */
-public class fr_sucursal extends javax.swing.JInternalFrame {
+public class fr_subcategoria extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form fr_sucursal
+     * Creates new form fr_subcategoria
      */
-    public fr_sucursal() {
+    public fr_subcategoria() throws SQLException {
         initComponents();
-        deshabilitar();
-        this.setTitle("Sucursal");
         //correlativo();
+        combo();
+        deshabilitar();
     }
     
     public void insertar() throws SQLException{
@@ -55,14 +54,17 @@ public class fr_sucursal extends javax.swing.JInternalFrame {
             //String sql = "INSERT INTO COLORES(codigo, descripcion)VALUES("+txt_codigo+","+txt_descripcion+")"; 
             String codigo = txt_codigo.getText();
             String descri = txt_descripcion.getText();
+            String categ = (String) cbo_categoria.getSelectedItem();
             
-            cs = conn.prepareCall("{call insertColores(?,?)}");
+            cs = conn.prepareCall("{call insertSubcategoria(?,?,?)}");
 
             cs.setString(1, codigo);
             cs.setString(2, descri);
+            cs.setString(3, categ);
             
             System.out.println("Capturamos la insercion del registro 1: "+codigo);
             System.out.println("Capturamos la insercion del registro 2: "+descri);
+            System.out.println("Capturamos la insercion del registro 2: "+categ);
             cs.execute();
             System.out.println("Finaliza el store procedure");
 
@@ -86,11 +88,24 @@ public class fr_sucursal extends javax.swing.JInternalFrame {
 		}
 	}
     
+    public void combo() throws SQLException {
+        
+        int contar = (int) cbo_categoria.countComponents();
+
+        String sql = "SELECT CODIGO AS DATO1 FROM CATEGORIA";
+        DefaultComboBoxModel mdl = new DefaultComboBoxModel(cargaCombo.Elementos(sql));
+        this.cbo_categoria.setModel(mdl);
+        this.cbo_categoria.addItem("Seleccione...");
+        //System.out.println(mdl);
+        this.cbo_categoria.setSelectedIndex(1);
+        
+    }
+    
     public void correlativo(){
         String Consecutivo = null;
         
         correlativo codigo = new correlativo();
-        Consecutivo = codigo.numconsecutivo("SELECT CONCAT(REPEAT('0',6-LENGTH(CONVERT(MAX(CODIGO)+1,CHAR(6)))),CONVERT(MAX(CODIGO)+1,CHAR(6))) AS CODIGO FROM SUCURSAL");
+        Consecutivo = codigo.numconsecutivo("SELECT CONCAT(REPEAT('0',6-LENGTH(CONVERT(MAX(CODIGO)+1,CHAR(6)))),CONVERT(MAX(CODIGO)+1,CHAR(6))) AS CODIGO FROM SUBCATEGORIA");   
         if (Consecutivo==null) {
             Consecutivo="000001";
         }
@@ -98,9 +113,10 @@ public class fr_sucursal extends javax.swing.JInternalFrame {
         this.txt_codigo.setText(Consecutivo);
     }
     
-    public void deshabilitar(){
+     public void deshabilitar(){
         txt_codigo.setEnabled(false);
         txt_descripcion.setEnabled(false);
+        cbo_categoria.setEnabled(false);
         bt_buscar.setEnabled(true);
         bt_eliminar.setEnabled(true);
         bt_guardar.setEnabled(false);
@@ -117,6 +133,7 @@ public class fr_sucursal extends javax.swing.JInternalFrame {
     public void habilitar(){
         txt_codigo.setEnabled(true);
         txt_descripcion.setEnabled(true);
+        cbo_categoria.setEnabled(true);
         bt_buscar.setEnabled(false);
         bt_eliminar.setEnabled(false);
         bt_guardar.setEnabled(true);
@@ -138,14 +155,9 @@ public class fr_sucursal extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        lbl_codigo = new javax.swing.JLabel();
-        lbl_descripcion = new javax.swing.JLabel();
-        txt_codigo = new javax.swing.JTextField();
-        txt_descripcion = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        Tabla = new javax.swing.JTable();
         jToolBar1 = new javax.swing.JToolBar();
         bt_buscar = new javax.swing.JButton();
         bt_agregar = new javax.swing.JButton();
@@ -158,58 +170,20 @@ public class fr_sucursal extends javax.swing.JInternalFrame {
         bt_adelante = new javax.swing.JButton();
         bt_fin = new javax.swing.JButton();
         bt_salir = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        Tabla = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        txt_codigo = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        txt_descripcion = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        cbo_categoria = new javax.swing.JComboBox<>();
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Informacion Sucursal"));
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane2.setViewportView(jTextArea1);
 
-        lbl_codigo.setText("Codigo");
-
-        lbl_descripcion.setText("Descripciòn");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lbl_descripcion)
-                        .addGap(18, 18, 18)
-                        .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lbl_codigo)
-                        .addGap(38, 38, 38)
-                        .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_codigo)
-                    .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_descripcion)
-                    .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
-        );
-
-        Tabla.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "Codigo", "Descripcion"
-            }
-        ));
-        jScrollPane1.setViewportView(Tabla);
-
-        jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
         jToolBar1.setOpaque(false);
 
@@ -299,35 +273,97 @@ public class fr_sucursal extends javax.swing.JInternalFrame {
         });
         jToolBar1.add(bt_salir);
 
+        Tabla.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(Tabla);
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Información SubCategoria"));
+
+        jLabel1.setText("Codigo");
+
+        jLabel2.setText("Descripción");
+
+        jLabel3.setText("Categoria");
+
+        cbo_categoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbo_categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(193, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(cbo_categoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(28, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -336,13 +372,6 @@ public class fr_sucursal extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void bt_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_salirActionPerformed
-        // TODO add your handling code here:
-        dispose();
-        MenuPrincipal.setEnabled(true);
-        MenuPrincipal.setVisible(true);
-    }//GEN-LAST:event_bt_salirActionPerformed
 
     private void bt_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_agregarActionPerformed
         // TODO add your handling code here:
@@ -359,9 +388,14 @@ public class fr_sucursal extends javax.swing.JInternalFrame {
             // TODO add your handling code here:
             insertar();
         } catch (SQLException ex) {
-            Logger.getLogger(fr_sucursal.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(fr_subcategoria.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_bt_guardarActionPerformed
+
+    private void bt_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_salirActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_bt_salirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -377,12 +411,16 @@ public class fr_sucursal extends javax.swing.JInternalFrame {
     public static javax.swing.JButton bt_inicio;
     public static javax.swing.JButton bt_modificar;
     public static javax.swing.JButton bt_salir;
+    private javax.swing.JComboBox<String> cbo_categoria;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jTextArea1;
     public static javax.swing.JToolBar jToolBar1;
-    private javax.swing.JLabel lbl_codigo;
-    private javax.swing.JLabel lbl_descripcion;
     private javax.swing.JTextField txt_codigo;
     private javax.swing.JTextField txt_descripcion;
     // End of variables declaration//GEN-END:variables

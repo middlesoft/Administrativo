@@ -5,6 +5,7 @@
  */
 package view.main;
 
+import controller.ControlColores;
 import view.inventario.fr_colores;
 import view.inventario.fr_productos;
 import view.inventario.fr_categoria;
@@ -12,9 +13,12 @@ import view.inventario.fr_unidades;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import view.inventario.fr_almacenes;
 import view.inventario.fr_departamento;
@@ -519,17 +523,25 @@ public class fr_ppal extends javax.swing.JFrame implements Runnable {
     }//GEN-LAST:event_ColoresActionPerformed
 
     private void CategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CategoriaActionPerformed
-        // TODO add your handling code here:
-        fr_categoria cat = new fr_categoria();
-        escritorio.add(cat);
-        cat.show();
+        try {
+            // TODO add your handling code here:
+            fr_categoria cat = new fr_categoria();
+            escritorio.add(cat);
+            cat.show();
+        } catch (SQLException ex) {
+            Logger.getLogger(fr_ppal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_CategoriaActionPerformed
 
     private void AlmacenesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlmacenesActionPerformed
-        // TODO add your handling code here:
-        fr_almacenes alm = new fr_almacenes();
-        escritorio.add(alm);
-        alm.show();
+        try {
+            // TODO add your handling code here:
+            fr_almacenes alm = new fr_almacenes();
+            escritorio.add(alm);
+            alm.show();
+        } catch (SQLException ex) {
+            Logger.getLogger(fr_ppal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_AlmacenesActionPerformed
 
     private void UbicacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UbicacionActionPerformed
@@ -548,9 +560,16 @@ public class fr_ppal extends javax.swing.JFrame implements Runnable {
 
     private void GruposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GruposActionPerformed
         // TODO add your handling code here:
-        fr_grupos gp = new fr_grupos();
-        escritorio.add(gp);
-        gp.show();
+        fr_grupos gp;
+        try {
+            gp = new fr_grupos();
+            escritorio.add(gp);
+            gp.show();
+        } catch (SQLException ex) {
+            Logger.getLogger(fr_ppal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
+       
     }//GEN-LAST:event_GruposActionPerformed
 
     private void TallasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TallasActionPerformed
@@ -598,6 +617,9 @@ public class fr_ppal extends javax.swing.JFrame implements Runnable {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new fr_ppal().setVisible(true);
+                
+                
+                
             }
         });
     }

@@ -5,6 +5,7 @@
  */
 package view.inventario;
 
+import connection.correlativo;
 import static view.inventario.fr_colores.bt_adelante;
 import static view.inventario.fr_colores.bt_agregar;
 import static view.inventario.fr_colores.bt_atras;
@@ -30,6 +31,19 @@ public class fr_ubicacion extends javax.swing.JInternalFrame {
         initComponents();
         deshabilitar();
         this.setTitle("Ubicación Fisica");
+        //correlativo();
+    }
+    
+    public void correlativo(){
+        String Consecutivo = null;
+        
+        correlativo codigo = new correlativo();
+        Consecutivo = codigo.numconsecutivo("SELECT CONCAT(REPEAT('0',6-LENGTH(CONVERT(MAX(CODIGO)+1,CHAR(6)))),CONVERT(MAX(CODIGO)+1,CHAR(6))) AS CODIGO FROM UBICACION");
+        if (Consecutivo==null) {
+            Consecutivo="000001";
+        }
+              
+        this.txt_codigo.setText(Consecutivo);
     }
     
     public void deshabilitar(){

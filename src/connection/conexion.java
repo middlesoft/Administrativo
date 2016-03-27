@@ -40,7 +40,7 @@ public class conexion {
          Connection conn = null;
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            this.conn = (Connection) DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            conexion = (Connection) DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
         }
         catch (ClassNotFoundException |SQLException e) {
             JOptionPane.showMessageDialog(null, "No hay Conexion con el Servidor de Base de datos");
@@ -53,7 +53,7 @@ public class conexion {
 }
     
     public void desconectar() throws SQLException {
-        this.conn.close();
+       conexion.close();
     }
     
      public int Count_Reg (String Sql) {
@@ -133,14 +133,11 @@ public class conexion {
             consulta=(Statement) Conn.createStatement();
             rs = consulta.executeQuery(sql);
      
-            if(rs.next()){      
-                
+            if(rs.next()){
                  JOptionPane.showMessageDialog(null, "Usted ha iniciado sesión");
                  fr_ppal principal = new fr_ppal();
                  principal.setExtendedState(fr_ppal.MAXIMIZED_BOTH);
-                 principal.show(); 
-                
-                          
+                 principal.show();          
              }
             
             else { 
@@ -155,5 +152,10 @@ public class conexion {
         }catch (ClassNotFoundException |SQLException e) {
             JOptionPane.showMessageDialog(null, "No hay Conexion con el Servidor de Base de datos");
             }
-        }   
+        }  
+   
+   //Devuelve el objeto Connection que se usará en la clase Controller
+    public static Connection getConexion() {
+        return conexion;
+    }
 }
