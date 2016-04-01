@@ -40,6 +40,9 @@ public class fr_colores extends javax.swing.JInternalFrame {
     private int i;
     public String [] columnas;
     public String [] filas;
+    CallableStatement cs = null;
+    Connection conn =  null;
+    ResultSet rs = null;
          
     /**
      * Creates new form fr_colores
@@ -172,7 +175,7 @@ public class fr_colores extends javax.swing.JInternalFrame {
     }
     
     public void modificar() throws SQLException{
-         CallableStatement cs = null;
+        CallableStatement cs = null;
         Connection conn =  null;
         ResultSet rs = null;
         modifico = true;
@@ -185,11 +188,8 @@ public class fr_colores extends javax.swing.JInternalFrame {
             cs = conn.prepareCall("{call updatColores(?,?)}");
 
             cs.setString(1, codigo);
-            cs.setString(2, descri);
-            
-            cs.execute();
-            System.out.println("Finaliza el store procedure");
-            
+            cs.setString(2, descri);           
+            cs.execute();            
             
             if(modifico==true){
                 JOptionPane.showMessageDialog(null, "Su Registro fue modificado exitosamente");
@@ -233,37 +233,27 @@ public class fr_colores extends javax.swing.JInternalFrame {
     }
     
     public void buscar(){
-         CallableStatement cs = null;
+        CallableStatement cs = null;
         Connection conn =  null;
         ResultSet rs = null;
         String cod, des;
-        
         try{
             conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
             DefaultTableModel dtm = new DefaultTableModel(null,columnas);
             
             String codigo = txt_buscar.getText();
-            //String descri = txt_descripcion.getText();
-            
-            cs = conn.prepareCall("{call findColores(?,?,?)}");
-            
+            cs = conn.prepareCall("{call findColores(?,?,?)}");            
             cs.setString(1, codigo);
-            
             rs = cs.executeQuery();
-            
-
+           
             while(rs.next()){
                  cod = rs.getString("CODIGO");
                  des = rs.getString("DESCRIPCION");
                  txt_codigo.setText(cod);
-                 txt_descripcion.setText(des);
-                 
-                 
-            }   
-            
+                 txt_descripcion.setText(des); 
+            }
             buscar=false;
-            habilitarBuscar();
-               
+            habilitarBuscar();     
         }catch(Exception e){
             System.out.println("Error al buscar registro Metodo buscar"+e);
         }       
@@ -271,14 +261,14 @@ public class fr_colores extends javax.swing.JInternalFrame {
        
     private static void close(Connection conn, Statement cs) throws SQLException {
 		
-		if (cs != null) {
-			cs.close();
-		}
+        if (cs != null) {
+                cs.close();
+        }
 
-		if (conn != null) {
-			conn.close();
-		}
-	}
+        if (conn != null) {
+                conn.close();
+        }
+    }
     
     public void correlativo(){
         String Consecutivo = null;
@@ -297,8 +287,7 @@ public class fr_colores extends javax.swing.JInternalFrame {
         txt_descripcion.setText("");
         setearText();
     }
-    
-    
+      
     public void deshabilitar() throws SQLException{
         txt_codigo.setEnabled(false);
         txt_descripcion.setEnabled(false);
@@ -346,8 +335,6 @@ public class fr_colores extends javax.swing.JInternalFrame {
         }
     }
     
-    
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -532,6 +519,11 @@ public class fr_colores extends javax.swing.JInternalFrame {
         bt_inicio.setFocusable(false);
         bt_inicio.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_inicio.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_inicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_inicioActionPerformed(evt);
+            }
+        });
         jToolBar1.add(bt_inicio);
 
         bt_atras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/1leftarrow32.png"))); // NOI18N
@@ -560,6 +552,11 @@ public class fr_colores extends javax.swing.JInternalFrame {
         bt_fin.setFocusable(false);
         bt_fin.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_fin.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_fin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_finActionPerformed(evt);
+            }
+        });
         jToolBar1.add(bt_fin);
 
         bt_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/kfm_home32.png"))); // NOI18N
@@ -648,27 +645,25 @@ public class fr_colores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_bt_agregarActionPerformed
 
     private void bt_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_guardarActionPerformed
-       
             // TODO add your handling code here:
         if(txt_codigo.getText().equals("")||txt_descripcion.getText().equals("")){
             JOptionPane.showMessageDialog(null, "Los campos no pueden estar en blanco");
-        
         }else{
-             try {
-                if(agrego==true){
-                 insertar();
-                }else{
-                 modificar();
-                }
-             } catch (SQLException ex) {
-                 Logger.getLogger(fr_colores.class.getName()).log(Level.SEVERE, null, ex);
-             }
+            try {
+               if(agrego==true){
+                insertar();
+               }else{
+                modificar();
+               }
+            } catch (SQLException ex) {
+                Logger.getLogger(fr_colores.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_bt_guardarActionPerformed
 
     private void bt_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelarActionPerformed
-        try {
-            // TODO add your handling code here:
+        // TODO add your handling code here:
+        try {           
             cancelar=true; agrego=false; modifico=false; eliminar=false;
             deshabilitar();
         } catch (SQLException ex) {
@@ -683,9 +678,7 @@ public class fr_colores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_bt_modificarActionPerformed
 
     private void TablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaMouseClicked
-        // TODO add your handling code here:
-        
-        
+        // TODO add your handling code here:  
     }//GEN-LAST:event_TablaMouseClicked
 
     private void bt_adelanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_adelanteActionPerformed
@@ -693,45 +686,43 @@ public class fr_colores extends javax.swing.JInternalFrame {
         CallableStatement cs = null;
         Connection conn =  null;
         ResultSet rs = null;
-        String cod, des;
-        
         try{
             conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
             cs = conn.prepareCall("{call getColores(?,?)}");
             rs = cs.executeQuery();
             
-            if(rs.isLast()==false){
+            if(rs.isLast()){
+                 JOptionPane.showMessageDialog(null, "Registro Final");
+            }else{
                 rs.next();
-                 txt_codigo.setText(rs.getString(1));
-                 txt_descripcion.setText(rs.getString(2));
+                txt_codigo.setText(rs.getString(1));
+                txt_descripcion.setText(rs.getString(2));
             }   
         }catch(Exception e){
-            
             System.out.println("Error en Metodo Adelante"+e);
         }       
     }//GEN-LAST:event_bt_adelanteActionPerformed
 
     private void bt_atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_atrasActionPerformed
         // TODO add your handling code here:
-        // TODO add your handling code here:
         CallableStatement cs = null;
         Connection conn =  null;
         ResultSet rs = null;
-        String cod, des;
-        
         try{
             conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
             cs = conn.prepareCall("{call getColores(?,?)}");
             rs = cs.executeQuery();
             
-            if(rs.isFirst()==false){
+            if(rs.isFirst()){
+                 JOptionPane.showMessageDialog(null, "Registro Inicial");
+            }else{
                 rs.previous();
-                 txt_codigo.setText(rs.getString(1));
-                 txt_descripcion.setText(rs.getString(2));
+                txt_codigo.setText(rs.getString(1));
+                txt_descripcion.setText(rs.getString(2));
             }   
         }catch(Exception e){
-            System.out.println("Error en Metodo Atras"+e);
-        }       
+            System.out.println("Error en Metodo Adelante"+e);
+        }         
     }//GEN-LAST:event_bt_atrasActionPerformed
 
     private void bt_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_eliminarActionPerformed
@@ -745,7 +736,6 @@ public class fr_colores extends javax.swing.JInternalFrame {
 
     private void bt_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_buscarActionPerformed
         // TODO add your handling code here:
-        //String bs = JOptionPane.showInputDialog("Ingrese Registro a Buscar");
        buscar=true;
        habilitarBuscar();
     }//GEN-LAST:event_bt_buscarActionPerformed
@@ -758,30 +748,47 @@ public class fr_colores extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
            buscar();
     }//GEN-LAST:event_txt_buscarActionPerformed
-    
-    public void conectaControlador(  ControlColores c  ){
- 
-        /*
-        bt_agregar.addActionListener(c);
-        bt_agregar.setActionCommand("agregar");
-        */
-        bt_modificar.addActionListener(c);
-        bt_modificar.setActionCommand("modificar");
- 
-        bt_guardar.addActionListener(c);
-        bt_guardar.setActionCommand("guardar");
+
+    private void bt_inicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_inicioActionPerformed
+        // TODO add your handling code here:
+        CallableStatement cs = null;
+        Connection conn =  null;
+        ResultSet rs = null;
+       
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            cs = conn.prepareCall("{call getColores(?,?)}");
+            rs = cs.executeQuery();
+            
+            if(rs.first()){
+                 txt_codigo.setText(rs.getString("codigo"));
+                 txt_descripcion.setText(rs.getString("descripcion"));
+            }   
+        }catch(Exception e){
+            System.out.println("Error en Metodo Adelante"+e);
+        }       
+    }//GEN-LAST:event_bt_inicioActionPerformed
+
+    private void bt_finActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_finActionPerformed
+         // TODO add your handling code here:
+        CallableStatement cs = null;
+        Connection conn =  null;
+        ResultSet rs = null;
+       
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            cs = conn.prepareCall("{call getColores(?,?)}");
+            rs = cs.executeQuery();
+            
+            if(rs.last()){
+                 txt_codigo.setText(rs.getString("codigo"));
+                 txt_descripcion.setText(rs.getString("descripcion"));
+            }   
+        }catch(Exception e){
+            System.out.println("Error en Metodo Adelante"+e);
+        }       
+    }//GEN-LAST:event_bt_finActionPerformed
         
-        bt_eliminar.addActionListener(c);
-        bt_eliminar.setActionCommand("eliminar");
-        
-        bt_cancelar.addActionListener(c);
-        bt_cancelar.setActionCommand("cancelar");
- 
-        Tabla.addMouseListener((MouseListener) c);
-        //sólo se permite pulsar una fila a la vez.
-        Tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    }
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JTable Tabla;
     public static javax.swing.JButton bt_adelante;
