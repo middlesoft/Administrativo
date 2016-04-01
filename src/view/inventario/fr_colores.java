@@ -37,6 +37,9 @@ import static view.main.fr_ppal.escritorio;
 public class fr_colores extends javax.swing.JInternalFrame {
     public static DefaultTableModel dtm;
     public boolean agrego = false; 
+    private int i;
+    public String [] columnas;
+    public String [] filas;
          
     /**
      * Creates new form fr_colores
@@ -57,6 +60,41 @@ public class fr_colores extends javax.swing.JInternalFrame {
          this.setTitle("Colores");
          deshabilitar(); 
          llenarTabla();
+         setearText();
+         
+    }
+    
+    public void setearText() throws SQLException{
+        CallableStatement cs = null;
+        Connection conn =  null;
+        ResultSet rs = null;
+        agrego=true;
+        String cod, des;
+        //columnas = column;
+        
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            DefaultTableModel dtm = new DefaultTableModel(null,columnas);
+                       
+            cs = conn.prepareCall("{call getColores(?,?)}");
+            rs = cs.executeQuery();
+            
+            while(rs.next()){
+                 cod = rs.getString("CODIGO");
+                 des = rs.getString("DESCRIPCION");
+                 
+                 txt_codigo.setText(cod);
+                 txt_descripcion.setText(des);
+            }
+            
+            
+            
+                     
+        }catch(Exception e){
+            System.out.println("Error al llenar la tabla"+e);
+        }
+        //Tabla.setModel(dtm);
+        
     }
 
     public void llenarTabla() throws SQLException{
@@ -64,24 +102,23 @@ public class fr_colores extends javax.swing.JInternalFrame {
         Connection conn =  null;
         ResultSet rs = null;
         agrego=true;
+        //columnas = column;
         
         try{
             conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
-            
+            DefaultTableModel dtm = new DefaultTableModel(null,columnas);
                        
             cs = conn.prepareCall("{call getColores(?,?)}");
             rs = cs.executeQuery();
             
             while(rs.next()){
-                rs.getString("CODIGO");
-                System.out.println(rs.getString("codigo"));
-                rs.getString("DESCRIPCION");
-                System.out.println(rs.getString("DESCRIPCION"));  
+                 
             }
                      
         }catch(Exception e){
             System.out.println("Error al llenar la tabla"+e);
         }
+        //Tabla.setModel(dtm);
         
     }
      
@@ -337,17 +374,6 @@ public class fr_colores extends javax.swing.JInternalFrame {
         });
         jToolBar1.add(bt_salir);
 
-        Tabla.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "Codigo", "Descripción"
-            }
-        ));
         jScrollPane1.setViewportView(Tabla);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
