@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: demo
 Target Host: localhost
 Target Database: demo
-Date: 31/03/2016 19:48:45
+Date: 01/04/2016 15:25:25
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -36,10 +36,10 @@ CREATE TABLE `categoria` (
 -- ----------------------------
 CREATE TABLE `colores` (
   `idcolores` int(6) unsigned zerofill NOT NULL AUTO_INCREMENT,
-  `codigo` varchar(6) NOT NULL DEFAULT '0',
+  `codigo` varchar(6) NOT NULL,
   `descripcion` varchar(50) NOT NULL,
-  PRIMARY KEY (`idcolores`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`idcolores`,`codigo`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for departamento
@@ -161,10 +161,34 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
+-- Procedure structure for deletColores
+-- ----------------------------
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `deletColores`(IN i_codigo varchar(6))
+BEGIN 
+
+	DELETE FROM COLORES WHERE CODIGO=i_codigo;
+
+END;;
+DELIMITER ;
+
+-- ----------------------------
+-- Procedure structure for findColores
+-- ----------------------------
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `findColores`(IN i_codigo varchar(45), OUT o_codigo varchar(6), OUT o_descri varchar(45))
+BEGIN
+
+	SELECT CODIGO, DESCRIPCION FROM COLORES WHERE CODIGO=i_codigo OR DESCRIPCION=i_codigo;
+
+END;;
+DELIMITER ;
+
+-- ----------------------------
 -- Procedure structure for getColores
 -- ----------------------------
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getColores`(OUT codigo varchar(6), OUT descri varchar(45))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getColores`(OUT o_codigo varchar(6), OUT o_descri varchar(45))
 BEGIN
 	SELECT CODIGO, DESCRIPCION FROM COLORES;
 END;;
@@ -312,14 +336,23 @@ END;;
 DELIMITER ;
 
 -- ----------------------------
+-- Procedure structure for updatColores
+-- ----------------------------
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updatColores`(IN i_codigo varchar(6),
+    IN i_descri varchar(45))
+BEGIN
+
+	UPDATE COLORES SET CODIGO= i_codigo, DESCRIPCION= i_descri Where CODIGO=i_codigo;
+
+END;;
+DELIMITER ;
+
+-- ----------------------------
 -- Records 
 -- ----------------------------
-INSERT INTO `colores` VALUES ('000001', 'AZ001', 'Azul');
-INSERT INTO `colores` VALUES ('000002', 'RR002', 'rrrr');
-INSERT INTO `colores` VALUES ('000003', 'GG003', 'ggggg');
-INSERT INTO `colores` VALUES ('000004', 'DF004', 'dfsdfs');
-INSERT INTO `colores` VALUES ('000005', 'FD005', 'fdfasdf');
-INSERT INTO `colores` VALUES ('000006', 'AD006', 'adfadfff');
+INSERT INTO `colores` VALUES ('000001', 'AZ1', 'Azul');
+INSERT INTO `colores` VALUES ('000009', 'RO2', 'Rojo');
 INSERT INTO `departamento` VALUES ('00001', 'indefinido', '20', '20');
 INSERT INTO `grupo` VALUES ('1', 'indefinido', '1');
 INSERT INTO `grupo` VALUES ('2', 'KJKJKJ', '00001');
