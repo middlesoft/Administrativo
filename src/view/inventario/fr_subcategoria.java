@@ -7,6 +7,7 @@ package view.inventario;
 
 import connection.cargaCombo;
 import connection.correlativo;
+import java.awt.Dimension;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,6 +27,7 @@ import static view.inventario.fr_categoria.bt_fin;
 import static view.inventario.fr_categoria.bt_guardar;
 import static view.inventario.fr_categoria.bt_inicio;
 import static view.inventario.fr_categoria.bt_modificar;
+import static view.main.fr_ppal.escritorio;
 
 /**
  *
@@ -41,6 +43,13 @@ public class fr_subcategoria extends javax.swing.JInternalFrame {
         //correlativo();
         combo();
         deshabilitar();
+        centrar();
+    }
+    
+     public void centrar(){
+        Dimension desktopSize = escritorio.getSize();
+        Dimension jInternalFrameSize = this.getSize();
+        this.setLocation((desktopSize.width - jInternalFrameSize.width)/2,(desktopSize.height- jInternalFrameSize.height)/2);
     }
     
     public void insertar() throws SQLException{

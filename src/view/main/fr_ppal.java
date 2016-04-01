@@ -516,10 +516,14 @@ public class fr_ppal extends javax.swing.JFrame implements Runnable {
     }//GEN-LAST:event_UnidadesActionPerformed
 
     private void ColoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ColoresActionPerformed
-        // TODO add your handling code here:
-        fr_colores col = new fr_colores();
-        escritorio.add(col);
-        col.show();
+        try {
+            // TODO add your handling code here:
+            fr_colores col = new fr_colores();
+            escritorio.add(col);
+            col.show();
+        } catch (SQLException ex) {
+            Logger.getLogger(fr_ppal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_ColoresActionPerformed
 
     private void CategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CategoriaActionPerformed

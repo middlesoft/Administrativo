@@ -9,6 +9,7 @@ package view.inventario;
 import connection.conexion;
 import connection.correlativo;
 import controller.ControlColores;
+import java.awt.Dimension;
 import java.awt.event.MouseListener;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -22,9 +23,12 @@ import java.sql.Types;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import static view.main.fr_ppal.MenuPrincipal;
+import view.main.fr_ppal;
+import static view.main.fr_ppal.escritorio;
    
 /**
  *
@@ -32,31 +36,63 @@ import static view.main.fr_ppal.MenuPrincipal;
  */
 public class fr_colores extends javax.swing.JInternalFrame {
     public static DefaultTableModel dtm;
-       
-        
+    public boolean agrego = false; 
+         
     /**
      * Creates new form fr_colores
      */
-    public fr_colores() {
+    public fr_colores() throws SQLException {
         initComponents();
         iniciar();
+        centrar();
     }
     
-    public void iniciar(){
+     public void centrar(){
+        Dimension desktopSize = escritorio.getSize();
+        Dimension jInternalFrameSize = this.getSize();
+        this.setLocation((desktopSize.width - jInternalFrameSize.width)/2,(desktopSize.height- jInternalFrameSize.height)/2);
+    }
+    
+    public void iniciar() throws SQLException{
          this.setTitle("Colores");
-         deshabilitar();
-         //correlativo();
+         deshabilitar(); 
+         llenarTabla();
     }
-    
+
+    public void llenarTabla() throws SQLException{
+        CallableStatement cs = null;
+        Connection conn =  null;
+        ResultSet rs = null;
+        agrego=true;
+        
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            
+                       
+            cs = conn.prepareCall("{call getColores(?,?)}");
+            rs = cs.executeQuery();
+            
+            while(rs.next()){
+                rs.getString("CODIGO");
+                System.out.println(rs.getString("codigo"));
+                rs.getString("DESCRIPCION");
+                System.out.println(rs.getString("DESCRIPCION"));  
+            }
+                     
+        }catch(Exception e){
+            System.out.println("Error al llenar la tabla"+e);
+        }
+        
+    }
+     
     public void insertar() throws SQLException{
         CallableStatement cs = null;
         Connection conn =  null;
         ResultSet rs = null;
-        
+        agrego=true;
         try{
             
             conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
-            //String sql = "INSERT INTO COLORES(codigo, descripcion)VALUES("+txt_codigo+","+txt_descripcion+")"; 
             String codigo = txt_codigo.getText();
             String descri = txt_descripcion.getText();
             
@@ -69,8 +105,16 @@ public class fr_colores extends javax.swing.JInternalFrame {
             System.out.println("Capturamos la insercion del registro 2: "+descri);
             cs.execute();
             System.out.println("Finaliza el store procedure");
-
-                       
+            
+            
+            if(agrego==true){
+                JOptionPane.showMessageDialog(null, "Su Registro fue agregado exitosamente");
+                 txt_codigo.setText("");
+                txt_descripcion.setText("");
+                deshabilitar();
+                agrego=false;
+            }
+            
         }catch(Exception e){
             e.printStackTrace();
         }finally{
@@ -338,7 +382,9 @@ public class fr_colores extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 361, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();

@@ -6,6 +6,7 @@
 package view.inventario;
 
 import connection.correlativo;
+import java.awt.Dimension;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -27,6 +28,7 @@ import static view.inventario.fr_colores.bt_modificar;
 import static view.inventario.fr_colores.txt_codigo;
 import static view.inventario.fr_colores.txt_descripcion;
 import static view.main.fr_ppal.MenuPrincipal;
+import static view.main.fr_ppal.escritorio;
 
 /**
  *
@@ -42,6 +44,13 @@ public class fr_sucursal extends javax.swing.JInternalFrame {
         deshabilitar();
         this.setTitle("Sucursal");
         //correlativo();
+        centrar();
+    }
+    
+     public void centrar(){
+        Dimension desktopSize = escritorio.getSize();
+        Dimension jInternalFrameSize = this.getSize();
+        this.setLocation((desktopSize.width - jInternalFrameSize.width)/2,(desktopSize.height- jInternalFrameSize.height)/2);
     }
     
     public void insertar() throws SQLException{

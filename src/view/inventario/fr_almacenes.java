@@ -7,6 +7,7 @@ package view.inventario;
 
 import connection.cargaCombo;
 import connection.correlativo;
+import java.awt.Dimension;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,6 +27,7 @@ import static view.inventario.fr_colores.bt_fin;
 import static view.inventario.fr_colores.bt_guardar;
 import static view.inventario.fr_colores.bt_inicio;
 import static view.inventario.fr_colores.bt_modificar;
+import static view.main.fr_ppal.escritorio;
 
 /**
  *
@@ -42,6 +44,13 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
         this.setTitle("Almacenes");
         //correlativo();
         combo();
+        centrar();
+    }
+    
+     public void centrar(){
+        Dimension desktopSize = escritorio.getSize();
+        Dimension jInternalFrameSize = this.getSize();
+        this.setLocation((desktopSize.width - jInternalFrameSize.width)/2,(desktopSize.height- jInternalFrameSize.height)/2);
     }
     
     

@@ -6,6 +6,7 @@
 package view.inventario;
 
 import connection.correlativo;
+import java.awt.Dimension;
 import static view.inventario.fr_colores.bt_adelante;
 import static view.inventario.fr_colores.bt_agregar;
 import static view.inventario.fr_colores.bt_atras;
@@ -17,6 +18,7 @@ import static view.inventario.fr_colores.bt_guardar;
 import static view.inventario.fr_colores.bt_inicio;
 import static view.inventario.fr_colores.bt_modificar;
 import static view.main.fr_ppal.MenuPrincipal;
+import static view.main.fr_ppal.escritorio;
 
 /**
  *
@@ -32,6 +34,13 @@ public class fr_ubicacion extends javax.swing.JInternalFrame {
         deshabilitar();
         this.setTitle("Ubicación Fisica");
         //correlativo();
+        centrar();
+    }
+    
+     public void centrar(){
+        Dimension desktopSize = escritorio.getSize();
+        Dimension jInternalFrameSize = this.getSize();
+        this.setLocation((desktopSize.width - jInternalFrameSize.width)/2,(desktopSize.height- jInternalFrameSize.height)/2);
     }
     
     public void correlativo(){

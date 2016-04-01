@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: demo
 Target Host: localhost
 Target Database: demo
-Date: 16/03/2016 22:07:18
+Date: 31/03/2016 19:48:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,6 +26,7 @@ CREATE TABLE `categoria` (
   `codigo` char(6) DEFAULT NULL,
   `descripcion` varchar(45) DEFAULT NULL,
   `codigoimpuesto` char(6) DEFAULT NULL,
+  `codigoconcepto` char(6) DEFAULT NULL,
   PRIMARY KEY (`idcategoria`),
   KEY `codigo` (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Categoria de Productos';
@@ -34,10 +35,11 @@ CREATE TABLE `categoria` (
 -- Table structure for colores
 -- ----------------------------
 CREATE TABLE `colores` (
-  `codigo` char(6) NOT NULL DEFAULT '0',
+  `idcolores` int(6) unsigned zerofill NOT NULL AUTO_INCREMENT,
+  `codigo` varchar(6) NOT NULL DEFAULT '0',
   `descripcion` varchar(50) NOT NULL,
-  PRIMARY KEY (`codigo`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`idcolores`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for departamento
@@ -89,14 +91,23 @@ CREATE TABLE `producto` (
   KEY `cod_tallas` (`cod_tallas`),
   KEY `cod_ubicacion` (`cod_ubicacion`),
   KEY `cod_grupo` (`cod_grupo`),
-  CONSTRAINT `producto_ibfk_8` FOREIGN KEY (`cod_grupo`) REFERENCES `grupo` (`codigo`) ON UPDATE CASCADE,
   CONSTRAINT `producto_ibfk_1` FOREIGN KEY (`cod_almacen`) REFERENCES `almacen` (`codigo`) ON UPDATE CASCADE,
   CONSTRAINT `producto_ibfk_2` FOREIGN KEY (`cod_categoria`) REFERENCES `categoria` (`codigo`) ON UPDATE CASCADE,
-  CONSTRAINT `producto_ibfk_3` FOREIGN KEY (`cod_color`) REFERENCES `colores` (`codigo`) ON UPDATE CASCADE,
   CONSTRAINT `producto_ibfk_4` FOREIGN KEY (`cod_unidad`) REFERENCES `unidades` (`codigo`) ON UPDATE CASCADE,
   CONSTRAINT `producto_ibfk_5` FOREIGN KEY (`cod_tallas`) REFERENCES `tallas` (`codigo`) ON UPDATE CASCADE,
   CONSTRAINT `producto_ibfk_6` FOREIGN KEY (`cod_departamento`) REFERENCES `departamento` (`codigo`) ON UPDATE CASCADE,
-  CONSTRAINT `producto_ibfk_7` FOREIGN KEY (`cod_ubicacion`) REFERENCES `ubicacion` (`codigo`) ON UPDATE CASCADE
+  CONSTRAINT `producto_ibfk_7` FOREIGN KEY (`cod_ubicacion`) REFERENCES `ubicacion` (`codigo`) ON UPDATE CASCADE,
+  CONSTRAINT `producto_ibfk_8` FOREIGN KEY (`cod_grupo`) REFERENCES `grupo` (`codigo`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Table structure for subcategoria
+-- ----------------------------
+CREATE TABLE `subcategoria` (
+  `codigo` char(6) NOT NULL DEFAULT '',
+  `descripcion` varchar(45) DEFAULT NULL,
+  `cod_categoria` char(6) DEFAULT NULL,
+  PRIMARY KEY (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
@@ -153,10 +164,9 @@ CREATE TABLE `usuarios` (
 -- Procedure structure for getColores
 -- ----------------------------
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getColores`()
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getColores`(OUT codigo varchar(6), OUT descri varchar(45))
 BEGIN
 	SELECT CODIGO, DESCRIPCION FROM COLORES;
-
 END;;
 DELIMITER ;
 
@@ -178,14 +188,125 @@ END;;
 DELIMITER ;
 
 -- ----------------------------
+-- Procedure structure for insertAlmacen
+-- ----------------------------
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertAlmacen`(IN codigo varchar(6), IN descripcion varchar(45), IN codsuc varchar(6))
+BEGIN
+	INSERT INTO ALMACEN(codigo, descripcion, cod_sucursal)
+		values (codigo,descripcion, codsuc);
+END;;
+DELIMITER ;
+
+-- ----------------------------
+-- Procedure structure for insertCategoria
+-- ----------------------------
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertCategoria`(IN cod varchar(6), IN des varchar(45), IN codimp  varchar(6), IN codcon varchar(6))
+BEGIN 
+	
+	INSERT INTO CATEGORIA(codigo, descripcion, codigoimpuesto, codigoconcepto) values(cod, des, codimp, codcon);
+
+END;;
+DELIMITER ;
+
+-- ----------------------------
 -- Procedure structure for insertColores
 -- ----------------------------
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `insertColores`(IN i_codigo varchar(15),
-		OUT P_codigo varchar(15)	)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertColores`(IN i_codigo varchar(6),
+    IN i_descri varchar(45))
 Begin
 
-	INSERT INTO COLORES (codigo) values (i_codigon);
+	INSERT INTO COLORES (codigo, descripcion) values (i_codigo, i_descri);
+
+END;;
+DELIMITER ;
+
+-- ----------------------------
+-- Procedure structure for insertDepartament
+-- ----------------------------
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertDepartament`(IN cod varchar(6), IN descrip varchar(6), IN vent varchar(6), IN cob varchar(6))
+BEGIN
+	INSERT INTO DEPARTAMENTO(codigo, descripcion, comi_vent, comi_cob) 
+		VALUES(cod, descrip, vent, cob);
+
+END;;
+DELIMITER ;
+
+-- ----------------------------
+-- Procedure structure for insertGrupos
+-- ----------------------------
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertGrupos`(IN codigo varchar(6), IN descripcion varchar(45), IN codsuc varchar(6))
+BEGIN
+	INSERT INTO ALMACEN(codigo, descripcion, cod_sucursal)
+		values (codigo,descripcion, codsuc);
+END;;
+DELIMITER ;
+
+-- ----------------------------
+-- Procedure structure for insertSubCategoria
+-- ----------------------------
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertSubCategoria`(IN cod varchar(6), IN des varchar(45), IN codimp  varchar(6), IN codcat varchar(6))
+BEGIN
+
+	INSERT INTO SUBCATEGORIA(codigo, descripcion, cod_categoria)
+		VALUES(cod, des, codcat);
+
+END;;
+DELIMITER ;
+
+-- ----------------------------
+-- Procedure structure for insertSubGrupos
+-- ----------------------------
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertSubGrupos`(IN codigo varchar(6), IN descri varchar(45), IN codgrup varchar(6))
+BEGIN
+
+	INSERT INTO subgrupos(codigo, descripcion, cod_grupo) 
+			VALUES (codigo, descrip, codgrup);
+	
+END;;
+DELIMITER ;
+
+-- ----------------------------
+-- Procedure structure for insertTallas
+-- ----------------------------
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertTallas`(IN codigo varchar(6), IN descri varchar(45))
+BEGIN
+
+	INSERT INTO tallas(codigo, descripcion)
+			VALUES (codigo, descrip);
+
+END;;
+DELIMITER ;
+
+-- ----------------------------
+-- Procedure structure for insertUbicacion
+-- ----------------------------
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertUbicacion`(IN codigo varchar(6), IN descri varchar(45), IN codalm varchar(6),  IN pasi varchar(6),  IN anaq varchar(6))
+BEGIN
+
+	INSERT INTO UBICACION(codigo, descripcion, cod_almacen, pasillo, anaquel)
+			VALUES (codigo, descrip, codalm, pasi, anaq);
+
+END;;
+DELIMITER ;
+
+-- ----------------------------
+-- Procedure structure for insertUnidades
+-- ----------------------------
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertUnidades`(IN codigo varchar(6), IN descri varchar(45))
+BEGIN
+
+	INSERT INTO unidades(codigo, descripcion)
+			VALUES (codigo, descrip);
 
 END;;
 DELIMITER ;
@@ -193,5 +314,13 @@ DELIMITER ;
 -- ----------------------------
 -- Records 
 -- ----------------------------
-INSERT INTO `colores` VALUES ('1', 'Azul');
+INSERT INTO `colores` VALUES ('000001', 'AZ001', 'Azul');
+INSERT INTO `colores` VALUES ('000002', 'RR002', 'rrrr');
+INSERT INTO `colores` VALUES ('000003', 'GG003', 'ggggg');
+INSERT INTO `colores` VALUES ('000004', 'DF004', 'dfsdfs');
+INSERT INTO `colores` VALUES ('000005', 'FD005', 'fdfasdf');
+INSERT INTO `colores` VALUES ('000006', 'AD006', 'adfadfff');
+INSERT INTO `departamento` VALUES ('00001', 'indefinido', '20', '20');
+INSERT INTO `grupo` VALUES ('1', 'indefinido', '1');
+INSERT INTO `grupo` VALUES ('2', 'KJKJKJ', '00001');
 INSERT INTO `usuarios` VALUES ('1', '1', '1');

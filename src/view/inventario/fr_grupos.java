@@ -7,6 +7,8 @@ package view.inventario;
 
 import connection.cargaCombo;
 import connection.correlativo;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,6 +28,7 @@ import static view.inventario.fr_colores.bt_fin;
 import static view.inventario.fr_colores.bt_guardar;
 import static view.inventario.fr_colores.bt_inicio;
 import static view.inventario.fr_colores.bt_modificar;
+import static view.main.fr_ppal.escritorio;
 
 /**
  *
@@ -41,7 +44,13 @@ public class fr_grupos extends javax.swing.JInternalFrame {
         deshabilitar();
         this.setTitle("Grupos");
         combo();
-        //correlativo();
+        centrar();
+    }
+    
+     public void centrar(){
+        Dimension desktopSize = escritorio.getSize();
+        Dimension jInternalFrameSize = this.getSize();
+        this.setLocation((desktopSize.width - jInternalFrameSize.width)/2,(desktopSize.height- jInternalFrameSize.height)/2);
     }
     
     public void insertar() throws SQLException{
@@ -126,7 +135,7 @@ public class fr_grupos extends javax.swing.JInternalFrame {
         bt_atras.setEnabled(true);
         bt_fin.setEnabled(true);
         bt_inicio.setEnabled(true);
-        bt_cancelar.setEnabled(false);
+        fr_colores.bt_cancelar.setEnabled(false);
         bt_agregar.setEnabled(true);
                 
     }
@@ -143,7 +152,7 @@ public class fr_grupos extends javax.swing.JInternalFrame {
         bt_atras.setEnabled(false);
         bt_fin.setEnabled(false);
         bt_inicio.setEnabled(false);
-        bt_cancelar.setEnabled(true);
+        fr_colores.bt_cancelar.setEnabled(true);
         bt_agregar.setEnabled(false);
     }
 
@@ -176,7 +185,7 @@ public class fr_grupos extends javax.swing.JInternalFrame {
         bt_inicio = new javax.swing.JButton();
         bt_atras = new javax.swing.JButton();
         bt_adelante = new javax.swing.JButton();
-        bt_fin = new javax.swing.JButton();
+        bt_fin1 = new javax.swing.JButton();
         bt_salir = new javax.swing.JButton();
 
         Tabla.setModel(new javax.swing.table.DefaultTableModel(
@@ -314,11 +323,11 @@ public class fr_grupos extends javax.swing.JInternalFrame {
         bt_adelante.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar2.add(bt_adelante);
 
-        bt_fin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/2rightarrow32.png"))); // NOI18N
-        bt_fin.setFocusable(false);
-        bt_fin.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        bt_fin.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar2.add(bt_fin);
+        bt_fin1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/2rightarrow32.png"))); // NOI18N
+        bt_fin1.setFocusable(false);
+        bt_fin1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_fin1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar2.add(bt_fin1);
 
         bt_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/kfm_home32.png"))); // NOI18N
         bt_salir.setFocusable(false);
@@ -363,7 +372,9 @@ public class fr_grupos extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 431, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -403,7 +414,7 @@ public class fr_grupos extends javax.swing.JInternalFrame {
     public static javax.swing.JButton bt_buscar;
     public static javax.swing.JButton bt_cancelar;
     public static javax.swing.JButton bt_eliminar;
-    public static javax.swing.JButton bt_fin;
+    public static javax.swing.JButton bt_fin1;
     public static javax.swing.JButton bt_guardar;
     public static javax.swing.JButton bt_inicio;
     public static javax.swing.JButton bt_modificar;

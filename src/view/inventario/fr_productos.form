@@ -150,7 +150,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel6" alignment="0" pref="450" max="32767" attributes="0"/>
+          <Component id="jPanel6" alignment="0" pref="540" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -164,7 +164,7 @@
         <Container class="javax.swing.JTabbedPane" name="jTabbedPane2">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="0" y="10" width="-1" height="370"/>
+              <AbsoluteConstraints x="0" y="0" width="1000" height="450"/>
             </Constraint>
           </Constraints>
 
@@ -183,18 +183,14 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                                  <Component id="jPanel19" min="-2" pref="689" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jPanel20" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="jPanel20" min="-2" max="-2" attributes="0"/>
+                              <Component id="jPanel19" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jPanel21" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -210,7 +206,7 @@
                                   <Component id="jPanel20" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="16" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -232,7 +228,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="lbl_subcategoria" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -243,46 +239,55 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" attributes="0">
                                               <Component id="cbo_color" min="-2" pref="180" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
                                               <Component id="lbl_precio" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                                               <Component id="cbo_peso" min="-2" pref="130" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                               <Component id="lbl_costo" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                                   <Component id="cbo_unidad" alignment="0" pref="145" max="32767" attributes="0"/>
                                                   <Component id="cbo_costo" alignment="0" max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
-                                          <Group type="102" attributes="0">
-                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                  <Component id="cbo_subcategoria" alignment="0" pref="180" max="32767" attributes="0"/>
-                                                  <Component id="cbo_categoria" alignment="0" max="32767" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Group type="102" attributes="0">
-                                                      <Group type="103" groupAlignment="0" attributes="0">
-                                                          <Component id="lbl_garantia" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="lbl_peso" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                      </Group>
-                                                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                                                      <Group type="103" groupAlignment="0" attributes="0">
-                                                          <Group type="102" attributes="0">
-                                                              <Component id="txt_garantia" min="-2" pref="80" max="-2" attributes="0"/>
-                                                              <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
-                                                              <Component id="lbl_unidad" min="-2" max="-2" attributes="0"/>
-                                                          </Group>
-                                                          <Component id="txt_peso" min="-2" pref="80" max="-2" attributes="0"/>
-                                                      </Group>
+                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                      <Component id="cbo_subcategoria" alignment="0" pref="180" max="32767" attributes="0"/>
+                                                      <Component id="cbo_categoria" alignment="0" max="32767" attributes="0"/>
                                                   </Group>
+                                                  <Component id="txt_modelo" min="-2" pref="174" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
                                                   <Group type="102" attributes="0">
                                                       <Component id="lbl_refencia" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
                                                       <Component id="txt_referencia" min="-2" pref="181" max="-2" attributes="0"/>
                                                   </Group>
+                                                  <Group type="102" attributes="0">
+                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Component id="lbl_garantia" min="-2" max="-2" attributes="0"/>
+                                                          <Component id="lbl_peso" min="-2" max="-2" attributes="0"/>
+                                                      </Group>
+                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Group type="102" attributes="0">
+                                                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                                              <Component id="txt_garantia" min="-2" pref="80" max="-2" attributes="0"/>
+                                                              <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                                                              <Component id="lbl_unidad" min="-2" max="-2" attributes="0"/>
+                                                          </Group>
+                                                          <Group type="102" alignment="0" attributes="0">
+                                                              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                                                              <Component id="txt_peso" min="-2" pref="80" max="-2" attributes="0"/>
+                                                          </Group>
+                                                      </Group>
+                                                  </Group>
                                               </Group>
+                                              <EmptySpace max="32767" attributes="0"/>
+                                              <Component id="jCheckBox2" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -292,34 +297,24 @@
                                           <Component id="lbl_codigo" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="lbl_modelo" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <EmptySpace pref="571" max="32767" attributes="0"/>
-                                              <Component id="jCheckBox2" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                                          </Group>
                                           <Group type="102" attributes="0">
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Group type="102" attributes="0">
-                                                      <Component id="txt_codigo" min="-2" pref="80" max="-2" attributes="0"/>
-                                                      <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
-                                                      <Component id="lbl_tipo" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace min="4" pref="4" max="-2" attributes="0"/>
-                                                      <Component id="cbo_tipo" min="-2" pref="130" max="-2" attributes="0"/>
-                                                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                                                      <Component id="lbl_fecha" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                      <Component id="cfecha" min="-2" pref="155" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <Component id="txt_descripcion" min="-2" pref="570" max="-2" attributes="0"/>
-                                                  <Component id="txt_modelo" alignment="0" min="-2" pref="174" max="-2" attributes="0"/>
-                                              </Group>
+                                              <Component id="txt_codigo" min="-2" pref="80" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
+                                              <Component id="lbl_tipo" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="4" pref="4" max="-2" attributes="0"/>
+                                              <Component id="cbo_tipo" min="-2" pref="130" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                                              <Component id="lbl_fecha" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="cfecha" min="-2" pref="155" max="-2" attributes="0"/>
                                           </Group>
+                                          <Component id="txt_descripcion" alignment="0" min="-2" pref="558" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="27" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -351,43 +346,37 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
                                       <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <Group type="103" groupAlignment="3" attributes="0">
-                                                  <Component id="txt_referencia" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="lbl_refencia" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txt_modelo" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="lbl_modelo" alignment="3" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="lbl_categoria" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" attributes="0">
-                                              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="3" attributes="0">
-                                                  <Component id="txt_peso" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="lbl_peso" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="cbo_categoria" alignment="3" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                          </Group>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="txt_referencia" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lbl_refencia" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txt_modelo" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lbl_modelo" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="txt_peso" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lbl_peso" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="cbo_categoria" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lbl_categoria" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jCheckBox2" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                       <Component id="cbo_subcategoria" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="lbl_subcategoria" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lbl_garantia" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                       <Component id="txt_garantia" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="cbo_unidad" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="lbl_unidad" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lbl_garantia" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -632,9 +621,9 @@
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jComboBox23" min="-2" pref="130" max="-2" attributes="0"/>
-                                  <Component id="jComboBox22" min="-2" pref="293" max="-2" attributes="0"/>
-                                  <Component id="jComboBox21" min="-2" pref="293" max="-2" attributes="0"/>
+                                  <Component id="cbo_iva" min="-2" pref="130" max="-2" attributes="0"/>
+                                  <Component id="cbo_procedencia" min="-2" pref="293" max="-2" attributes="0"/>
+                                  <Component id="cbo_proveedor" min="-2" pref="293" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace pref="315" max="32767" attributes="0"/>
                           </Group>
@@ -646,16 +635,16 @@
                               <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="lbl_proveedor" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jComboBox21" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cbo_proveedor" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="lbl_procedencia" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jComboBox22" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cbo_procedencia" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jComboBox23" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cbo_iva" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="lbl_iva" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
@@ -669,7 +658,7 @@
                         <Property name="text" type="java.lang.String" value="Proveedor"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JComboBox" name="jComboBox21">
+                    <Component class="javax.swing.JComboBox" name="cbo_proveedor">
                       <Properties>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                           <StringArray count="4">
@@ -689,7 +678,7 @@
                         <Property name="text" type="java.lang.String" value="Procedencia"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JComboBox" name="jComboBox22">
+                    <Component class="javax.swing.JComboBox" name="cbo_procedencia">
                       <Properties>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                           <StringArray count="4">
@@ -709,7 +698,7 @@
                         <Property name="text" type="java.lang.String" value="IVA"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JComboBox" name="jComboBox23">
+                    <Component class="javax.swing.JComboBox" name="cbo_iva">
                       <Properties>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                           <StringArray count="4">
@@ -939,7 +928,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                           <Component id="jScrollPane3" min="-2" pref="886" max="-2" attributes="0"/>
-                          <EmptySpace pref="57" max="32767" attributes="0"/>
+                          <EmptySpace pref="66" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -948,7 +937,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                           <Component id="jScrollPane3" min="-2" pref="290" max="-2" attributes="0"/>
-                          <EmptySpace pref="34" max="32767" attributes="0"/>
+                          <EmptySpace pref="111" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -995,7 +984,7 @@
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                           <Component id="jPanel30" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="80" max="32767" attributes="0"/>
+                          <EmptySpace pref="32" max="32767" attributes="0"/>
                           <Component id="jPanel31" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
                       </Group>
@@ -1009,7 +998,7 @@
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace pref="29" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jPanel30" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Component id="jPanel31" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -1045,25 +1034,25 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="txt_promedio3" min="-2" pref="100" max="-2" attributes="0"/>
+                                      <Component id="txt_costo2" min="-2" pref="100" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="lblfecha11" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="cfecha_promedio3" min="-2" pref="120" max="-2" attributes="0"/>
+                                      <Component id="cfecha_costo2" min="-2" pref="120" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="txt_anterior2" min="-2" pref="100" max="-2" attributes="0"/>
+                                      <Component id="txt_costo3" min="-2" pref="100" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="lblfecha9" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="cfecha_anterior2" min="-2" pref="120" max="-2" attributes="0"/>
+                                      <Component id="cfecha_costo3" min="-2" pref="120" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="txt_ultimo3" min="-2" pref="100" max="-2" attributes="0"/>
+                                      <Component id="txt_costo1" min="-2" pref="100" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="lblfecha10" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="cfecha_ultimo3" min="-2" pref="120" max="-2" attributes="0"/>
+                                      <Component id="cfecha_costo1" min="-2" pref="120" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace min="0" pref="30" max="32767" attributes="0"/>
@@ -1077,28 +1066,28 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                       <Component id="lbl_ultimo1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="txt_ultimo3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txt_costo1" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="lblfecha10" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="cfecha_ultimo3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cfecha_costo1" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Group type="103" alignment="1" groupAlignment="3" attributes="0">
                                       <Component id="lbl_promedio1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="txt_promedio3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txt_costo2" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="lblfecha11" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="cfecha_promedio3" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cfecha_costo2" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="lbl_anterior1" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                      <Component id="txt_anterior2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txt_costo3" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="lblfecha9" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="cfecha_anterior2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cfecha_costo3" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace pref="15" max="32767" attributes="0"/>
                           </Group>
@@ -1111,9 +1100,9 @@
                         <Property name="text" type="java.lang.String" value="&#xda;ltimo : "/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txt_ultimo3">
+                    <Component class="javax.swing.JTextField" name="txt_costo1">
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_ultimo3ActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_costo1ActionPerformed"/>
                       </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="lbl_promedio1">
@@ -1121,16 +1110,16 @@
                         <Property name="text" type="java.lang.String" value="Promedio : "/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txt_promedio3">
+                    <Component class="javax.swing.JTextField" name="txt_costo2">
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblfecha9">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Fecha :"/>
                       </Properties>
                     </Component>
-                    <Component class="com.toedter.calendar.JDateChooser" name="cfecha_anterior2">
+                    <Component class="com.toedter.calendar.JDateChooser" name="cfecha_costo3">
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txt_anterior2">
+                    <Component class="javax.swing.JTextField" name="txt_costo3">
                     </Component>
                     <Component class="javax.swing.JLabel" name="lbl_anterior1">
                       <Properties>
@@ -1142,14 +1131,14 @@
                         <Property name="text" type="java.lang.String" value="Fecha :"/>
                       </Properties>
                     </Component>
-                    <Component class="com.toedter.calendar.JDateChooser" name="cfecha_ultimo3">
+                    <Component class="com.toedter.calendar.JDateChooser" name="cfecha_costo1">
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblfecha11">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Fecha :"/>
                       </Properties>
                     </Component>
-                    <Component class="com.toedter.calendar.JDateChooser" name="cfecha_promedio3">
+                    <Component class="com.toedter.calendar.JDateChooser" name="cfecha_costo2">
                     </Component>
                   </SubComponents>
                 </Container>
@@ -1177,15 +1166,15 @@
                                       </Group>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="txt_exisminima1" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="txt_exismaxima1" alignment="0" min="-2" pref="80" max="-2" attributes="0"/>
+                                          <Component id="txt_exisminima" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="txt_exismaxima" alignment="0" min="-2" pref="80" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                                       <Component id="lbl_exisactual1" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="txt_exisactual1" min="-2" pref="80" max="-2" attributes="0"/>
+                                      <Component id="txt_exisactual" min="-2" pref="80" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -1198,13 +1187,13 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="txt_llegar1" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="txt_comprome1" alignment="0" min="-2" pref="80" max="-2" attributes="0"/>
+                                          <Component id="txt_llegar" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="txt_comprome" alignment="0" min="-2" pref="80" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                                      <Component id="txt_despachar1" min="-2" pref="80" max="-2" attributes="0"/>
+                                      <Component id="txt_despachar" min="-2" pref="80" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace pref="16" max="32767" attributes="0"/>
@@ -1219,32 +1208,32 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="lbl_llegar1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txt_llegar1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txt_llegar" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="txt_comprome1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txt_comprome" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="lbl_compro1" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="txt_despachar1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txt_despachar" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="lbl_despachar1" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="lbl_exisminima1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txt_exisminima1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txt_exisminima" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="txt_exismaxima1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txt_exismaxima" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="lbl_exismaxima1" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="txt_exisactual1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txt_exisactual" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="lbl_exisactual1" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -1270,32 +1259,32 @@
                         <Property name="text" type="java.lang.String" value="Existencia Actual :"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txt_exisminima1">
+                    <Component class="javax.swing.JTextField" name="txt_exisminima">
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txt_exismaxima1">
+                    <Component class="javax.swing.JTextField" name="txt_exismaxima">
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txt_exisactual1">
+                    <Component class="javax.swing.JTextField" name="txt_exisactual">
                     </Component>
                     <Component class="javax.swing.JLabel" name="lbl_llegar1">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Por Llegar :"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txt_llegar1">
+                    <Component class="javax.swing.JTextField" name="txt_llegar">
                     </Component>
                     <Component class="javax.swing.JLabel" name="lbl_compro1">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Comprometido :"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txt_comprome1">
+                    <Component class="javax.swing.JTextField" name="txt_comprome">
                     </Component>
                     <Component class="javax.swing.JLabel" name="lbl_despachar1">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Por Despachar :"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txt_despachar1">
+                    <Component class="javax.swing.JTextField" name="txt_despachar">
                     </Component>
                   </SubComponents>
                 </Container>
@@ -1322,27 +1311,27 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="txt_anterior3" min="-2" pref="100" max="-2" attributes="0"/>
+                                      <Component id="txt_precio3" min="-2" pref="100" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="lblfecha13" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="cfecha_anterior3" min="-2" pref="120" max="-2" attributes="0"/>
+                                      <Component id="cfecha_precio3" min="-2" pref="120" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="txt_promedio4" min="-2" pref="100" max="-2" attributes="0"/>
+                                              <Component id="txt_precio2" min="-2" pref="100" max="-2" attributes="0"/>
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
                                               <Component id="lblfecha12" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="cfecha_promedio4" min="-2" pref="120" max="-2" attributes="0"/>
+                                              <Component id="cfecha_precio2" min="-2" pref="120" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="txt_ultimo4" min="-2" pref="100" max="-2" attributes="0"/>
+                                              <Component id="txt_precio1" min="-2" pref="100" max="-2" attributes="0"/>
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
                                               <Component id="lblfecha14" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="cfecha_ultimo4" min="-2" pref="120" max="-2" attributes="0"/>
+                                              <Component id="cfecha_precio1" min="-2" pref="120" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
@@ -1353,18 +1342,18 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="txt_promedio5" min="-2" pref="100" max="-2" attributes="0"/>
+                                              <Component id="txt_precio5" min="-2" pref="100" max="-2" attributes="0"/>
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
                                               <Component id="lblfecha16" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="cfecha_promedio5" min="-2" pref="120" max="-2" attributes="0"/>
+                                              <Component id="cfecha_precio5" min="-2" pref="120" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="txt_ultimo5" min="-2" pref="100" max="-2" attributes="0"/>
+                                              <Component id="txt_precio4" min="-2" pref="100" max="-2" attributes="0"/>
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
                                               <Component id="lblfecha15" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="cfecha_ultimo5" min="-2" pref="120" max="-2" attributes="0"/>
+                                              <Component id="cfecha_precio4" min="-2" pref="120" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -1382,37 +1371,37 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                               <Component id="lbl_precio6" alignment="3" min="-2" max="-2" attributes="0"/>
-                                              <Component id="txt_ultimo4" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="txt_precio1" alignment="3" min="-2" max="-2" attributes="0"/>
                                               <Component id="lblfecha14" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
-                                          <Component id="cfecha_ultimo4" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="cfecha_precio1" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="1" attributes="0">
                                           <Group type="103" alignment="1" groupAlignment="3" attributes="0">
                                               <Component id="lbl_precio7" alignment="3" min="-2" max="-2" attributes="0"/>
-                                              <Component id="txt_promedio4" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="txt_precio2" alignment="3" min="-2" max="-2" attributes="0"/>
                                               <Component id="lblfecha12" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
-                                          <Component id="cfecha_promedio4" alignment="1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="cfecha_precio2" alignment="1" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                              <Component id="txt_ultimo5" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="txt_precio4" alignment="3" min="-2" max="-2" attributes="0"/>
                                               <Component id="lblfecha15" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
-                                          <Component id="cfecha_ultimo5" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="cfecha_precio4" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="1" attributes="0">
                                           <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                                              <Component id="txt_promedio5" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="txt_precio5" alignment="3" min="-2" max="-2" attributes="0"/>
                                               <Component id="lblfecha16" alignment="3" min="-2" max="-2" attributes="0"/>
                                               <Component id="lbl_precio10" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
-                                          <Component id="cfecha_promedio5" alignment="1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="cfecha_precio5" alignment="1" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Component id="lbl_precio9" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -1421,10 +1410,10 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="lbl_precio8" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                      <Component id="txt_anterior3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txt_precio3" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="lblfecha13" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="cfecha_anterior3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cfecha_precio3" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace pref="20" max="32767" attributes="0"/>
                           </Group>
@@ -1437,9 +1426,9 @@
                         <Property name="text" type="java.lang.String" value="Precio 1 :"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txt_ultimo4">
+                    <Component class="javax.swing.JTextField" name="txt_precio1">
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_ultimo4ActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_precio1ActionPerformed"/>
                       </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="lbl_precio7">
@@ -1447,11 +1436,11 @@
                         <Property name="text" type="java.lang.String" value="Precio 2 :"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txt_promedio4">
+                    <Component class="javax.swing.JTextField" name="txt_precio2">
                     </Component>
-                    <Component class="com.toedter.calendar.JDateChooser" name="cfecha_anterior3">
+                    <Component class="com.toedter.calendar.JDateChooser" name="cfecha_precio3">
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txt_anterior3">
+                    <Component class="javax.swing.JTextField" name="txt_precio3">
                     </Component>
                     <Component class="javax.swing.JLabel" name="lbl_precio8">
                       <Properties>
@@ -1463,30 +1452,30 @@
                         <Property name="text" type="java.lang.String" value="Fecha :"/>
                       </Properties>
                     </Component>
-                    <Component class="com.toedter.calendar.JDateChooser" name="cfecha_ultimo4">
+                    <Component class="com.toedter.calendar.JDateChooser" name="cfecha_precio1">
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblfecha13">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Fecha :"/>
                       </Properties>
                     </Component>
-                    <Component class="com.toedter.calendar.JDateChooser" name="cfecha_promedio4">
+                    <Component class="com.toedter.calendar.JDateChooser" name="cfecha_precio2">
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblfecha14">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Fecha :"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txt_ultimo5">
+                    <Component class="javax.swing.JTextField" name="txt_precio4">
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_ultimo5ActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_precio4ActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txt_promedio5">
+                    <Component class="javax.swing.JTextField" name="txt_precio5">
                     </Component>
-                    <Component class="com.toedter.calendar.JDateChooser" name="cfecha_promedio5">
+                    <Component class="com.toedter.calendar.JDateChooser" name="cfecha_precio5">
                     </Component>
-                    <Component class="com.toedter.calendar.JDateChooser" name="cfecha_ultimo5">
+                    <Component class="com.toedter.calendar.JDateChooser" name="cfecha_precio4">
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblfecha15">
                       <Properties>
@@ -1516,7 +1505,6 @@
         </Container>
         <Container class="javax.swing.JToolBar" name="jToolBar1">
           <Properties>
-            <Property name="floatable" type="boolean" value="false"/>
             <Property name="rollover" type="boolean" value="true"/>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
@@ -1525,7 +1513,7 @@
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="260" y="390" width="510" height="48"/>
+              <AbsoluteConstraints x="250" y="460" width="510" height="48"/>
             </Constraint>
           </Constraints>
 
