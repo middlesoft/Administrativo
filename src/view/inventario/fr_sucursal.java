@@ -7,14 +7,27 @@ package view.inventario;
 
 import connection.correlativo;
 import java.awt.Dimension;
+import static java.awt.Frame.MAXIMIZED_BOTH;
+import java.io.File;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
+import static view.inventario.fr_colores.Tabla;
 import static view.inventario.fr_colores.bt_adelante;
 import static view.inventario.fr_colores.bt_agregar;
 import static view.inventario.fr_colores.bt_atras;
@@ -35,79 +48,246 @@ import static view.main.fr_ppal.escritorio;
  * @author Kelvin
  */
 public class fr_sucursal extends javax.swing.JInternalFrame {
-
+    public static DefaultTableModel dtm;
+    public boolean agrego = false, modifico = false, eliminar=false, cancelar=false,  buscar=false;
+    private int i;
+    public String [] columnas;
+    public String [] filas;
+    CallableStatement cs = null;
+    Connection conn =  null;
+    ResultSet rs = null;
     /**
      * Creates new form fr_sucursal
      */
-    public fr_sucursal() {
+    public fr_sucursal() throws SQLException {
         initComponents();
-        deshabilitar();
-        this.setTitle("Sucursal");
-        //correlativo();
+        iniciar();
         centrar();
     }
     
-     public void centrar(){
+ public void centrar(){
         Dimension desktopSize = escritorio.getSize();
         Dimension jInternalFrameSize = this.getSize();
         this.setLocation((desktopSize.width - jInternalFrameSize.width)/2,(desktopSize.height- jInternalFrameSize.height)/2);
     }
     
+    public void iniciar() throws SQLException{
+         this.setTitle("Sucursal");
+         deshabilitar(); 
+         setearText();
+         llenarTabla();
+         agrego=false; modifico=false; eliminar=false; cancelar=false; buscar=false;
+         habilitarBuscar();
+    }
+    
+    public void habilitarBuscar(){
+        if(buscar==false){
+            pBuscar.setVisible(false);
+            lbl_buscar.setVisible(false);
+            txt_buscar.setVisible(false);
+            txt_buscar.setText("");
+        }else{
+            pBuscar.setVisible(true);
+            lbl_buscar.setVisible(true);
+            txt_buscar.setVisible(true);
+            Tabla.setEnabled(true);
+        }
+    }
+    
+    public void setearText() throws SQLException{
+        CallableStatement cs = null;
+        Connection conn =  null;
+        ResultSet rs = null;
+        String cod, des;
+        
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            DefaultTableModel dtm = new DefaultTableModel(null,columnas);
+                       
+            cs = conn.prepareCall("{call getSucursal(?,?)}");
+            rs = cs.executeQuery();
+            
+            while(rs.next()){
+                 cod = rs.getString("CODIGO");
+                 des = rs.getString("DESCRIPCION");
+                 txt_codigo.setText(cod);
+                 txt_descripcion.setText(des);
+            }   
+        }catch(Exception e){
+            System.out.println("Error al llenar la tabla Metodo setearText"+e);
+        }       
+    }
+
+    public void llenarTabla() throws SQLException{
+        CallableStatement cs = null;
+        Connection conn =  null;
+        ResultSet rs = null;
+                
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            DefaultTableModel dtm = new DefaultTableModel(null,columnas);
+            
+            cs = conn.prepareCall("{call getSucursal(?,?)}");
+            rs = cs.executeQuery();
+            
+            cs.registerOutParameter(2, Types.VARCHAR);
+ 
+            dtm.addColumn("Codigo");
+            dtm.addColumn("Descripcion");
+            Object fila[] = new Object[2];      
+            while(rs.next()){
+                  for(i=0; i<fila.length;i++){
+                    fila[i] = rs.getObject(i+1);
+                  }         
+              Tabla.updateUI();
+              dtm.addRow(fila);
+              Tabla.setModel(dtm);
+            }
+        }catch(Exception e){
+            System.out.println("Error al llenar la tabla metodo llenarTabla"+e);
+        } 
+    }
+     
     public void insertar() throws SQLException{
         CallableStatement cs = null;
         Connection conn =  null;
         ResultSet rs = null;
-        
+        agrego=true;
         try{
             
             conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
-            //String sql = "INSERT INTO COLORES(codigo, descripcion)VALUES("+txt_codigo+","+txt_descripcion+")"; 
             String codigo = txt_codigo.getText();
             String descri = txt_descripcion.getText();
             
-            cs = conn.prepareCall("{call insertColores(?,?)}");
+            cs = conn.prepareCall("{call insertSucursal(?,?)}");
 
             cs.setString(1, codigo);
             cs.setString(2, descri);
+            cs.execute();          
             
-            System.out.println("Capturamos la insercion del registro 1: "+codigo);
-            System.out.println("Capturamos la insercion del registro 2: "+descri);
-            cs.execute();
-            System.out.println("Finaliza el store procedure");
+            if(agrego==true){
+                JOptionPane.showMessageDialog(null, "Su Registro fue agregado exitosamente");
+                setearText();
+                llenarTabla();
+                deshabilitar();
+                agrego=false;
+            }   
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            close(conn, cs);
+        }   
+    }
+    
+    public void modificar() throws SQLException{
+        CallableStatement cs = null;
+        Connection conn =  null;
+        ResultSet rs = null;
+        modifico = true;
+        
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            String codigo = txt_codigo.getText();
+            String descri = txt_descripcion.getText();
+            
+            cs = conn.prepareCall("{call updatSucursal(?,?)}");
 
-                       
+            cs.setString(1, codigo);
+            cs.setString(2, descri);           
+            cs.execute();            
+            
+            if(modifico==true){
+                JOptionPane.showMessageDialog(null, "Su Registro fue modificado exitosamente");
+                setearText();
+                llenarTabla();
+                deshabilitar();
+                modifico=false; 
+            }
+            
         }catch(Exception e){
             e.printStackTrace();
         }finally{
             close(conn, cs);
         }
-        
     }
     
-    private static void close(Connection conn, Statement cs) throws SQLException {
-		
-		if (cs != null) {
-			cs.close();
-		}
-
-		if (conn != null) {
-			conn.close();
-		}
-	}
+    public void eliminar() {
+        CallableStatement cs = null;
+        Connection conn =  null;
+        ResultSet rs = null;
+      
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            DefaultTableModel dtm = new DefaultTableModel(null,columnas);
+            String codigo = txt_codigo.getText();
+                       
+            cs = conn.prepareCall("{call deletSucursal(?)}");
+            cs.setString(1, codigo);
+            rs = cs.executeQuery();
+            
+            setearText();
+            llenarTabla();           
+            JOptionPane.showMessageDialog(null, "Su Registro fue eliminado exitosamente");
+            
+        }catch(Exception e){
+            System.out.println("Error al eliminar registro en Metodo eliminar"+e);
+        }       
+    }
+    
+    public void buscar(){
+        CallableStatement cs = null;
+        Connection conn =  null;
+        ResultSet rs = null;
+        String cod, des;
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            DefaultTableModel dtm = new DefaultTableModel(null,columnas);
+            
+            String codigo = txt_buscar.getText();
+            cs = conn.prepareCall("{call findSucursal(?,?,?)}");            
+            cs.setString(1, codigo);
+            rs = cs.executeQuery();
+           
+            while(rs.next()){
+                 cod = rs.getString("CODIGO");
+                 des = rs.getString("DESCRIPCION");
+                 txt_codigo.setText(cod);
+                 txt_descripcion.setText(des); 
+            }
+            buscar=false;
+            habilitarBuscar();     
+        }catch(Exception e){
+            System.out.println("Error al buscar registro Metodo buscar"+e);
+        }       
+    }
+       
+    private static void close(Connection conn, Statement cs) throws SQLException {		
+        if (cs != null) {
+                cs.close();
+        }
+        if (conn != null) {
+                conn.close();
+        }
+    }
     
     public void correlativo(){
         String Consecutivo = null;
         
         correlativo codigo = new correlativo();
-        Consecutivo = codigo.numconsecutivo("SELECT CONCAT(REPEAT('0',6-LENGTH(CONVERT(MAX(CODIGO)+1,CHAR(6)))),CONVERT(MAX(CODIGO)+1,CHAR(6))) AS CODIGO FROM SUCURSAL");
+        Consecutivo = codigo.numconsecutivo("SELECT CONCAT(REPEAT('0',6-LENGTH(CONVERT(MAX(CODIGO)+1,CHAR(6)))),CONVERT(MAX(CODIGO)+1,CHAR(6))) AS CODIGO FROM COLORES");
         if (Consecutivo==null) {
             Consecutivo="000001";
-        }
-              
+        }      
         this.txt_codigo.setText(Consecutivo);
     }
     
-    public void deshabilitar(){
+    public void limpiarText() throws SQLException{
+        txt_codigo.setText("");
+        txt_descripcion.setText("");
+        setearText();
+    }
+      
+    public void deshabilitar() throws SQLException{
         txt_codigo.setEnabled(false);
         txt_descripcion.setEnabled(false);
         bt_buscar.setEnabled(true);
@@ -120,7 +300,13 @@ public class fr_sucursal extends javax.swing.JInternalFrame {
         bt_inicio.setEnabled(true);
         bt_cancelar.setEnabled(false);
         bt_agregar.setEnabled(true);
-                
+        Tabla.setEnabled(false);
+        
+        if(cancelar==false){
+            llenarTabla();
+        }else{
+           limpiarText();
+        }    
     }
     
     public void habilitar(){
@@ -136,6 +322,47 @@ public class fr_sucursal extends javax.swing.JInternalFrame {
         bt_inicio.setEnabled(false);
         bt_cancelar.setEnabled(true);
         bt_agregar.setEnabled(false);
+        Tabla.setEnabled(true);
+        
+        if(agrego==true){
+            txt_codigo.setText("");
+            txt_descripcion.setText("");
+        }else{
+            modifico=true;
+        }
+    }
+
+    public void imprimir(java.awt.event.ActionEvent evt) {
+        String codigo=(txt_codigo.getText().toString());
+        System.out.println("Codigo Color: "+codigo);
+        JOptionPane.showMessageDialog(null, "EN CONSTRUCCION");
+       /*Quitar comentario cuando se vaya a ejecutar el reporte
+        startReport(codigo);
+        */
+    }
+    
+    public void startReport(String codigo){
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            File jasper = new File(System.getProperty("user.dir")+"\\src\\informes\\"+"Factura.jasper");
+            System.out.println("Jasper: "+jasper);
+            
+            JasperReport reporte=null;
+            reporte=(JasperReport) JRLoader.loadObject(jasper);
+
+            Map param=new HashMap();
+            param.put("codigo", codigo);
+
+            System.out.println("Codigo Color:"+codigo);
+            JasperPrint jasperprinter = JasperFillManager.fillReport(reporte,param,conn);
+            System.out.println(jasperprinter);
+            JasperViewer vista = new JasperViewer(jasperprinter,false);
+            vista.setTitle("Reporte de Colores");
+            vista.setExtendedState(MAXIMIZED_BOTH);
+            vista.setVisible(true);
+        }catch(Exception e){
+            javax.swing.JOptionPane.showMessageDialog(null, e);
+        }
     }
 
     /**
@@ -153,6 +380,9 @@ public class fr_sucursal extends javax.swing.JInternalFrame {
         lbl_descripcion = new javax.swing.JLabel();
         txt_codigo = new javax.swing.JTextField();
         txt_descripcion = new javax.swing.JTextField();
+        pBuscar = new javax.swing.JPanel();
+        lbl_buscar = new javax.swing.JLabel();
+        txt_buscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabla = new javax.swing.JTable();
         jToolBar1 = new javax.swing.JToolBar();
@@ -166,6 +396,7 @@ public class fr_sucursal extends javax.swing.JInternalFrame {
         bt_atras = new javax.swing.JButton();
         bt_adelante = new javax.swing.JButton();
         bt_fin = new javax.swing.JButton();
+        bt_imprimir = new javax.swing.JButton();
         bt_salir = new javax.swing.JButton();
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Informacion Sucursal"));
@@ -174,22 +405,61 @@ public class fr_sucursal extends javax.swing.JInternalFrame {
 
         lbl_descripcion.setText("Descripciòn");
 
+        lbl_buscar.setText("Buscar Registro");
+
+        txt_buscar.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txt_buscarFocusLost(evt);
+            }
+        });
+        txt_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_buscarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pBuscarLayout = new javax.swing.GroupLayout(pBuscar);
+        pBuscar.setLayout(pBuscarLayout);
+        pBuscarLayout.setHorizontalGroup(
+            pBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pBuscarLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(lbl_buscar)
+                .addContainerGap(41, Short.MAX_VALUE))
+            .addGroup(pBuscarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txt_buscar)
+                .addContainerGap())
+        );
+        pBuscarLayout.setVerticalGroup(
+            pBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pBuscarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbl_buscar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbl_descripcion)
+                    .addComponent(lbl_codigo))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lbl_descripcion)
-                        .addGap(18, 18, 18)
-                        .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(6, 6, 6)
+                        .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lbl_codigo)
-                        .addGap(38, 38, 38)
-                        .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,11 +468,15 @@ public class fr_sucursal extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_codigo)
                     .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_descripcion)
-                    .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                    .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_descripcion))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         Tabla.setModel(new javax.swing.table.DefaultTableModel(
@@ -216,6 +490,11 @@ public class fr_sucursal extends javax.swing.JInternalFrame {
                 "Codigo", "Descripcion"
             }
         ));
+        Tabla.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TablaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(Tabla);
 
         jToolBar1.setFloatable(false);
@@ -226,6 +505,11 @@ public class fr_sucursal extends javax.swing.JInternalFrame {
         bt_buscar.setFocusable(false);
         bt_buscar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_buscar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_buscarActionPerformed(evt);
+            }
+        });
         jToolBar1.add(bt_buscar);
 
         bt_agregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit_add32.png"))); // NOI18N
@@ -243,6 +527,11 @@ public class fr_sucursal extends javax.swing.JInternalFrame {
         bt_modificar.setFocusable(false);
         bt_modificar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_modificar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_modificarActionPerformed(evt);
+            }
+        });
         jToolBar1.add(bt_modificar);
 
         bt_guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/3floppy_unmount32.png"))); // NOI18N
@@ -271,31 +560,67 @@ public class fr_sucursal extends javax.swing.JInternalFrame {
         bt_eliminar.setFocusable(false);
         bt_eliminar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_eliminar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_eliminarActionPerformed(evt);
+            }
+        });
         jToolBar1.add(bt_eliminar);
 
         bt_inicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/2leftarrow32.png"))); // NOI18N
         bt_inicio.setFocusable(false);
         bt_inicio.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_inicio.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_inicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_inicioActionPerformed(evt);
+            }
+        });
         jToolBar1.add(bt_inicio);
 
         bt_atras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/1leftarrow32.png"))); // NOI18N
         bt_atras.setFocusable(false);
         bt_atras.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_atras.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_atras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_atrasActionPerformed(evt);
+            }
+        });
         jToolBar1.add(bt_atras);
 
         bt_adelante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/1rightarrow32.png"))); // NOI18N
         bt_adelante.setFocusable(false);
         bt_adelante.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_adelante.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_adelante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_adelanteActionPerformed(evt);
+            }
+        });
         jToolBar1.add(bt_adelante);
 
         bt_fin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/2rightarrow32.png"))); // NOI18N
         bt_fin.setFocusable(false);
         bt_fin.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_fin.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_fin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_finActionPerformed(evt);
+            }
+        });
         jToolBar1.add(bt_fin);
+
+        bt_imprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/print32.png"))); // NOI18N
+        bt_imprimir.setFocusable(false);
+        bt_imprimir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_imprimir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_imprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_imprimirActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(bt_imprimir);
 
         bt_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/kfm_home32.png"))); // NOI18N
         bt_salir.setFocusable(false);
@@ -326,10 +651,10 @@ public class fr_sucursal extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -348,29 +673,193 @@ public class fr_sucursal extends javax.swing.JInternalFrame {
 
     private void bt_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_salirActionPerformed
         // TODO add your handling code here:
-        dispose();
-        MenuPrincipal.setEnabled(true);
-        MenuPrincipal.setVisible(true);
+        if(txt_codigo.getText().equals("")||txt_descripcion.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Formulario no puede ser cerrado, existe algun proceso abierto");
+        }else{
+            dispose();
+            MenuPrincipal.setEnabled(true);
+            MenuPrincipal.setVisible(true);
+        }
     }//GEN-LAST:event_bt_salirActionPerformed
 
     private void bt_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_agregarActionPerformed
         // TODO add your handling code here:
+         agrego=true;
         habilitar();
     }//GEN-LAST:event_bt_agregarActionPerformed
 
     private void bt_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelarActionPerformed
-        // TODO add your handling code here:
-        deshabilitar();
-    }//GEN-LAST:event_bt_cancelarActionPerformed
-
-    private void bt_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_guardarActionPerformed
         try {
             // TODO add your handling code here:
-            insertar();
+            deshabilitar();
         } catch (SQLException ex) {
             Logger.getLogger(fr_sucursal.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }//GEN-LAST:event_bt_cancelarActionPerformed
+
+    private void bt_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_guardarActionPerformed
+       if(txt_codigo.getText().equals("")||txt_descripcion.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Los campos no pueden estar en blanco");
+        }else{
+            try {
+               if(agrego==true){
+                insertar();
+               }else{
+                modificar();
+               }
+            } catch (SQLException ex) {
+                Logger.getLogger(fr_colores.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_bt_guardarActionPerformed
+
+    private void txt_buscarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_buscarFocusLost
+        // TODO add your handling code here:
+          try {           
+            cancelar=true; agrego=false; modifico=false; eliminar=false;
+            deshabilitar();
+        } catch (SQLException ex) {
+            Logger.getLogger(fr_colores.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_txt_buscarFocusLost
+
+    private void txt_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_buscarActionPerformed
+        // TODO add your handling code here:
+       buscar();
+    }//GEN-LAST:event_txt_buscarActionPerformed
+
+    private void bt_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_modificarActionPerformed
+        // TODO add your handling code here:
+        modifico=true;
+        habilitar();
+    }//GEN-LAST:event_bt_modificarActionPerformed
+
+    private void bt_adelanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_adelanteActionPerformed
+        // TODO add your handling code here:
+         // TODO add your handling code here:
+        CallableStatement cs = null;
+        Connection conn =  null;
+        ResultSet rs = null;
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            cs = conn.prepareCall("{call getSucursal(?,?)}");
+            rs = cs.executeQuery();
+            
+            if(rs.isLast()){
+                 JOptionPane.showMessageDialog(null, "Registro Final");
+            }else{
+                rs.next();
+                txt_codigo.setText(rs.getString(1));
+                txt_descripcion.setText(rs.getString(2));
+            }   
+        }catch(Exception e){
+            System.out.println("Error en Metodo Adelante"+e);
+        }       
+    }//GEN-LAST:event_bt_adelanteActionPerformed
+
+    private void bt_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_eliminarActionPerformed
+        // TODO add your handling code here:
+         // TODO add your handling code here:
+        int ax = JOptionPane.showConfirmDialog(null, "Desea Eliminar este Registro?");
+            if(ax == JOptionPane.YES_OPTION){
+                eliminar();
+            } 
+    }//GEN-LAST:event_bt_eliminarActionPerformed
+
+    private void bt_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_buscarActionPerformed
+        // TODO add your handling code here:
+       buscar=true;
+       habilitarBuscar();
+    }//GEN-LAST:event_bt_buscarActionPerformed
+
+    private void bt_inicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_inicioActionPerformed
+        // TODO add your handling code here:
+        CallableStatement cs = null;
+        Connection conn =  null;
+        ResultSet rs = null;
+       
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            cs = conn.prepareCall("{call getSucursal(?,?)}");
+            rs = cs.executeQuery();
+            
+            if(rs.first()){
+                 txt_codigo.setText(rs.getString("codigo"));
+                 txt_descripcion.setText(rs.getString("descripcion"));
+            }   
+        }catch(Exception e){
+            System.out.println("Error en Metodo Adelante"+e);
+        }       
+    }//GEN-LAST:event_bt_inicioActionPerformed
+
+    private void bt_finActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_finActionPerformed
+        // TODO add your handling code here:
+        CallableStatement cs = null;
+        Connection conn =  null;
+        ResultSet rs = null;
+       
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            cs = conn.prepareCall("{call getSucursal(?,?)}");
+            rs = cs.executeQuery();
+            
+            if(rs.last()){
+                 txt_codigo.setText(rs.getString("codigo"));
+                 txt_descripcion.setText(rs.getString("descripcion"));
+            }   
+        }catch(Exception e){
+            System.out.println("Error en Metodo Adelante"+e);
+        }       
+    }//GEN-LAST:event_bt_finActionPerformed
+
+    private void bt_atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_atrasActionPerformed
+        // TODO add your handling code here:
+        CallableStatement cs = null;
+        Connection conn =  null;
+        ResultSet rs = null;
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            cs = conn.prepareCall("{call getSucursal(?,?)}");
+            rs = cs.executeQuery();
+            
+            if(rs.isFirst()){
+                 JOptionPane.showMessageDialog(null, "Registro Inicial");
+            }else{
+                rs.previous();
+                txt_codigo.setText(rs.getString(1));
+                txt_descripcion.setText(rs.getString(2));
+            }   
+        }catch(Exception e){
+            System.out.println("Error en Metodo Adelante"+e);
+        }         
+    }//GEN-LAST:event_bt_atrasActionPerformed
+
+    private void bt_imprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_imprimirActionPerformed
+        // TODO add your handling code here:
+        imprimir(evt);
+    }//GEN-LAST:event_bt_imprimirActionPerformed
+
+    private void TablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaMouseClicked
+        // TODO add your handling code here:
+        /*
+        int filaseleccionada;
+        try{
+            filaseleccionada = Tabla.getSelectedRow();
+            
+                if(filaseleccionada == -1){
+                    JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna fila");
+                }else{
+                    DefaultTableModel modelotabla=(DefaultTableModel) Tabla.getModel();
+                    String codigo = (String)modelotabla.getValueAt(filaseleccionada, 1);
+                    String descri = (String) modelotabla.getValueAt(filaseleccionada, 2);
+                    txt_codigo.setText(codigo);
+                    txt_codigo.setText(descri);
+                }
+            }catch (HeadlessException ex){
+             JOptionPane.showMessageDialog(null, "Error: "+ex+"\nInténtelo nuevamente", " .::Error En la Operacion::." ,JOptionPane.ERROR_MESSAGE);
+       }    
+       */
+    }//GEN-LAST:event_TablaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -383,6 +872,7 @@ public class fr_sucursal extends javax.swing.JInternalFrame {
     public static javax.swing.JButton bt_eliminar;
     public static javax.swing.JButton bt_fin;
     public static javax.swing.JButton bt_guardar;
+    private javax.swing.JButton bt_imprimir;
     public static javax.swing.JButton bt_inicio;
     public static javax.swing.JButton bt_modificar;
     public static javax.swing.JButton bt_salir;
@@ -390,8 +880,11 @@ public class fr_sucursal extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JToolBar jToolBar1;
+    private javax.swing.JLabel lbl_buscar;
     private javax.swing.JLabel lbl_codigo;
     private javax.swing.JLabel lbl_descripcion;
+    private javax.swing.JPanel pBuscar;
+    private javax.swing.JTextField txt_buscar;
     private javax.swing.JTextField txt_codigo;
     private javax.swing.JTextField txt_descripcion;
     // End of variables declaration//GEN-END:variables

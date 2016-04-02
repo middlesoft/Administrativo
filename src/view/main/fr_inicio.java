@@ -30,6 +30,9 @@ public class fr_inicio extends javax.swing.JFrame {
         Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/middlesoftlogo.png"));
         setIconImage(icon);
         setVisible(true);
+        
+        txt_user.setText("1");
+        txt_pass.setText("1");
     }
     
     public void definirToolTipText(){

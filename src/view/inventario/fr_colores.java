@@ -10,7 +10,10 @@ import connection.conexion;
 import connection.correlativo;
 import controller.ControlColores;
 import java.awt.Dimension;
+import static java.awt.Frame.MAXIMIZED_BOTH;
+import java.awt.HeadlessException;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -20,12 +23,19 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import static view.main.fr_ppal.MenuPrincipal;
 import view.main.fr_ppal;
 import static view.main.fr_ppal.escritorio;
@@ -66,8 +76,6 @@ public class fr_colores extends javax.swing.JInternalFrame {
          llenarTabla();
          agrego=false; modifico=false; eliminar=false; cancelar=false; buscar=false;
          habilitarBuscar();
-         
-    
     }
     
     public void habilitarBuscar(){
@@ -80,8 +88,8 @@ public class fr_colores extends javax.swing.JInternalFrame {
             pBuscar.setVisible(true);
             lbl_buscar.setVisible(true);
             txt_buscar.setVisible(true);
+            Tabla.setEnabled(true);
         }
-        
     }
     
     public void setearText() throws SQLException{
@@ -94,7 +102,7 @@ public class fr_colores extends javax.swing.JInternalFrame {
             conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
             DefaultTableModel dtm = new DefaultTableModel(null,columnas);
                        
-            cs = conn.prepareCall("{call getColores(?,?)}");
+            cs = conn.prepareCall("{call getSucursal(?,?)}");
             rs = cs.executeQuery();
             
             while(rs.next()){
@@ -117,7 +125,7 @@ public class fr_colores extends javax.swing.JInternalFrame {
             conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
             DefaultTableModel dtm = new DefaultTableModel(null,columnas);
             
-            cs = conn.prepareCall("{call getColores(?,?)}");
+            cs = conn.prepareCall("{call getSucursal(?,?)}");
             rs = cs.executeQuery();
             
             cs.registerOutParameter(2, Types.VARCHAR);
@@ -135,9 +143,7 @@ public class fr_colores extends javax.swing.JInternalFrame {
             }
         }catch(Exception e){
             System.out.println("Error al llenar la tabla metodo llenarTabla"+e);
-        }
-       
-        
+        } 
     }
      
     public void insertar() throws SQLException{
@@ -151,7 +157,7 @@ public class fr_colores extends javax.swing.JInternalFrame {
             String codigo = txt_codigo.getText();
             String descri = txt_descripcion.getText();
             
-            cs = conn.prepareCall("{call insertColores(?,?)}");
+            cs = conn.prepareCall("{call insertSucursal(?,?)}");
 
             cs.setString(1, codigo);
             cs.setString(2, descri);
@@ -163,15 +169,12 @@ public class fr_colores extends javax.swing.JInternalFrame {
                 llenarTabla();
                 deshabilitar();
                 agrego=false;
-                
-            }
-            
+            }   
         }catch(Exception e){
             e.printStackTrace();
         }finally{
             close(conn, cs);
-        }
-        
+        }   
     }
     
     public void modificar() throws SQLException{
@@ -185,7 +188,7 @@ public class fr_colores extends javax.swing.JInternalFrame {
             String codigo = txt_codigo.getText();
             String descri = txt_descripcion.getText();
             
-            cs = conn.prepareCall("{call updatColores(?,?)}");
+            cs = conn.prepareCall("{call updatSucursal(?,?)}");
 
             cs.setString(1, codigo);
             cs.setString(2, descri);           
@@ -210,22 +213,19 @@ public class fr_colores extends javax.swing.JInternalFrame {
         CallableStatement cs = null;
         Connection conn =  null;
         ResultSet rs = null;
-        String cod, des;
       
         try{
             conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
             DefaultTableModel dtm = new DefaultTableModel(null,columnas);
-            
             String codigo = txt_codigo.getText();
                        
-            cs = conn.prepareCall("{call deletColores(?)}");
+            cs = conn.prepareCall("{call deletSucursal(?)}");
             cs.setString(1, codigo);
             rs = cs.executeQuery();
             
             setearText();
-            llenarTabla();
-            
-             JOptionPane.showMessageDialog(null, "Su Registro fue eliminado exitosamente");
+            llenarTabla();           
+            JOptionPane.showMessageDialog(null, "Su Registro fue eliminado exitosamente");
             
         }catch(Exception e){
             System.out.println("Error al eliminar registro en Metodo eliminar"+e);
@@ -242,7 +242,7 @@ public class fr_colores extends javax.swing.JInternalFrame {
             DefaultTableModel dtm = new DefaultTableModel(null,columnas);
             
             String codigo = txt_buscar.getText();
-            cs = conn.prepareCall("{call findColores(?,?,?)}");            
+            cs = conn.prepareCall("{call findSucursal(?,?,?)}");            
             cs.setString(1, codigo);
             rs = cs.executeQuery();
            
@@ -259,12 +259,10 @@ public class fr_colores extends javax.swing.JInternalFrame {
         }       
     }
        
-    private static void close(Connection conn, Statement cs) throws SQLException {
-		
+    private static void close(Connection conn, Statement cs) throws SQLException {		
         if (cs != null) {
                 cs.close();
         }
-
         if (conn != null) {
                 conn.close();
         }
@@ -277,8 +275,7 @@ public class fr_colores extends javax.swing.JInternalFrame {
         Consecutivo = codigo.numconsecutivo("SELECT CONCAT(REPEAT('0',6-LENGTH(CONVERT(MAX(CODIGO)+1,CHAR(6)))),CONVERT(MAX(CODIGO)+1,CHAR(6))) AS CODIGO FROM COLORES");
         if (Consecutivo==null) {
             Consecutivo="000001";
-        }
-              
+        }      
         this.txt_codigo.setText(Consecutivo);
     }
     
@@ -307,12 +304,10 @@ public class fr_colores extends javax.swing.JInternalFrame {
             llenarTabla();
         }else{
            limpiarText();
-        }
-           
+        }    
     }
     
     public void habilitar(){
-    
         txt_codigo.setEnabled(true);
         txt_descripcion.setEnabled(true);
         bt_buscar.setEnabled(false);
@@ -332,6 +327,39 @@ public class fr_colores extends javax.swing.JInternalFrame {
             txt_descripcion.setText("");
         }else{
             modifico=true;
+        }
+    }
+
+    public void imprimir(java.awt.event.ActionEvent evt) {
+        String codigo=(txt_codigo.getText().toString());
+        System.out.println("Codigo Color: "+codigo);
+        JOptionPane.showMessageDialog(null, "EN CONSTRUCCION");
+       /*Quitar comentario cuando se vaya a ejecutar el reporte
+        startReport(codigo);
+        */
+    }
+    
+    public void startReport(String codigo){
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            File jasper = new File(System.getProperty("user.dir")+"\\src\\informes\\"+"Factura.jasper");
+            System.out.println("Jasper: "+jasper);
+            
+            JasperReport reporte=null;
+            reporte=(JasperReport) JRLoader.loadObject(jasper);
+
+            Map param=new HashMap();
+            param.put("codigo", codigo);
+
+            System.out.println("Codigo Color:"+codigo);
+            JasperPrint jasperprinter = JasperFillManager.fillReport(reporte,param,conn);
+            System.out.println(jasperprinter);
+            JasperViewer vista = new JasperViewer(jasperprinter,false);
+            vista.setTitle("Reporte de Colores");
+            vista.setExtendedState(MAXIMIZED_BOTH);
+            vista.setVisible(true);
+        }catch(Exception e){
+            javax.swing.JOptionPane.showMessageDialog(null, e);
         }
     }
     
@@ -364,6 +392,7 @@ public class fr_colores extends javax.swing.JInternalFrame {
         bt_atras = new javax.swing.JButton();
         bt_adelante = new javax.swing.JButton();
         bt_fin = new javax.swing.JButton();
+        bt_imprimir = new javax.swing.JButton();
         bt_salir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabla = new javax.swing.JTable();
@@ -559,6 +588,17 @@ public class fr_colores extends javax.swing.JInternalFrame {
         });
         jToolBar1.add(bt_fin);
 
+        bt_imprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/print32.png"))); // NOI18N
+        bt_imprimir.setFocusable(false);
+        bt_imprimir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_imprimir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_imprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_imprimirActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(bt_imprimir);
+
         bt_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/kfm_home32.png"))); // NOI18N
         bt_salir.setFocusable(false);
         bt_salir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -590,6 +630,9 @@ public class fr_colores extends javax.swing.JInternalFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 TablaMouseClicked(evt);
             }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                TablaMousePressed(evt);
+            }
         });
         jScrollPane1.setViewportView(Tabla);
 
@@ -603,7 +646,7 @@ public class fr_colores extends javax.swing.JInternalFrame {
                     .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -625,7 +668,9 @@ public class fr_colores extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -633,9 +678,14 @@ public class fr_colores extends javax.swing.JInternalFrame {
 
     private void bt_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_salirActionPerformed
         // TODO add your handling code here:
-        dispose();
-        MenuPrincipal.setEnabled(true);
-        MenuPrincipal.setVisible(true);
+        if(txt_codigo.getText().equals("")||txt_descripcion.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Formulario no puede ser cerrado, existe algun proceso abierto");
+        }else{
+            dispose();
+            MenuPrincipal.setEnabled(true);
+            MenuPrincipal.setVisible(true);
+        }
+       
     }//GEN-LAST:event_bt_salirActionPerformed
 
     private void bt_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_agregarActionPerformed
@@ -678,7 +728,25 @@ public class fr_colores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_bt_modificarActionPerformed
 
     private void TablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaMouseClicked
-        // TODO add your handling code here:  
+        // TODO add your handling code here:
+        /*
+        int filaseleccionada;
+        try{
+            filaseleccionada = Tabla.getSelectedRow();
+            
+                if(filaseleccionada == -1){
+                    JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna fila");
+                }else{
+                    DefaultTableModel modelotabla=(DefaultTableModel) Tabla.getModel();
+                    String codigo = (String)modelotabla.getValueAt(filaseleccionada, 1);
+                    String descri = (String) modelotabla.getValueAt(filaseleccionada, 2);
+                    txt_codigo.setText(codigo);
+                    txt_codigo.setText(descri);
+                }
+            }catch (HeadlessException ex){
+             JOptionPane.showMessageDialog(null, "Error: "+ex+"\nInténtelo nuevamente", " .::Error En la Operacion::." ,JOptionPane.ERROR_MESSAGE);
+       }    
+       */
     }//GEN-LAST:event_TablaMouseClicked
 
     private void bt_adelanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_adelanteActionPerformed
@@ -731,7 +799,6 @@ public class fr_colores extends javax.swing.JInternalFrame {
             if(ax == JOptionPane.YES_OPTION){
                 eliminar();
             }           
-
     }//GEN-LAST:event_bt_eliminarActionPerformed
 
     private void bt_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_buscarActionPerformed
@@ -788,6 +855,16 @@ public class fr_colores extends javax.swing.JInternalFrame {
             System.out.println("Error en Metodo Adelante"+e);
         }       
     }//GEN-LAST:event_bt_finActionPerformed
+
+    private void bt_imprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_imprimirActionPerformed
+        // TODO add your handling code here:
+        imprimir(evt);
+    }//GEN-LAST:event_bt_imprimirActionPerformed
+
+    private void TablaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaMousePressed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_TablaMousePressed
         
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JTable Tabla;
@@ -799,6 +876,7 @@ public class fr_colores extends javax.swing.JInternalFrame {
     public static javax.swing.JButton bt_eliminar;
     public static javax.swing.JButton bt_fin;
     public static javax.swing.JButton bt_guardar;
+    private javax.swing.JButton bt_imprimir;
     public static javax.swing.JButton bt_inicio;
     public static javax.swing.JButton bt_modificar;
     public static javax.swing.JButton bt_salir;

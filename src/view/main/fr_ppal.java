@@ -577,17 +577,25 @@ public class fr_ppal extends javax.swing.JFrame implements Runnable {
     }//GEN-LAST:event_GruposActionPerformed
 
     private void TallasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TallasActionPerformed
-        // TODO add your handling code here:
-        fr_tallas talla = new fr_tallas();
-        escritorio.add(talla);
-        talla.show();
+        try {
+            // TODO add your handling code here:
+            fr_tallas talla = new fr_tallas();
+            escritorio.add(talla);
+            talla.show();
+        } catch (SQLException ex) {
+            Logger.getLogger(fr_ppal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_TallasActionPerformed
 
     private void SucursalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SucursalActionPerformed
-        // TODO add your handling code here:
-        fr_sucursal suc = new fr_sucursal();
-        escritorio.add(suc);
-        suc.show();
+        try {
+            // TODO add your handling code here:
+            fr_sucursal suc = new fr_sucursal();
+            escritorio.add(suc);
+            suc.show();
+        } catch (SQLException ex) {
+            Logger.getLogger(fr_ppal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_SucursalActionPerformed
 
     /**
