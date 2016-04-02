@@ -27,26 +27,8 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
-import static view.inventario.fr_colores.bt_adelante;
-import static view.inventario.fr_colores.bt_agregar;
-import static view.inventario.fr_colores.bt_atras;
-import static view.inventario.fr_colores.bt_buscar;
-import static view.inventario.fr_colores.bt_cancelar;
-import static view.inventario.fr_colores.bt_eliminar;
-import static view.inventario.fr_colores.bt_fin;
-import static view.inventario.fr_colores.bt_guardar;
-import static view.inventario.fr_colores.bt_inicio;
-import static view.inventario.fr_colores.bt_modificar;
-import static view.inventario.fr_tallas.bt_adelante;
-import static view.inventario.fr_tallas.bt_agregar;
-import static view.inventario.fr_tallas.bt_atras;
-import static view.inventario.fr_tallas.bt_buscar;
-import static view.inventario.fr_tallas.bt_cancelar;
-import static view.inventario.fr_tallas.bt_eliminar;
-import static view.inventario.fr_tallas.bt_fin;
-import static view.inventario.fr_tallas.bt_guardar;
-import static view.inventario.fr_tallas.bt_inicio;
-import static view.inventario.fr_tallas.bt_modificar;
+import static view.inventario.fr_colores.txt_codigo;
+import static view.inventario.fr_colores.txt_descripcion;
 import static view.main.fr_ppal.MenuPrincipal;
 import static view.main.fr_ppal.escritorio;
 
@@ -55,7 +37,7 @@ import static view.main.fr_ppal.escritorio;
  * @author Kel
  */
 public class fr_unidades extends javax.swing.JInternalFrame {
-        public static DefaultTableModel dtm;
+     public static DefaultTableModel dtm;
         public boolean agrego = false, modifico = false, eliminar=false, cancelar=false,  buscar=false;
         private int i;
         public String [] columnas;
@@ -63,7 +45,6 @@ public class fr_unidades extends javax.swing.JInternalFrame {
         CallableStatement cs = null;
         Connection conn =  null;
         ResultSet rs = null;
-        
     /**
      * Creates new form fr_unidades
      */
@@ -73,14 +54,14 @@ public class fr_unidades extends javax.swing.JInternalFrame {
         centrar();
     }
     
-     public void centrar(){
+    public void centrar(){
         Dimension desktopSize = escritorio.getSize();
         Dimension jInternalFrameSize = this.getSize();
         this.setLocation((desktopSize.width - jInternalFrameSize.width)/2,(desktopSize.height- jInternalFrameSize.height)/2);
     }
     
     public void iniciar() throws SQLException{
-         this.setTitle("Tallas");
+         this.setTitle("Unidades");
          deshabilitar(); 
          setearText();
          llenarTabla();
@@ -201,7 +182,9 @@ public class fr_unidades extends javax.swing.JInternalFrame {
             cs = conn.prepareCall("{call updatUnidades(?,?)}");
 
             cs.setString(1, codigo);
-            cs.setString(2, descri);           
+            System.out.println("unidades: "+codigo);
+            cs.setString(2, descri);    
+            System.out.println("unidades: "+descri);
             cs.execute();            
             
             if(modifico==true){
@@ -407,8 +390,6 @@ public class fr_unidades extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabla = new javax.swing.JTable();
 
-        setPreferredSize(new java.awt.Dimension(495, 384));
-
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Información de Unidades", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
         jPanel2.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
 
@@ -467,7 +448,7 @@ public class fr_unidades extends javax.swing.JInternalFrame {
                     .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(pBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -486,7 +467,7 @@ public class fr_unidades extends javax.swing.JInternalFrame {
                 .addGap(0, 11, Short.MAX_VALUE))
         );
 
-                jToolBar1.setFloatable(false);
+        jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
         jToolBar1.setOpaque(false);
 
@@ -524,7 +505,6 @@ public class fr_unidades extends javax.swing.JInternalFrame {
         jToolBar1.add(bt_modificar);
 
         bt_guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/3floppy_unmount32.png"))); // NOI18N
-        bt_guardar.setActionCommand("guardar");
         bt_guardar.setFocusable(false);
         bt_guardar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_guardar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -644,8 +624,11 @@ public class fr_unidades extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -664,7 +647,7 @@ public class fr_unidades extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -674,41 +657,35 @@ public class fr_unidades extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bt_imprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_imprimirActionPerformed
+    private void txt_buscarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_buscarFocusLost
         // TODO add your handling code here:
-        imprimir(evt);
-    }//GEN-LAST:event_bt_imprimirActionPerformed
+    }//GEN-LAST:event_txt_buscarFocusLost
 
-    private void bt_salirActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    private void txt_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_buscarActionPerformed
         // TODO add your handling code here:
-       if(txt_codigo.getText().equals("")||txt_descripcion.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Formulario no puede ser cerrado, existe algun proceso abierto");
-        }else{
-            dispose();
-            MenuPrincipal.setEnabled(true);
-            MenuPrincipal.setVisible(true);
-        }
-    }        
+        buscar();
+    }//GEN-LAST:event_txt_buscarActionPerformed
 
-	private void bt_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_agregarActionPerformed
-			// TODO add your handling code here:
-			agrego=true;
-			habilitar();
-		}//GEN-LAST:event_bt_agregarActionPerformed
-		
+    private void bt_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_buscarActionPerformed
+        // TODO add your handling code here:
+       buscar=true;
+       habilitarBuscar();
+    }//GEN-LAST:event_bt_buscarActionPerformed
 
-                                    
+    private void bt_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_agregarActionPerformed
+        // TODO add your handling code here:
+        agrego=true;
+        habilitar();
+    }//GEN-LAST:event_bt_agregarActionPerformed
 
-    private void bt_cancelarActionPerformed(java.awt.event.ActionEvent evt) {                                            
-       try {           
-            cancelar=true; agrego=false; modifico=false; eliminar=false;
-            deshabilitar();
-        } catch (SQLException ex) {
-            Logger.getLogger(fr_colores.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }                                           
+    private void bt_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_modificarActionPerformed
+        // TODO add your handling code here:
+        modifico=true;
+        habilitar();
+    }//GEN-LAST:event_bt_modificarActionPerformed
 
-    private void bt_guardarActionPerformed(java.awt.event.ActionEvent evt) {                                           
+    private void bt_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_guardarActionPerformed
+        // TODO add your handling code here:
          if(txt_codigo.getText().equals("")||txt_descripcion.getText().equals("")){
             JOptionPane.showMessageDialog(null, "Los campos no pueden estar en blanco");
         }else{
@@ -722,47 +699,85 @@ public class fr_unidades extends javax.swing.JInternalFrame {
                 Logger.getLogger(fr_colores.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
-    }                                          
+    }//GEN-LAST:event_bt_guardarActionPerformed
 
-    private void txt_buscarFocusLost(java.awt.event.FocusEvent evt) {                                     
+    private void bt_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelarActionPerformed
         // TODO add your handling code here:
-    }                                    
+        try {           
+            cancelar=true; agrego=false; modifico=false; eliminar=false;
+            deshabilitar();
+        } catch (SQLException ex) {
+            Logger.getLogger(fr_colores.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_bt_cancelarActionPerformed
 
-    private void txt_buscarActionPerformed(java.awt.event.ActionEvent evt) {                                           
+    private void bt_imprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_imprimirActionPerformed
         // TODO add your handling code here:
-        buscar();
-    }                                          
-                                      
+        imprimir(evt);
+    }//GEN-LAST:event_bt_imprimirActionPerformed
 
-    private void bt_modificarActionPerformed(java.awt.event.ActionEvent evt) {                                             
+    private void bt_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_salirActionPerformed
         // TODO add your handling code here:
-        
-    }                                            
+        if(txt_codigo.getText().equals("")||txt_descripcion.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Formulario no puede ser cerrado, existe algun proceso abierto");
+        }else{
+            dispose();
+            MenuPrincipal.setEnabled(true);
+            MenuPrincipal.setVisible(true);
+        }
+    }//GEN-LAST:event_bt_salirActionPerformed
 
-    private void TablaMouseClicked(java.awt.event.MouseEvent evt) {                                   
+    private void bt_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_eliminarActionPerformed
         // TODO add your handling code here:
-         /*
-        int filaseleccionada;
+         int ax = JOptionPane.showConfirmDialog(null, "Desea Eliminar este Registro?");
+            if(ax == JOptionPane.YES_OPTION){
+                eliminar();
+            } 
+    }//GEN-LAST:event_bt_eliminarActionPerformed
+
+    private void bt_inicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_inicioActionPerformed
+        // TODO add your handling code here:
+        CallableStatement cs = null;
+        Connection conn =  null;
+        ResultSet rs = null;
+       
         try{
-            filaseleccionada = Tabla.getSelectedRow();
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            cs = conn.prepareCall("{call getUnidades(?,?)}");
+            rs = cs.executeQuery();
             
-                if(filaseleccionada == -1){
-                    JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna fila");
-                }else{
-                    DefaultTableModel modelotabla=(DefaultTableModel) Tabla.getModel();
-                    String codigo = (String)modelotabla.getValueAt(filaseleccionada, 1);
-                    String descri = (String) modelotabla.getValueAt(filaseleccionada, 2);
-                    txt_codigo.setText(codigo);
-                    txt_codigo.setText(descri);
-                }
-            }catch (HeadlessException ex){
-             JOptionPane.showMessageDialog(null, "Error: "+ex+"\nInténtelo nuevamente", " .::Error En la Operacion::." ,JOptionPane.ERROR_MESSAGE);
-       }    
-       */
-    }                                  
+            if(rs.first()){
+                 txt_codigo.setText(rs.getString("codigo"));
+                 txt_descripcion.setText(rs.getString("descripcion"));
+            }   
+        }catch(Exception e){
+            System.out.println("Error en Metodo Adelante"+e);
+        }       
+    }//GEN-LAST:event_bt_inicioActionPerformed
 
-    private void bt_adelanteActionPerformed(java.awt.event.ActionEvent evt) {                                            
+    private void bt_atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_atrasActionPerformed
+        // TODO add your handling code here:
+        CallableStatement cs = null;
+        Connection conn =  null;
+        ResultSet rs = null;
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            cs = conn.prepareCall("{call getUnidades(?,?)}");
+            rs = cs.executeQuery();
+            
+            if(rs.isFirst()){
+                 JOptionPane.showMessageDialog(null, "Registro Inicial");
+            }else{
+                rs.previous();
+                txt_codigo.setText(rs.getString(1));
+                txt_descripcion.setText(rs.getString(2));
+            }   
+        }catch(Exception e){
+            System.out.println("Error en Metodo Adelante"+e);
+        }    
+    }//GEN-LAST:event_bt_atrasActionPerformed
+
+    private void bt_adelanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_adelanteActionPerformed
         // TODO add your handling code here:
         CallableStatement cs = null;
         Connection conn =  null;
@@ -782,65 +797,9 @@ public class fr_unidades extends javax.swing.JInternalFrame {
         }catch(Exception e){
             System.out.println("Error en Metodo Adelante"+e);
         }       
-    }                                           
+    }//GEN-LAST:event_bt_adelanteActionPerformed
 
-    private void bt_atrasActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
-        CallableStatement cs = null;
-        Connection conn =  null;
-        ResultSet rs = null;
-        try{
-            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
-            cs = conn.prepareCall("{call getUnidades(?,?)}");
-            rs = cs.executeQuery();
-            
-            if(rs.isFirst()){
-                 JOptionPane.showMessageDialog(null, "Registro Inicial");
-            }else{
-                rs.previous();
-                txt_codigo.setText(rs.getString(1));
-                txt_descripcion.setText(rs.getString(2));
-            }   
-        }catch(Exception e){
-            System.out.println("Error en Metodo Adelante"+e);
-        }         
-    }                                        
-
-    private void bt_eliminarActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        // TODO add your handling code here:
-        int ax = JOptionPane.showConfirmDialog(null, "Desea Eliminar este Registro?");
-            if(ax == JOptionPane.YES_OPTION){
-                eliminar();
-            }   
-    }                                           
-
-    private void bt_buscarActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        // TODO add your handling code here:
-        buscar=true;
-        habilitarBuscar();
-    }                                         
-
-    private void bt_inicioActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        // TODO add your handling code here:
-        CallableStatement cs = null;
-        Connection conn =  null;
-        ResultSet rs = null;
-       
-        try{
-            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
-            cs = conn.prepareCall("{call getUnidades(?,?)}");
-            rs = cs.executeQuery();
-            
-            if(rs.first()){
-                 txt_codigo.setText(rs.getString("codigo"));
-                 txt_descripcion.setText(rs.getString("descripcion"));
-            }   
-        }catch(Exception e){
-            System.out.println("Error en Metodo Adelante"+e);
-        }       
-    }                                         
-
-    private void bt_finActionPerformed(java.awt.event.ActionEvent evt) {                                       
+    private void bt_finActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_finActionPerformed
         // TODO add your handling code here:
         CallableStatement cs = null;
         Connection conn =  null;
@@ -858,8 +817,7 @@ public class fr_unidades extends javax.swing.JInternalFrame {
         }catch(Exception e){
             System.out.println("Error en Metodo Adelante"+e);
         }       
-    }                                      
-
+    }//GEN-LAST:event_bt_finActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
