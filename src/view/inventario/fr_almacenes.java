@@ -66,7 +66,7 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
         initComponents();
         iniciar();
         centrar();
-        cargarSucursal();
+       
     }
     
     public void centrar(){
@@ -80,9 +80,10 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
          deshabilitar(); 
          setearText();
          llenarTabla();
-         
+         obtenerDatos();
          agrego=false; modifico=false; eliminar=false; cancelar=false; buscar=false;
          habilitarBuscar();
+         
     }
     
     public void habilitarBuscar(){
@@ -136,7 +137,6 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
             conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
             JComboBox cbo = new JComboBox();
             String suc = (String) cbo_sucursal.getSelectedItem();
-            //String codsuc = (String) cbo_sucursal.getSelectedItem();
             cbo_sucursal.removeAllItems();
             
             cs = conn.prepareCall("{call getSucursal(?,?)}");
@@ -146,8 +146,7 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
             for(int i=0; i<=suc.length(); i++){
                   while(rs.next()){ 
                     codsuc = rs.getString("CODIGO");
-                    suc = rs.getString("DESCRIPCION");
-                    
+                    suc = rs.getString("DESCRIPCION");                   
                     cbo_sucursal.addItem(codsuc.concat(" - "+suc));
                 }
                 System.out.println("DESCRIPCION SUCURSAL: "+suc);
@@ -156,6 +155,43 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
         }catch(Exception e){
            System.out.println("Error al llenar la tabla Metodo cargarSucursal"+e); 
         }  
+    }
+    
+    public void obtenerDatos() throws SQLException{
+        CallableStatement cs = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        String cod, des;
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            DefaultTableModel dtm = new DefaultTableModel(null,columnas);
+            
+            String codigo = txt_codigo.getText();
+            String suc = (String) cbo_sucursal.getSelectedItem();
+            cbo_sucursal.removeAllItems();
+            
+            cs = conn.prepareCall("{call findAlmacen(?,?,?)}");            
+            cs.setString(1, codigo);
+            rs = cs.executeQuery();
+     
+           for(int i=0; i<=codigo.length(); i++){
+                  while(rs.next()){
+                    cod = rs.getString("CODIGO");
+                    des = rs.getString("DESCRIPCION");
+                    codsuc = rs.getString("CODSU");
+                    suc = rs.getString("SUCDES");
+                    txt_codigo.setText(cod);
+                    txt_descripcion.setText(des); 
+                    cbo_sucursal.addItem(codsuc.concat(" - "+suc));
+                }
+            } 
+        }catch(Exception e){
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al obtener registro intente nuevamente");
+        } finally{
+            close(conn, cs);
+        }  
+        
     }
 
     public void llenarTabla() throws SQLException{
@@ -233,6 +269,7 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
             conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
             String codigo = txt_codigo.getText();
             String descri = txt_descripcion.getText();
+            String suc = (String) cbo_sucursal.getSelectedItem();
             
             cs = conn.prepareCall("{call updatAlmacen(?,?,?)}");
 
@@ -253,6 +290,7 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
         if(modifico==true){
                 JOptionPane.showMessageDialog(null, "Su Registro fue modificado exitosamente");
                 setearText();
+                obtenerDatos();
                 llenarTabla();
                 deshabilitar();
                 modifico=false; 
@@ -306,7 +344,7 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
             cs.setString(1, codigo);
             rs = cs.executeQuery();
      
-           for(int i=0; i<=suc.length(); i++){
+           for(int i=0; i<=codigo.length(); i++){
                   while(rs.next()){
                     cod = rs.getString("CODIGO");
                     des = rs.getString("DESCRIPCION");
@@ -325,9 +363,9 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
             close(conn, cs);
         }  
         
-        if(buscar==true){          
-            habilitarBuscar(); 
+        if(buscar==true){   
             buscar=false;
+            habilitarBuscar();  
         }
     }
        
@@ -743,12 +781,15 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         agrego=true;
         habilitar();
+        cargarSucursal();
+        
     }//GEN-LAST:event_bt_agregarActionPerformed
 
     private void bt_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelarActionPerformed
         try {           
             cancelar=true; agrego=false; modifico=false; eliminar=false;
             deshabilitar();
+            obtenerDatos();
         } catch (SQLException ex) {
             Logger.getLogger(fr_colores.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -797,6 +838,8 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         modifico=true;
         habilitar();
+        cargarSucursal();
+        
     }//GEN-LAST:event_bt_modificarActionPerformed
 
     private void bt_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_buscarActionPerformed
