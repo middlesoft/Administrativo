@@ -347,16 +347,16 @@ public class fr_colores extends javax.swing.JInternalFrame {
     public void imprimir(java.awt.event.ActionEvent evt) {
         String codigo=(txt_codigo.getText().toString());
         System.out.println("Codigo Color: "+codigo);
-        JOptionPane.showMessageDialog(null, "EN CONSTRUCCION");
-       /*Quitar comentario cuando se vaya a ejecutar el reporte
+        //JOptionPane.showMessageDialog(null, "EN CONSTRUCCION");
+       /*Quitar comentario cuando se vaya a ejecutar el reporte*/
         startReport(codigo);
-        */
+        
     }
     
     public void startReport(String codigo){
         try{
             conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
-            File jasper = new File(System.getProperty("user.dir")+"\\src\\informes\\"+"Factura.jasper");
+            File jasper = new File(System.getProperty("user.dir")+"\\src\\reportes\\"+"listadecolores.jasper");
             System.out.println("Jasper: "+jasper);
             
             JasperReport reporte=null;
