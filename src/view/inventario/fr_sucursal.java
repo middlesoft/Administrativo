@@ -165,18 +165,23 @@ public class fr_sucursal extends javax.swing.JInternalFrame {
             cs.setString(2, descri);
             cs.execute();          
             
-            if(agrego==true){
+           
+        }catch(Exception e){
+            e.printStackTrace();
+            agrego=false;
+            JOptionPane.showMessageDialog(null, "Su Registro no pudo ser agregado");
+            
+        }finally{
+            close(conn, cs);
+        }  
+        
+         if(agrego==true){
                 JOptionPane.showMessageDialog(null, "Su Registro fue agregado exitosamente");
                 setearText();
                 llenarTabla();
                 deshabilitar();
                 agrego=false;
             }   
-        }catch(Exception e){
-            e.printStackTrace();
-        }finally{
-            close(conn, cs);
-        }   
     }
     
     public void modificar() throws SQLException{
@@ -196,19 +201,21 @@ public class fr_sucursal extends javax.swing.JInternalFrame {
             cs.setString(2, descri);           
             cs.execute();            
             
-            if(modifico==true){
+        }catch(Exception e){
+            e.printStackTrace();
+            modifico=false;
+            JOptionPane.showMessageDialog(null, "Su Registro no pudo ser modificado");
+        }finally{
+            close(conn, cs);
+        }
+        
+        if(modifico==true){
                 JOptionPane.showMessageDialog(null, "Su Registro fue modificado exitosamente");
                 setearText();
                 llenarTabla();
                 deshabilitar();
                 modifico=false; 
-            }
-            
-        }catch(Exception e){
-            e.printStackTrace();
-        }finally{
-            close(conn, cs);
-        }
+         }
     }
     
     public void eliminar() {

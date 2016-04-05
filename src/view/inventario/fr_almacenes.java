@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -57,6 +58,7 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
     CallableStatement cs = null;
     Connection conn =  null;
     ResultSet rs = null;
+    String suc, codsuc;
     /**
      * Creates new form fr_almacenes
      */
@@ -64,6 +66,7 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
         initComponents();
         iniciar();
         centrar();
+        cargarSucursal();
     }
     
     public void centrar(){
@@ -77,6 +80,7 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
          deshabilitar(); 
          setearText();
          llenarTabla();
+         
          agrego=false; modifico=false; eliminar=false; cancelar=false; buscar=false;
          habilitarBuscar();
     }
@@ -87,6 +91,7 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
             lbl_buscar.setVisible(false);
             txt_buscar.setVisible(false);
             txt_buscar.setText("");
+            Tabla.setEnabled(false);
         }else{
             pBuscar.setVisible(true);
             lbl_buscar.setVisible(true);
@@ -99,7 +104,7 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
         CallableStatement cs = null;
         Connection conn =  null;
         ResultSet rs = null;
-        String cod, des;
+        String cod, des,suc;
         
         try{
             conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
@@ -110,13 +115,47 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
             
             while(rs.next()){
                  cod = rs.getString("CODIGO");
-                 des = rs.getString("DESCRIPCION");
+                 des = rs.getString("DESCRIPCION");     
                  txt_codigo.setText(cod);
                  txt_descripcion.setText(des);
+                
+
             }   
         }catch(Exception e){
             System.out.println("Error al llenar la tabla Metodo setearText"+e);
         }       
+    }
+    
+    public void cargarSucursal(){
+        CallableStatement cs = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        
+        try {
+            
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            JComboBox cbo = new JComboBox();
+            String suc = (String) cbo_sucursal.getSelectedItem();
+            //String codsuc = (String) cbo_sucursal.getSelectedItem();
+            cbo_sucursal.removeAllItems();
+            
+            cs = conn.prepareCall("{call getSucursal(?,?)}");
+            rs = cs.executeQuery();
+            
+            
+            for(int i=0; i<=suc.length(); i++){
+                  while(rs.next()){ 
+                    codsuc = rs.getString("CODIGO");
+                    suc = rs.getString("DESCRIPCION");
+                    
+                    cbo_sucursal.addItem(codsuc.concat(" - "+suc));
+                }
+                System.out.println("DESCRIPCION SUCURSAL: "+suc);
+            }
+            
+        }catch(Exception e){
+           System.out.println("Error al llenar la tabla Metodo cargarSucursal"+e); 
+        }  
     }
 
     public void llenarTabla() throws SQLException{
@@ -159,25 +198,29 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
             conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
             String codigo = txt_codigo.getText();
             String descri = txt_descripcion.getText();
-            
-            cs = conn.prepareCall("{call insertAlmacen(?,?)}");
+             
+            cs = conn.prepareCall("{call insertAlmacen(?,?,?)}");
 
             cs.setString(1, codigo);
             cs.setString(2, descri);
+            cs.setString(3, codsuc);
             cs.execute();          
-            
-            if(agrego==true){
+
+        }catch(Exception e){
+            e.printStackTrace();
+            agrego=false;
+            JOptionPane.showMessageDialog(null, "Su Registro no pudo ser agregado");
+        }finally{
+            close(conn, cs);
+        }   
+        
+        if(agrego==true){
                 JOptionPane.showMessageDialog(null, "Su Registro fue agregado exitosamente");
                 setearText();
                 llenarTabla();
                 deshabilitar();
                 agrego=false;
             }   
-        }catch(Exception e){
-            e.printStackTrace();
-        }finally{
-            close(conn, cs);
-        }   
     }
     
     public void modificar() throws SQLException{
@@ -191,75 +234,101 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
             String codigo = txt_codigo.getText();
             String descri = txt_descripcion.getText();
             
-            cs = conn.prepareCall("{call updatAlmacen(?,?)}");
+            cs = conn.prepareCall("{call updatAlmacen(?,?,?)}");
 
             cs.setString(1, codigo);
-            cs.setString(2, descri);           
+            cs.setString(2, descri);
+            cs.setString(3, codsuc);        
             cs.execute();            
+ 
+        }catch(Exception e){
+            e.printStackTrace();
+            modifico=false;
+            JOptionPane.showMessageDialog(null, "Su Registro no pudo ser modificado");
             
-            if(modifico==true){
+        }finally{
+            close(conn, cs);
+        }
+        
+        if(modifico==true){
                 JOptionPane.showMessageDialog(null, "Su Registro fue modificado exitosamente");
                 setearText();
                 llenarTabla();
                 deshabilitar();
                 modifico=false; 
-            }
-            
-        }catch(Exception e){
-            e.printStackTrace();
-        }finally{
-            close(conn, cs);
         }
     }
     
-    public void eliminar() {
+    public void eliminar() throws SQLException {
         CallableStatement cs = null;
         Connection conn =  null;
         ResultSet rs = null;
+        eliminar=true;
       
         try{
             conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
             DefaultTableModel dtm = new DefaultTableModel(null,columnas);
             String codigo = txt_codigo.getText();
                        
-            cs = conn.prepareCall("{call deletSucursal(?)}");
+            cs = conn.prepareCall("{call deletAlmacen(?)}");
             cs.setString(1, codigo);
             rs = cs.executeQuery();
-            
-            setearText();
-            llenarTabla();           
-            JOptionPane.showMessageDialog(null, "Su Registro fue eliminado exitosamente");
-            
+
         }catch(Exception e){
+            e.printStackTrace();
+            eliminar=false;
             System.out.println("Error al eliminar registro en Metodo eliminar"+e);
-        }       
+        }finally{
+            close(conn, cs);
+        } 
+        if(eliminar==true){
+           setearText();
+            llenarTabla();           
+            JOptionPane.showMessageDialog(null, "Su Registro fue eliminado exitosamente"); 
+        }
     }
     
-    public void buscar(){
+    public void buscar() throws SQLException{
         CallableStatement cs = null;
         Connection conn =  null;
         ResultSet rs = null;
         String cod, des;
+        buscar=true;
         try{
             conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
             DefaultTableModel dtm = new DefaultTableModel(null,columnas);
             
             String codigo = txt_buscar.getText();
+            String suc = (String) cbo_sucursal.getSelectedItem();
+            cbo_sucursal.removeAllItems();
+            
             cs = conn.prepareCall("{call findAlmacen(?,?,?)}");            
             cs.setString(1, codigo);
             rs = cs.executeQuery();
-           
-            while(rs.next()){
-                 cod = rs.getString("CODIGO");
-                 des = rs.getString("DESCRIPCION");
-                 txt_codigo.setText(cod);
-                 txt_descripcion.setText(des); 
-            }
-            buscar=false;
-            habilitarBuscar();     
+     
+           for(int i=0; i<=suc.length(); i++){
+                  while(rs.next()){
+                    cod = rs.getString("CODIGO");
+                    des = rs.getString("DESCRIPCION");
+                    codsuc = rs.getString("CODSU");
+                    suc = rs.getString("SUCDES");
+                    txt_codigo.setText(cod);
+                    txt_descripcion.setText(des); 
+                    cbo_sucursal.addItem(codsuc.concat(" - "+suc));
+                }
+            } 
         }catch(Exception e){
-            System.out.println("Error al buscar registro Metodo buscar"+e);
-        }       
+            e.printStackTrace();
+            buscar=false;
+            JOptionPane.showMessageDialog(null, "Error al buscar registro intente nuevamente");
+        } finally{
+            close(conn, cs);
+        }  
+        
+        if(buscar==true){          
+            habilitarBuscar(); 
+            buscar=false;
+        }
     }
        
     private static void close(Connection conn, Statement cs) throws SQLException {		
@@ -291,6 +360,7 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
     public void deshabilitar() throws SQLException{
         txt_codigo.setEnabled(false);
         txt_descripcion.setEnabled(false);
+        cbo_sucursal.setEnabled(false);
         bt_buscar.setEnabled(true);
         bt_eliminar.setEnabled(true);
         bt_guardar.setEnabled(false);
@@ -313,6 +383,7 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
     public void habilitar(){
         txt_codigo.setEnabled(true);
         txt_descripcion.setEnabled(true);
+        cbo_sucursal.setEnabled(true);
         bt_buscar.setEnabled(false);
         bt_eliminar.setEnabled(false);
         bt_guardar.setEnabled(true);
@@ -377,7 +448,7 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        Tabla = new javax.swing.JTable();
         jToolBar1 = new javax.swing.JToolBar();
         bt_buscar = new javax.swing.JButton();
         bt_agregar = new javax.swing.JButton();
@@ -392,9 +463,9 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
         bt_imprimir = new javax.swing.JButton();
         bt_salir = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        lbl_codigo = new javax.swing.JLabel();
+        lbl_descripcion = new javax.swing.JLabel();
+        lbl_sucursal = new javax.swing.JLabel();
         txt_codigo = new javax.swing.JTextField();
         txt_descripcion = new javax.swing.JTextField();
         cbo_sucursal = new javax.swing.JComboBox<>();
@@ -402,7 +473,7 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
         lbl_buscar = new javax.swing.JLabel();
         txt_buscar = new javax.swing.JTextField();
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        Tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -413,7 +484,7 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
                 "Codigo", "Descripción", "Sucursal"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(Tabla);
 
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
@@ -423,6 +494,11 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
         bt_buscar.setFocusable(false);
         bt_buscar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_buscar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_buscarActionPerformed(evt);
+            }
+        });
         jToolBar1.add(bt_buscar);
 
         bt_agregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit_add32.png"))); // NOI18N
@@ -440,6 +516,11 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
         bt_modificar.setFocusable(false);
         bt_modificar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_modificar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_modificarActionPerformed(evt);
+            }
+        });
         jToolBar1.add(bt_modificar);
 
         bt_guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/3floppy_unmount32.png"))); // NOI18N
@@ -523,11 +604,11 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Información de Almacenes", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 11))); // NOI18N
 
-        jLabel1.setText("Codigo");
+        lbl_codigo.setText("Codigo");
 
-        jLabel2.setText("Descripción");
+        lbl_descripcion.setText("Descripción");
 
-        jLabel3.setText("Sucursal");
+        lbl_sucursal.setText("Sucursal");
 
         cbo_sucursal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -574,9 +655,9 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel1))
+                    .addComponent(lbl_descripcion)
+                    .addComponent(lbl_sucursal)
+                    .addComponent(lbl_codigo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -594,15 +675,15 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
                     .addComponent(pBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
+                            .addComponent(lbl_codigo)
                             .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
+                            .addComponent(lbl_descripcion)
                             .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
+                            .addComponent(lbl_sucursal)
                             .addComponent(cbo_sucursal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
@@ -648,10 +729,19 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
 
     private void bt_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_eliminarActionPerformed
         // TODO add your handling code here:
+         int ax = JOptionPane.showConfirmDialog(null, "Desea Eliminar este Registro?");
+            if(ax == JOptionPane.YES_OPTION){
+             try {
+                 eliminar();
+             } catch (SQLException ex) {
+                 Logger.getLogger(fr_almacenes.class.getName()).log(Level.SEVERE, null, ex);
+             }
+            }   
     }//GEN-LAST:event_bt_eliminarActionPerformed
 
     private void bt_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_agregarActionPerformed
         // TODO add your handling code here:
+        agrego=true;
         habilitar();
     }//GEN-LAST:event_bt_agregarActionPerformed
 
@@ -670,11 +760,18 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_bt_salirActionPerformed
 
     private void bt_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_guardarActionPerformed
-        try {
-            // TODO add your handling code here:
-            insertar();
-        } catch (SQLException ex) {
-            Logger.getLogger(fr_almacenes.class.getName()).log(Level.SEVERE, null, ex);
+         if(txt_codigo.getText().equals("")||txt_descripcion.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Los campos no pueden estar en blanco");
+        }else{
+            try {
+               if(agrego==true){
+                insertar();
+               }else{
+                modificar();
+               }
+            } catch (SQLException ex) {
+                Logger.getLogger(fr_colores.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_bt_guardarActionPerformed
 
@@ -683,8 +780,12 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_buscarFocusLost
 
     private void txt_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_buscarActionPerformed
-        // TODO add your handling code here:
-        buscar();
+        try {
+            // TODO add your handling code here:
+            buscar();
+        } catch (SQLException ex) {
+            Logger.getLogger(fr_almacenes.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_txt_buscarActionPerformed
 
     private void bt_imprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_imprimirActionPerformed
@@ -692,8 +793,21 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
         imprimir(evt);
     }//GEN-LAST:event_bt_imprimirActionPerformed
 
+    private void bt_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_modificarActionPerformed
+        // TODO add your handling code here:
+        modifico=true;
+        habilitar();
+    }//GEN-LAST:event_bt_modificarActionPerformed
+
+    private void bt_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_buscarActionPerformed
+        // TODO add your handling code here:
+       buscar=true;
+       habilitarBuscar();
+    }//GEN-LAST:event_bt_buscarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable Tabla;
     public static javax.swing.JButton bt_adelante;
     public static javax.swing.JButton bt_agregar;
     public static javax.swing.JButton bt_atras;
@@ -707,15 +821,14 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
     public static javax.swing.JButton bt_modificar;
     public static javax.swing.JButton bt_salir;
     private javax.swing.JComboBox<String> cbo_sucursal;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     public static javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel lbl_buscar;
+    private javax.swing.JLabel lbl_codigo;
+    private javax.swing.JLabel lbl_descripcion;
+    private javax.swing.JLabel lbl_sucursal;
     private javax.swing.JPanel pBuscar;
     private javax.swing.JTextField txt_buscar;
     private javax.swing.JTextField txt_codigo;

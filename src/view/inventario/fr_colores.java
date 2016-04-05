@@ -102,7 +102,7 @@ public class fr_colores extends javax.swing.JInternalFrame {
             conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
             DefaultTableModel dtm = new DefaultTableModel(null,columnas);
                        
-            cs = conn.prepareCall("{call getSucursal(?,?)}");
+            cs = conn.prepareCall("{call getColores(?,?)}");
             rs = cs.executeQuery();
             
             while(rs.next()){
@@ -125,7 +125,7 @@ public class fr_colores extends javax.swing.JInternalFrame {
             conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
             DefaultTableModel dtm = new DefaultTableModel(null,columnas);
             
-            cs = conn.prepareCall("{call getSucursal(?,?)}");
+            cs = conn.prepareCall("{call getColores(?,?)}");
             rs = cs.executeQuery();
             
             cs.registerOutParameter(2, Types.VARCHAR);
@@ -157,23 +157,26 @@ public class fr_colores extends javax.swing.JInternalFrame {
             String codigo = txt_codigo.getText();
             String descri = txt_descripcion.getText();
             
-            cs = conn.prepareCall("{call insertSucursal(?,?)}");
+            cs = conn.prepareCall("{call insertColores(?,?)}");
 
             cs.setString(1, codigo);
             cs.setString(2, descri);
             cs.execute();          
-            
-            if(agrego==true){
+ 
+        }catch(Exception e){
+            e.printStackTrace();
+            agrego=false;
+            JOptionPane.showMessageDialog(null, "Su Registro no pudo ser agregado");
+        }finally{
+            close(conn, cs);
+        }   
+        
+        if(agrego==true){
                 JOptionPane.showMessageDialog(null, "Su Registro fue agregado exitosamente");
                 setearText();
                 llenarTabla();
                 deshabilitar();
                 agrego=false;
-            }   
-        }catch(Exception e){
-            e.printStackTrace();
-        }finally{
-            close(conn, cs);
         }   
     }
     
@@ -188,51 +191,60 @@ public class fr_colores extends javax.swing.JInternalFrame {
             String codigo = txt_codigo.getText();
             String descri = txt_descripcion.getText();
             
-            cs = conn.prepareCall("{call updatSucursal(?,?)}");
+            cs = conn.prepareCall("{call updatColores(?,?)}");
 
             cs.setString(1, codigo);
             cs.setString(2, descri);           
-            cs.execute();            
+            cs.execute();              
             
-            if(modifico==true){
+        }catch(Exception e){
+            e.printStackTrace();
+            modifico=false;
+            JOptionPane.showMessageDialog(null, "Su Registro no pudo ser modificado");
+        }finally{
+            close(conn, cs);
+        }
+        
+        if(modifico==true){
                 JOptionPane.showMessageDialog(null, "Su Registro fue modificado exitosamente");
                 setearText();
                 llenarTabla();
                 deshabilitar();
                 modifico=false; 
-            }
-            
-        }catch(Exception e){
-            e.printStackTrace();
-        }finally{
-            close(conn, cs);
         }
     }
     
-    public void eliminar() {
+    public void eliminar() throws SQLException {
         CallableStatement cs = null;
         Connection conn =  null;
         ResultSet rs = null;
+        eliminar=true;
       
         try{
             conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
             DefaultTableModel dtm = new DefaultTableModel(null,columnas);
             String codigo = txt_codigo.getText();
                        
-            cs = conn.prepareCall("{call deletSucursal(?)}");
+            cs = conn.prepareCall("{call deletColores(?)}");
             cs.setString(1, codigo);
             rs = cs.executeQuery();
-            
-            setearText();
-            llenarTabla();           
-            JOptionPane.showMessageDialog(null, "Su Registro fue eliminado exitosamente");
-            
+
         }catch(Exception e){
+            e.printStackTrace();
+            eliminar=false;
             System.out.println("Error al eliminar registro en Metodo eliminar"+e);
-        }       
+        }  finally{
+            close(conn, cs);
+        }
+        if(eliminar==true){
+           setearText();
+            llenarTabla();           
+            JOptionPane.showMessageDialog(null, "Su Registro fue eliminado exitosamente"); 
+        }
+        
     }
     
-    public void buscar(){
+    public void buscar() throws SQLException{
         CallableStatement cs = null;
         Connection conn =  null;
         ResultSet rs = null;
@@ -242,7 +254,7 @@ public class fr_colores extends javax.swing.JInternalFrame {
             DefaultTableModel dtm = new DefaultTableModel(null,columnas);
             
             String codigo = txt_buscar.getText();
-            cs = conn.prepareCall("{call findSucursal(?,?,?)}");            
+            cs = conn.prepareCall("{call findColores(?,?,?)}");            
             cs.setString(1, codigo);
             rs = cs.executeQuery();
            
@@ -256,6 +268,8 @@ public class fr_colores extends javax.swing.JInternalFrame {
             habilitarBuscar();     
         }catch(Exception e){
             System.out.println("Error al buscar registro Metodo buscar"+e);
+        }finally{
+            close(conn, cs);
         }       
     }
        
@@ -796,7 +810,11 @@ public class fr_colores extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         int ax = JOptionPane.showConfirmDialog(null, "Desea Eliminar este Registro?");
             if(ax == JOptionPane.YES_OPTION){
+            try {
                 eliminar();
+            } catch (SQLException ex) {
+                Logger.getLogger(fr_colores.class.getName()).log(Level.SEVERE, null, ex);
+            }
             }           
     }//GEN-LAST:event_bt_eliminarActionPerformed
 
@@ -811,8 +829,12 @@ public class fr_colores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_buscarFocusLost
 
     private void txt_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_buscarActionPerformed
-        // TODO add your handling code here:
-           buscar();
+        try {
+            // TODO add your handling code here:
+            buscar();
+        } catch (SQLException ex) {
+            Logger.getLogger(fr_colores.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_txt_buscarActionPerformed
 
     private void bt_inicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_inicioActionPerformed

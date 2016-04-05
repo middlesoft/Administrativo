@@ -40,9 +40,6 @@ public class fr_categoria extends javax.swing.JInternalFrame {
         initComponents();
         deshabilitar();
         this.setTitle("Categoria");
-        //correlativo();
-        comboImpuesto();
-        comboConcepto();
         centrar();
         
     }

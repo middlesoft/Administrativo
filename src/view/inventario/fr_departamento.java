@@ -40,7 +40,6 @@ public class fr_departamento extends javax.swing.JInternalFrame {
     public fr_departamento() {
         initComponents();
         deshabilitar();
-        //correlativo();
         this.setTitle("Departamento");
         centrar();
     }
