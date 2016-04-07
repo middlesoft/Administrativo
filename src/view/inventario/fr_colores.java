@@ -851,9 +851,10 @@ public class fr_colores extends javax.swing.JInternalFrame {
             if(rs.first()){
                  txt_codigo.setText(rs.getString("codigo"));
                  txt_descripcion.setText(rs.getString("descripcion"));
+                 
             }   
         }catch(Exception e){
-            System.out.println("Error en Metodo Adelante"+e);
+            System.out.println("Error en Metodo Inicio"+e);
         }       
     }//GEN-LAST:event_bt_inicioActionPerformed
 

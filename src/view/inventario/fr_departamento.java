@@ -7,16 +7,39 @@ package view.inventario;
 
 import connection.correlativo;
 import java.awt.Dimension;
+import static java.awt.Frame.MAXIMIZED_BOTH;
+import java.io.File;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
+import static view.inventario.fr_colores.Tabla;
+import static view.inventario.fr_colores.bt_adelante;
+import static view.inventario.fr_colores.bt_agregar;
+import static view.inventario.fr_colores.bt_atras;
+import static view.inventario.fr_colores.bt_buscar;
 import static view.inventario.fr_colores.bt_cancelar;
+import static view.inventario.fr_colores.bt_eliminar;
 import static view.inventario.fr_colores.bt_fin;
+import static view.inventario.fr_colores.bt_guardar;
+import static view.inventario.fr_colores.bt_inicio;
+import static view.inventario.fr_colores.bt_modificar;
+import static view.inventario.fr_colores.txt_codigo;
+import static view.inventario.fr_colores.txt_descripcion;
 import static view.inventario.fr_grupos.bt_adelante;
 import static view.inventario.fr_grupos.bt_agregar;
 import static view.inventario.fr_grupos.bt_atras;
@@ -33,89 +56,284 @@ import static view.main.fr_ppal.escritorio;
  * @author Kelvin
  */
 public class fr_departamento extends javax.swing.JInternalFrame {
+    public static DefaultTableModel dtm;
+    public boolean agrego = false, modifico = false, eliminar=false, cancelar=false,  buscar=false;
+    private int i;
+    public String [] columnas;
+    public String [] filas;
+    CallableStatement cs = null;
+    Connection conn =  null;
+    ResultSet rs = null;
 
     /**
      * Creates new form fr_departamento
      */
-    public fr_departamento() {
+    public fr_departamento() throws SQLException {
         initComponents();
-        deshabilitar();
-        this.setTitle("Departamento");
+        iniciar();
         centrar();
     }
     
-     public void centrar(){
+    public void centrar(){
         Dimension desktopSize = escritorio.getSize();
         Dimension jInternalFrameSize = this.getSize();
         this.setLocation((desktopSize.width - jInternalFrameSize.width)/2,(desktopSize.height- jInternalFrameSize.height)/2);
     }
     
+    public void iniciar() throws SQLException{
+         this.setTitle("Departamento");
+         deshabilitar(); 
+         setearText();
+         llenarTabla();
+         agrego=false; modifico=false; eliminar=false; cancelar=false; buscar=false;
+         habilitarBuscar();
+    }
+    
+    public void habilitarBuscar(){
+        if(buscar==false){
+            pBuscar.setVisible(false);
+            lbl_buscar.setVisible(false);
+            txt_buscar.setVisible(false);
+            txt_buscar.setText("");
+        }else{
+            pBuscar.setVisible(true);
+            lbl_buscar.setVisible(true);
+            txt_buscar.setVisible(true);
+            Tabla.setEnabled(true);
+        }
+    }
+    
+    public void setearText() throws SQLException{
+        CallableStatement cs = null;
+        Connection conn =  null;
+        ResultSet rs = null;
+        String cod, des,vent,cob;
+        
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            DefaultTableModel dtm = new DefaultTableModel(null,columnas);
+                       
+            cs = conn.prepareCall("{call getDepartamento(?,?,?,?)}");
+            rs = cs.executeQuery();
+            
+            while(rs.next()){
+                 cod = rs.getString("CODIGO");
+                 des = rs.getString("DESCRIPCION");
+                 vent = rs.getString("COMI_VENT");
+                 cob = rs.getString("COMI_COB");
+                 txt_codigo.setText(cod);
+                 txt_descripcion.setText(des);
+                 txt_comiven.setText(vent);
+                 txt_comicob.setText(cob);
+           }   
+        }catch(Exception e){
+            System.out.println("Error al llenar la tabla Metodo setearText"+e);
+        }       
+    }
+
+    public void llenarTabla() throws SQLException{
+        CallableStatement cs = null;
+        Connection conn =  null;
+        ResultSet rs = null;
+                
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            DefaultTableModel dtm = new DefaultTableModel(null,columnas);
+            
+            cs = conn.prepareCall("{call getDepartamento(?,?,?,?)}");
+            rs = cs.executeQuery();
+            
+            cs.registerOutParameter(4, Types.VARCHAR);
+ 
+            dtm.addColumn("Codigo");
+            dtm.addColumn("Descripcion");
+            dtm.addColumn("Comision Venta");
+            dtm.addColumn("Comision Cobro");
+            Object fila[] = new Object[4];      
+            while(rs.next()){
+                  for(i=0; i<fila.length;i++){
+                    fila[i] = rs.getObject(i+1);
+                  }         
+              Tabla.updateUI();
+              dtm.addRow(fila);
+              Tabla.setModel(dtm);
+            }
+        }catch(Exception e){
+            System.out.println("Error al llenar la tabla metodo llenarTabla"+e);
+        } 
+    }
+     
     public void insertar() throws SQLException{
         CallableStatement cs = null;
         Connection conn =  null;
         ResultSet rs = null;
-               
+        agrego=true;
         try{
             
             conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
-            //String sql = "INSERT INTO COLORES(codigo, descripcion)VALUES("+txt_codigo+","+txt_descripcion+")"; 
             String codigo = txt_codigo.getText();
             String descri = txt_descripcion.getText();
-            String comiven = txt_comiven.getText();
-            String comicob = txt_comicob.getText();
-           
+            String vent = txt_comiven.getText();
+            String cob = txt_comicob.getText();
             
-            cs = conn.prepareCall("{call insertDepartament(?,?,?,?)}");
+            cs = conn.prepareCall("{call insertDepartamento(?,?,?,?)}");
 
             cs.setString(1, codigo);
             cs.setString(2, descri);
-            cs.setString(3, comiven);
-            cs.setString(4, comicob);
-            
-            System.out.println("Capturamos la insercion del registro 1: "+codigo);
-            System.out.println("Capturamos la insercion del registro 2: "+descri);
-            System.out.println("Capturamos la insercion del registro 3: "+comiven);
-            System.out.println("Capturamos la insercion del registro 4: "+comicob);
-            cs.execute();
-            System.out.println("Finaliza el store procedure");
-
-                       
+            cs.setString(3, vent);
+            cs.setString(4, cob);
+            cs.execute();          
+ 
         }catch(Exception e){
             e.printStackTrace();
+            agrego=false;
+            JOptionPane.showMessageDialog(null, "Su Registro no pudo ser agregado");
+        }finally{
+            close(conn, cs);
+        }   
+        
+        if(agrego==true){
+                JOptionPane.showMessageDialog(null, "Su Registro fue agregado exitosamente");
+                setearText();
+                llenarTabla();
+                deshabilitar();
+                agrego=false;
+        }   
+    }
+    
+    public void modificar() throws SQLException{
+        CallableStatement cs = null;
+        Connection conn =  null;
+        ResultSet rs = null;
+        modifico = true;
+        
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            String codigo = txt_codigo.getText();
+            String descri = txt_descripcion.getText();
+            String vent = txt_comiven.getText();
+            String cob = txt_comicob.getText();
+            
+            cs = conn.prepareCall("{call updatDepartamento(?,?,?,?)}");
+
+            cs.setString(1, codigo);
+            cs.setString(2, descri);
+            cs.setString(3, vent);
+            cs.setString(4, cob);   
+            cs.execute();              
+            
+        }catch(Exception e){
+            e.printStackTrace();
+            modifico=false;
+            JOptionPane.showMessageDialog(null, "Su Registro no pudo ser modificado");
         }finally{
             close(conn, cs);
         }
         
+        if(modifico==true){
+                JOptionPane.showMessageDialog(null, "Su Registro fue modificado exitosamente");
+                setearText();
+                llenarTabla();
+                deshabilitar();
+                modifico=false; 
+        }
     }
     
-    private static void close(Connection conn, Statement cs) throws SQLException {
-		
-		if (cs != null) {
-			cs.close();
-		}
+    public void eliminar() throws SQLException {
+        CallableStatement cs = null;
+        Connection conn =  null;
+        ResultSet rs = null;
+        eliminar=true;
+      
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            DefaultTableModel dtm = new DefaultTableModel(null,columnas);
+            String codigo = txt_codigo.getText();
+                       
+            cs = conn.prepareCall("{call deletDepartamento(?)}");
+            cs.setString(1, codigo);
+            rs = cs.executeQuery();
 
-		if (conn != null) {
-			conn.close();
-		}
-	}
+        }catch(Exception e){
+            e.printStackTrace();
+            eliminar=false;
+            System.out.println("Error al eliminar registro en Metodo eliminar"+e);
+        }  finally{
+            close(conn, cs);
+        }
+        if(eliminar==true){
+           setearText();
+            llenarTabla();           
+            JOptionPane.showMessageDialog(null, "Su Registro fue eliminado exitosamente"); 
+        }
+        
+    }
+    
+    public void buscar() throws SQLException{
+        CallableStatement cs = null;
+        Connection conn =  null;
+        ResultSet rs = null;
+        String cod, des, vent, cob;
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            DefaultTableModel dtm = new DefaultTableModel(null,columnas);
+            
+            String codigo = txt_buscar.getText();
+            cs = conn.prepareCall("{call findDepartamento(?)}");            
+            cs.setString(1, codigo);
+            rs = cs.executeQuery();
+           
+            while(rs.next()){
+                 cod = rs.getString("CODIGO");
+                 des = rs.getString("DESCRIPCION");
+                 vent = rs.getString("COMI_VENT");
+                 cob = rs.getString("COMI_COB");
+                 
+                 txt_codigo.setText(cod);
+                 txt_descripcion.setText(des); 
+                 txt_comiven.setText(vent);
+                 txt_comicob.setText(cob);
+            }
+            buscar=false;
+            habilitarBuscar();     
+        }catch(Exception e){
+            System.out.println("Error al buscar registro Metodo buscar"+e);
+        }finally{
+            close(conn, cs);
+        }       
+    }
+       
+    private static void close(Connection conn, Statement cs) throws SQLException {		
+        if (cs != null) {
+                cs.close();
+        }
+        if (conn != null) {
+                conn.close();
+        }
+    }
     
     public void correlativo(){
         String Consecutivo = null;
         
         correlativo codigo = new correlativo();
-        Consecutivo = codigo.numconsecutivo("SELECT CONCAT(REPEAT('0',6-LENGTH(CONVERT(MAX(CODIGO)+1,CHAR(6)))),CONVERT(MAX(CODIGO)+1,CHAR(6))) AS CODIGO FROM DEPARTAMENTO");
+        Consecutivo = codigo.numconsecutivo("SELECT CONCAT(REPEAT('0',6-LENGTH(CONVERT(MAX(CODIGO)+1,CHAR(6)))),CONVERT(MAX(CODIGO)+1,CHAR(6))) AS CODIGO FROM COLORES");
         if (Consecutivo==null) {
             Consecutivo="000001";
-        }
-              
+        }      
         this.txt_codigo.setText(Consecutivo);
     }
     
-    public void deshabilitar(){
+    public void limpiarText() throws SQLException{
+        txt_codigo.setText("");
+        txt_descripcion.setText("");
+        setearText();
+    }
+      
+    public void deshabilitar() throws SQLException{
         txt_codigo.setEnabled(false);
         txt_descripcion.setEnabled(false);
         txt_comiven.setEnabled(false);
-        txt_comiven.setEnabled(false);
+        txt_comicob.setEnabled(false);
         bt_buscar.setEnabled(true);
         bt_eliminar.setEnabled(true);
         bt_guardar.setEnabled(false);
@@ -126,14 +344,21 @@ public class fr_departamento extends javax.swing.JInternalFrame {
         bt_inicio.setEnabled(true);
         bt_cancelar.setEnabled(false);
         bt_agregar.setEnabled(true);
-                
+        Tabla.setEnabled(false);
+        chk_activo.setEnabled(false);
+        
+        if(cancelar==false){
+            llenarTabla();
+        }else{
+           limpiarText();
+        }    
     }
     
     public void habilitar(){
         txt_codigo.setEnabled(true);
         txt_descripcion.setEnabled(true);
         txt_comiven.setEnabled(true);
-        txt_comiven.setEnabled(true);
+        txt_comicob.setEnabled(true);
         bt_buscar.setEnabled(false);
         bt_eliminar.setEnabled(false);
         bt_guardar.setEnabled(true);
@@ -144,6 +369,46 @@ public class fr_departamento extends javax.swing.JInternalFrame {
         bt_inicio.setEnabled(false);
         bt_cancelar.setEnabled(true);
         bt_agregar.setEnabled(false);
+        Tabla.setEnabled(true);
+        chk_activo.setEnabled(true);
+        
+        if(agrego==true){
+            txt_codigo.setText("");
+            txt_descripcion.setText("");
+            txt_comiven.setText("");
+            txt_comicob.setText("");
+        }else{
+            modifico=true;
+        }
+    }
+
+    public void imprimir(java.awt.event.ActionEvent evt) {
+        String codigo=(txt_codigo.getText().toString());
+        //JOptionPane.showMessageDialog(null, "EN CONSTRUCCION");
+       /*Quitar comentario cuando se vaya a ejecutar el reporte*/
+        startReport(codigo);
+        
+    }
+    
+    public void startReport(String codigo){
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            javax.swing.JOptionPane.showMessageDialog(null,"Procesando Reporte......");
+            File jasper = new File(System.getProperty("user.dir")+"\\src\\reportes\\"+"listadedepartamento.jasper");
+            JasperReport reporte=null;
+            reporte=(JasperReport) JRLoader.loadObject(jasper);
+
+            Map param=new HashMap();
+            param.put("codigo", codigo);
+
+            JasperPrint jasperprinter = JasperFillManager.fillReport(reporte,param,conn);
+            JasperViewer vista = new JasperViewer(jasperprinter,false);
+            vista.setTitle("Reporte de Departamento");
+            vista.setExtendedState(MAXIMIZED_BOTH);
+            vista.setVisible(true);
+        }catch(Exception e){
+            javax.swing.JOptionPane.showMessageDialog(null, e);
+        }
     }
 
     /**
@@ -168,6 +433,9 @@ public class fr_departamento extends javax.swing.JInternalFrame {
         txt_comiven = new javax.swing.JTextField();
         txt_comicob = new javax.swing.JTextField();
         chk_activo = new javax.swing.JCheckBox();
+        pBuscar = new javax.swing.JPanel();
+        lbl_buscar = new javax.swing.JLabel();
+        txt_buscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabla = new javax.swing.JTable();
         jToolBar1 = new javax.swing.JToolBar();
@@ -181,6 +449,7 @@ public class fr_departamento extends javax.swing.JInternalFrame {
         bt_atras = new javax.swing.JButton();
         bt_adelante = new javax.swing.JButton();
         bt_fin = new javax.swing.JButton();
+        bt_imprimir = new javax.swing.JButton();
         bt_salir = new javax.swing.JButton();
 
         jLabel2.setText("jLabel2");
@@ -203,71 +472,120 @@ public class fr_departamento extends javax.swing.JInternalFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblcomision_venta)
+                    .addComponent(txt_comiven, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblcomision_cobro)
-                    .addComponent(txt_comiven)
                     .addComponent(txt_comicob, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addGap(36, 36, 36))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblcomision_venta)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_comiven, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblcomision_cobro)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_comicob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(lblcomision_cobro)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_comicob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(lblcomision_venta)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_comiven, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         chk_activo.setText("Activo");
+
+        lbl_buscar.setText("Buscar Registro");
+
+        txt_buscar.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txt_buscarFocusLost(evt);
+            }
+        });
+        txt_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_buscarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pBuscarLayout = new javax.swing.GroupLayout(pBuscar);
+        pBuscar.setLayout(pBuscarLayout);
+        pBuscarLayout.setHorizontalGroup(
+            pBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pBuscarLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(lbl_buscar)
+                .addContainerGap(41, Short.MAX_VALUE))
+            .addGroup(pBuscarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txt_buscar)
+                .addContainerGap())
+        );
+        pBuscarLayout.setVerticalGroup(
+            pBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pBuscarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbl_buscar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbl_descripcion)
+                    .addComponent(lbl_codigo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbl_descripcion)
-                            .addComponent(lbl_codigo))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(chk_activo)
-                        .addGap(30, 30, 30)))
+                        .addGap(56, 56, 56)))
+                .addComponent(pBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(115, 115, 115)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lbl_codigo)
-                            .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(12, 12, 12)
+                        .addComponent(pBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(22, 22, 22)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lbl_codigo)
+                                    .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(12, 12, 12))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(chk_activo)
+                                .addGap(18, 18, 18)))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lbl_descripcion)
-                            .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(chk_activo)))
-                .addContainerGap(12, Short.MAX_VALUE))
+                            .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         Tabla.setModel(new javax.swing.table.DefaultTableModel(
@@ -291,6 +609,11 @@ public class fr_departamento extends javax.swing.JInternalFrame {
         bt_buscar.setFocusable(false);
         bt_buscar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_buscar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_buscarActionPerformed(evt);
+            }
+        });
         jToolBar1.add(bt_buscar);
 
         bt_agregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit_add32.png"))); // NOI18N
@@ -308,6 +631,11 @@ public class fr_departamento extends javax.swing.JInternalFrame {
         bt_modificar.setFocusable(false);
         bt_modificar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_modificar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_modificarActionPerformed(evt);
+            }
+        });
         jToolBar1.add(bt_modificar);
 
         bt_guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/3floppy_unmount32.png"))); // NOI18N
@@ -336,31 +664,67 @@ public class fr_departamento extends javax.swing.JInternalFrame {
         bt_eliminar.setFocusable(false);
         bt_eliminar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_eliminar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_eliminarActionPerformed(evt);
+            }
+        });
         jToolBar1.add(bt_eliminar);
 
         bt_inicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/2leftarrow32.png"))); // NOI18N
         bt_inicio.setFocusable(false);
         bt_inicio.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_inicio.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_inicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_inicioActionPerformed(evt);
+            }
+        });
         jToolBar1.add(bt_inicio);
 
         bt_atras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/1leftarrow32.png"))); // NOI18N
         bt_atras.setFocusable(false);
         bt_atras.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_atras.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_atras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_atrasActionPerformed(evt);
+            }
+        });
         jToolBar1.add(bt_atras);
 
         bt_adelante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/1rightarrow32.png"))); // NOI18N
         bt_adelante.setFocusable(false);
         bt_adelante.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_adelante.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_adelante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_adelanteActionPerformed(evt);
+            }
+        });
         jToolBar1.add(bt_adelante);
 
         bt_fin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/2rightarrow32.png"))); // NOI18N
         bt_fin.setFocusable(false);
         bt_fin.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_fin.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_fin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_finActionPerformed(evt);
+            }
+        });
         jToolBar1.add(bt_fin);
+
+        bt_imprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/print32.png"))); // NOI18N
+        bt_imprimir.setFocusable(false);
+        bt_imprimir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_imprimir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_imprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_imprimirActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(bt_imprimir);
 
         bt_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/kfm_home32.png"))); // NOI18N
         bt_salir.setFocusable(false);
@@ -378,23 +742,21 @@ public class fr_departamento extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -416,29 +778,180 @@ public class fr_departamento extends javax.swing.JInternalFrame {
 
     private void bt_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_salirActionPerformed
         // TODO add your handling code here:
-        dispose();
-        MenuPrincipal.setEnabled(true);
-        MenuPrincipal.setVisible(true);
+       if(txt_codigo.getText().equals("")||txt_descripcion.getText().equals("") || txt_comiven.getText().equals("") || txt_comicob.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Formulario no puede ser cerrado, existe algun proceso abierto");
+        }else{
+            dispose();
+            MenuPrincipal.setEnabled(true);
+            MenuPrincipal.setVisible(true);
+        }
     }//GEN-LAST:event_bt_salirActionPerformed
 
     private void bt_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_guardarActionPerformed
-        try {
-            // TODO add your handling code here:
-            insertar();
-        } catch (SQLException ex) {
-            Logger.getLogger(fr_departamento.class.getName()).log(Level.SEVERE, null, ex);
+        if(txt_codigo.getText().equals("")||txt_descripcion.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Los campos no pueden estar en blanco");
+        }else{
+            try {
+               if(agrego==true){
+                insertar();
+               }else{
+                modificar();
+               }
+            } catch (SQLException ex) {
+                Logger.getLogger(fr_departamento.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_bt_guardarActionPerformed
 
     private void bt_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_agregarActionPerformed
         // TODO add your handling code here:
+         agrego=true;
         habilitar();
     }//GEN-LAST:event_bt_agregarActionPerformed
 
     private void bt_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelarActionPerformed
-        // TODO add your handling code here:
-        deshabilitar();
+        try {           
+            cancelar=true; agrego=false; modifico=false; eliminar=false;
+            deshabilitar();
+        } catch (SQLException ex) {
+            Logger.getLogger(fr_departamento.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_bt_cancelarActionPerformed
+
+    private void txt_buscarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_buscarFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_buscarFocusLost
+
+    private void txt_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_buscarActionPerformed
+        try {
+            // TODO add your handling code here:
+            buscar();
+        } catch (SQLException ex) {
+            Logger.getLogger(fr_departamento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_txt_buscarActionPerformed
+
+    private void bt_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_modificarActionPerformed
+        // TODO add your handling code here:
+        modifico=true;
+        habilitar();
+    }//GEN-LAST:event_bt_modificarActionPerformed
+
+    private void bt_adelanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_adelanteActionPerformed
+        // TODO add your handling code here:
+         CallableStatement cs = null;
+        Connection conn =  null;
+        ResultSet rs = null;
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            cs = conn.prepareCall("{call getDepartamento(?,?,?,?)}");
+            rs = cs.executeQuery();
+            
+            if(rs.isLast()){
+                 JOptionPane.showMessageDialog(null, "Registro Final");
+            }else{
+                rs.next();
+                txt_codigo.setText(rs.getString(1));
+                txt_descripcion.setText(rs.getString(2));
+                txt_comiven.setText(rs.getString(3));
+                txt_comiven.setText(rs.getString(4));
+            }   
+        }catch(Exception e){
+            System.out.println("Error en Metodo Adelante"+e);
+        }       
+    }//GEN-LAST:event_bt_adelanteActionPerformed
+
+    private void bt_atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_atrasActionPerformed
+        // TODO add your handling code here:
+         CallableStatement cs = null;
+        Connection conn =  null;
+        ResultSet rs = null;
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            cs = conn.prepareCall("{call getDepartamento(?,?,?,?)}");
+            rs = cs.executeQuery();
+            
+            if(rs.isFirst()){
+                 JOptionPane.showMessageDialog(null, "Registro Inicial");
+            }else{
+                rs.previous();
+                txt_codigo.setText(rs.getString(1));
+                txt_descripcion.setText(rs.getString(2));
+                txt_comiven.setText(rs.getString(3));
+                txt_comiven.setText(rs.getString(4));
+            }   
+        }catch(Exception e){
+            System.out.println("Error en Metodo Adelante"+e);
+        }         
+    }//GEN-LAST:event_bt_atrasActionPerformed
+
+    private void bt_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_eliminarActionPerformed
+        // TODO add your handling code here:
+         int ax = JOptionPane.showConfirmDialog(null, "Desea Eliminar este Registro?");
+            if(ax == JOptionPane.YES_OPTION){
+            try {
+                eliminar();
+            } catch (SQLException ex) {
+                Logger.getLogger(fr_departamento.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            }    
+    }//GEN-LAST:event_bt_eliminarActionPerformed
+
+    private void bt_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_buscarActionPerformed
+        // TODO add your handling code here:
+       buscar=true;
+       habilitarBuscar();
+    }//GEN-LAST:event_bt_buscarActionPerformed
+
+    private void bt_inicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_inicioActionPerformed
+        // TODO add your handling code here:
+        CallableStatement cs = null;
+        Connection conn =  null;
+        ResultSet rs = null;
+       
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            cs = conn.prepareCall("{call getDepartamento(?,?,?,?)}");
+            rs = cs.executeQuery();
+            
+            if(rs.first()){
+                 txt_codigo.setText(rs.getString(1));
+                 txt_descripcion.setText(rs.getString(2));
+                 txt_comiven.setText(rs.getString(3));
+                txt_comiven.setText(rs.getString(4));
+                 
+            }   
+        }catch(Exception e){
+            System.out.println("Error en Metodo Inicio"+e);
+        }       
+    }//GEN-LAST:event_bt_inicioActionPerformed
+
+    private void bt_finActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_finActionPerformed
+        // TODO add your handling code here:
+        CallableStatement cs = null;
+        Connection conn =  null;
+        ResultSet rs = null;
+       
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
+            cs = conn.prepareCall("{call getDepartamento(?,?,?,?)}");
+            rs = cs.executeQuery();
+            
+            if(rs.last()){
+                 txt_codigo.setText(rs.getString(1));
+                 txt_descripcion.setText(rs.getString(2));
+                 txt_comiven.setText(rs.getString(3));
+                txt_comiven.setText(rs.getString(4));
+            }   
+        }catch(Exception e){
+            System.out.println("Error en Metodo Adelante"+e);
+        }       
+    }//GEN-LAST:event_bt_finActionPerformed
+
+    private void bt_imprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_imprimirActionPerformed
+        // TODO add your handling code here:
+        imprimir(evt);
+    }//GEN-LAST:event_bt_imprimirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -451,6 +964,7 @@ public class fr_departamento extends javax.swing.JInternalFrame {
     public static javax.swing.JButton bt_eliminar;
     public static javax.swing.JButton bt_fin;
     public static javax.swing.JButton bt_guardar;
+    private javax.swing.JButton bt_imprimir;
     public static javax.swing.JButton bt_inicio;
     public static javax.swing.JButton bt_modificar;
     public static javax.swing.JButton bt_salir;
@@ -461,10 +975,13 @@ public class fr_departamento extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JToolBar jToolBar1;
+    private javax.swing.JLabel lbl_buscar;
     private javax.swing.JLabel lbl_codigo;
     private javax.swing.JLabel lbl_descripcion;
     private javax.swing.JLabel lblcomision_cobro;
     private javax.swing.JLabel lblcomision_venta;
+    private javax.swing.JPanel pBuscar;
+    private javax.swing.JTextField txt_buscar;
     private javax.swing.JTextField txt_codigo;
     private javax.swing.JTextField txt_comicob;
     private javax.swing.JTextField txt_comiven;

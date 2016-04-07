@@ -444,17 +444,17 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
 
     public void imprimir(java.awt.event.ActionEvent evt) {
         String codigo=(txt_codigo.getText().toString());
-        System.out.println("Codigo Almacen99: "+codigo);
-        JOptionPane.showMessageDialog(null, "EN CONSTRUCCION");
-       /*Quitar comentario cuando se vaya a ejecutar el reporte
+        System.out.println("Codigo Almacen: "+codigo);
+       // JOptionPane.showMessageDialog(null, "EN CONSTRUCCION");
+       /*Quitar comentario cuando se vaya a ejecutar el reporte*/
         startReport(codigo);
-        */
+        
     }
     
     public void startReport(String codigo){
         try{
             conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo","root","");
-            File jasper = new File(System.getProperty("user.dir")+"\\src\\informes\\"+"Factura.jasper");
+            File jasper = new File(System.getProperty("user.dir")+"\\src\\reportes\\"+"listadealmacen.jasper");
             System.out.println("Jasper: "+jasper);
             
             JasperReport reporte=null;
@@ -467,7 +467,7 @@ public class fr_almacenes extends javax.swing.JInternalFrame {
             JasperPrint jasperprinter = JasperFillManager.fillReport(reporte,param,conn);
             System.out.println(jasperprinter);
             JasperViewer vista = new JasperViewer(jasperprinter,false);
-            vista.setTitle("Reporte de Colores");
+            vista.setTitle("Reporte de Almacen");
             vista.setExtendedState(MAXIMIZED_BOTH);
             vista.setVisible(true);
         }catch(Exception e){
