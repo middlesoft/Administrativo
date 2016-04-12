@@ -24,6 +24,9 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="1"/>
                 </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/exit.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Salir"/>
               </Properties>
               <Events>
@@ -53,6 +56,9 @@
           <SubComponents>
             <Menu class="javax.swing.JMenu" name="Inventario">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/inventario.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Inventario"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="1"/>
@@ -61,6 +67,9 @@
               <SubComponents>
                 <Menu class="javax.swing.JMenu" name="Procesos_Inv">
                   <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/images/proceso.png"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Procesos"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Segoe UI" size="14" style="1"/>
@@ -76,6 +85,9 @@
                 </Menu>
                 <Menu class="javax.swing.JMenu" name="Tabla_Inv">
                   <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/images/tabla.png"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Tablas"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Segoe UI" size="14" style="1"/>
@@ -176,6 +188,9 @@
                 </Menu>
                 <Menu class="javax.swing.JMenu" name="Reporte_Inv">
                   <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/images/report.png"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Reportes"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Segoe UI" size="14" style="1"/>
@@ -186,21 +201,33 @@
             </Menu>
             <Menu class="javax.swing.JMenu" name="Compras">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/ventas.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="CxC"/>
               </Properties>
               <SubComponents>
                 <Menu class="javax.swing.JMenu" name="Procesos_CxC">
                   <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/images/proceso.png"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Procesos"/>
                   </Properties>
                 </Menu>
                 <Menu class="javax.swing.JMenu" name="Tabla_CxC">
                   <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/images/tabla.png"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Tablas"/>
                   </Properties>
                 </Menu>
                 <Menu class="javax.swing.JMenu" name="Reporte_CxC">
                   <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/images/report.png"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Reportes"/>
                   </Properties>
                 </Menu>
@@ -208,6 +235,9 @@
             </Menu>
             <Menu class="javax.swing.JMenu" name="Ventas">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/compras.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="CxP"/>
               </Properties>
               <SubComponents>
@@ -227,11 +257,6 @@
                   </Properties>
                 </Menu>
               </SubComponents>
-            </Menu>
-            <Menu class="javax.swing.JMenu" name="Contabilidad">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Contabilidad"/>
-              </Properties>
             </Menu>
           </SubComponents>
         </Menu>

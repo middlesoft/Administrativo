@@ -146,7 +146,6 @@ public class fr_ppal extends javax.swing.JFrame implements Runnable {
         Procesos_CxP = new javax.swing.JMenu();
         Tabla_CxP = new javax.swing.JMenu();
         Reporte_CxP = new javax.swing.JMenu();
-        Contabilidad = new javax.swing.JMenu();
         Soporte = new javax.swing.JMenu();
         Ayuda = new javax.swing.JMenu();
 
@@ -287,6 +286,7 @@ public class fr_ppal extends javax.swing.JFrame implements Runnable {
         });
 
         Salir.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/exit.png"))); // NOI18N
         Salir.setText("Salir");
         Salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -309,9 +309,11 @@ public class fr_ppal extends javax.swing.JFrame implements Runnable {
             }
         });
 
+        Inventario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/inventario.png"))); // NOI18N
         Inventario.setText("Inventario");
         Inventario.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
+        Procesos_Inv.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/proceso.png"))); // NOI18N
         Procesos_Inv.setText("Procesos");
         Procesos_Inv.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
@@ -320,6 +322,7 @@ public class fr_ppal extends javax.swing.JFrame implements Runnable {
 
         Inventario.add(Procesos_Inv);
 
+        Tabla_Inv.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/tabla.png"))); // NOI18N
         Tabla_Inv.setText("Tablas");
         Tabla_Inv.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
@@ -411,25 +414,31 @@ public class fr_ppal extends javax.swing.JFrame implements Runnable {
 
         Inventario.add(Tabla_Inv);
 
+        Reporte_Inv.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/report.png"))); // NOI18N
         Reporte_Inv.setText("Reportes");
         Reporte_Inv.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         Inventario.add(Reporte_Inv);
 
         Modulos.add(Inventario);
 
+        Compras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ventas.png"))); // NOI18N
         Compras.setText("CxC");
 
+        Procesos_CxC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/proceso.png"))); // NOI18N
         Procesos_CxC.setText("Procesos");
         Compras.add(Procesos_CxC);
 
+        Tabla_CxC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/tabla.png"))); // NOI18N
         Tabla_CxC.setText("Tablas");
         Compras.add(Tabla_CxC);
 
+        Reporte_CxC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/report.png"))); // NOI18N
         Reporte_CxC.setText("Reportes");
         Compras.add(Reporte_CxC);
 
         Modulos.add(Compras);
 
+        Ventas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/compras.png"))); // NOI18N
         Ventas.setText("CxP");
 
         Procesos_CxP.setText("Procesos");
@@ -442,9 +451,6 @@ public class fr_ppal extends javax.swing.JFrame implements Runnable {
         Ventas.add(Reporte_CxP);
 
         Modulos.add(Ventas);
-
-        Contabilidad.setText("Contabilidad");
-        Modulos.add(Contabilidad);
 
         MenuPrincipal.add(Modulos);
 
@@ -560,10 +566,14 @@ public class fr_ppal extends javax.swing.JFrame implements Runnable {
     }//GEN-LAST:event_UbicacionActionPerformed
 
     private void DepartamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DepartamentoActionPerformed
-        // TODO add your handling code here:
-        fr_departamento dp = new fr_departamento();
-        escritorio.add(dp);
-        dp.show();
+        try {
+            // TODO add your handling code here:
+            fr_departamento dp = new fr_departamento();
+            escritorio.add(dp);
+            dp.show();
+        } catch (SQLException ex) {
+            Logger.getLogger(fr_ppal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_DepartamentoActionPerformed
 
     private void GruposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GruposActionPerformed
@@ -648,7 +658,6 @@ public class fr_ppal extends javax.swing.JFrame implements Runnable {
     public static javax.swing.JMenuItem Categoria;
     public static javax.swing.JMenuItem Colores;
     public static javax.swing.JMenu Compras;
-    public static javax.swing.JMenu Contabilidad;
     public static javax.swing.JMenuItem Departamento;
     public static javax.swing.JMenu Edicion;
     public static javax.swing.JMenuItem Entrada_Salida;
