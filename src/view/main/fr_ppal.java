@@ -441,12 +441,15 @@ public class fr_ppal extends javax.swing.JFrame implements Runnable {
         Ventas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/compras.png"))); // NOI18N
         Ventas.setText("CxP");
 
+        Procesos_CxP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/proceso.png"))); // NOI18N
         Procesos_CxP.setText("Procesos");
         Ventas.add(Procesos_CxP);
 
+        Tabla_CxP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/tabla.png"))); // NOI18N
         Tabla_CxP.setText("Tablas");
         Ventas.add(Tabla_CxP);
 
+        Reporte_CxP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/report.png"))); // NOI18N
         Reporte_CxP.setText("Reportes");
         Ventas.add(Reporte_CxP);
 

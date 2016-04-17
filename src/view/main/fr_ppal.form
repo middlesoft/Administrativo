@@ -243,16 +243,25 @@
               <SubComponents>
                 <Menu class="javax.swing.JMenu" name="Procesos_CxP">
                   <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/images/proceso.png"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Procesos"/>
                   </Properties>
                 </Menu>
                 <Menu class="javax.swing.JMenu" name="Tabla_CxP">
                   <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/images/tabla.png"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Tablas"/>
                   </Properties>
                 </Menu>
                 <Menu class="javax.swing.JMenu" name="Reporte_CxP">
                   <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/images/report.png"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Reportes"/>
                   </Properties>
                 </Menu>
